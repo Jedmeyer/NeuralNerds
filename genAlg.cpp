@@ -1,7 +1,7 @@
 // 
 //
 
-//#include "stdafx.h" //Uncomment this include if you are using Visual Studio
+#include "stdafx.h"
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -12,7 +12,7 @@ using namespace std;
 
 class chromo {
 public:
-	bitset<36> data;
+	bitset<36> data; // We will be switching to strings.  They will take up more memory, but will simplify the design of the genetic algorithms.
 	int fitness;
 	chromo(bitset<36> in) {
 		data = in;
