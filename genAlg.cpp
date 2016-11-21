@@ -1,7 +1,7 @@
-// ConsoleApplication3.cpp : Defines the entry point for the console application.
+// 
 //
 
-#include "stdafx.h"
+//#include "stdafx.h" //Uncomment this include if you are using Visual Studio
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -25,11 +25,11 @@ chromo** generation;
 char* decoded;
 bitset<4> gene;
 int counter;
-double target = 10;
+double target = 5;
 double num;
 double val;
 double num2;
-int genSize = 10000;
+int genSize = 1000;
 bool op = true;
 bool number = false;
 bool first = true;
@@ -81,9 +81,9 @@ double getNum(char n) {
 
 }
 
-//DECODE(chromo)  This function will take a chromo argument and return a string containing the decoded characters
+//DECODE(chromo)  This function will take a chromo argument and return the fitness value for that chromo
 double decode(chromo c) {
-	
+
 	decoded = new char[10];
 	counter = 0;
 	fitness = 0;
@@ -154,7 +154,7 @@ double decode(chromo c) {
 				counter++;
 			}
 		}
-		
+
 
 
 
@@ -187,7 +187,7 @@ double decode(chromo c) {
 			default: type = 'n'; break;
 			}
 		}
-		else if (type == 'o'&&i!=8) {
+		else if (type == 'o'&&i != 8) {
 			switch (decoded[i]) {
 			case'+': type = 'n'; counter++; break;
 			case'-': type = 'n'; counter++; break;
@@ -203,7 +203,7 @@ double decode(chromo c) {
 	isType = true;
 	yesNum = false;
 	prevNum = false;
-	function = new char[counter+1];
+	function = new char[counter + 1];
 	function[counter] = '\0';
 	counter = 0;
 	type = 'n';
@@ -224,7 +224,7 @@ double decode(chromo c) {
 			default: type = 'n'; break;
 			}
 		}
-		else if (type == 'o'&&i!=8) {
+		else if (type == 'o'&&i != 8) {
 			switch (decoded[i]) {
 			case'+': type = 'n'; function[counter] = decoded[i]; counter++; break;
 			case'-': type = 'n'; function[counter] = decoded[i]; counter++; break;
@@ -243,17 +243,17 @@ double decode(chromo c) {
 
 
 
-	
+
 
 
 	for (int i = 0; i < counter; i++) {
 		switch (function[i]) {
-			case'+': num2 = getNum(function[i + 1]); val += num2; break;
-			case'-': num2 = getNum(function[i + 1]); val -= num2; break;
-			case'*': num2 = getNum(function[i + 1]); val *= num2; break;
-			case'/': num2 = getNum(function[i + 1]); if (num2 != 0) { val /= num2; }
-					 else {} break;
-			default:  break;
+		case'+': num2 = getNum(function[i + 1]); val += num2; break;
+		case'-': num2 = getNum(function[i + 1]); val -= num2; break;
+		case'*': num2 = getNum(function[i + 1]); val *= num2; break;
+		case'/': num2 = getNum(function[i + 1]); if (num2 != 0) { val /= num2; }
+				 else {} break;
+		default:  break;
 		}
 		if (first) {
 			val = getNum(function[i]);
@@ -264,23 +264,34 @@ double decode(chromo c) {
 
 
 
-	/*
+	
 
 	cout << endl;
-
-	cout << "\\/" << endl;
-	cout << decoded << endl;
-	cout << function << endl;
-	cout << val << endl;
-	cout << "/\\" << endl;
-
-
-
-	*/
-
-
-
+	cout << "---------------------------------------------------------" << endl;
+	//if (val == target) {
+	//	fitness = 1;
+	//	cout << "solution found: " << endl;
+		
+	//}
+	//else {
+		
+		
+//	}
 	fitness = (1 / (target - val));
+	cout << "Chromosome data: " << c.data << endl;
+	cout << "characters: " << decoded << endl;
+	cout << "function: "<< function << endl;
+	cout << "solution: " << val << endl;
+	cout << "Fitness: " << fitness << endl;
+	cout << "---------------------------------------------------------" << endl;
+
+
+
+	
+
+
+
+	
 
 
 	delete[] decoded;
@@ -300,7 +311,7 @@ int main()
 	//test.set(1, 1);
 	//bitset<4> t2(string("0010"));
 	//if (test == (bitset<4>)(string("0010"))) {//I can compare bitsets like this
-											  //if (test == t2) {
+	//if (test == t2) {
 	//	cout << "Success" << endl;
 	//}
 	//cout << test << endl;
@@ -312,7 +323,11 @@ int main()
 		if (maxFitness < fit) {
 			maxFitness = fit;
 			fittest = generation[i];
+
 		}
+	//	if (fit == 1) {
+	//		break;
+		//}
 		//cout << "pass" << endl;
 	}
 	cout << "Max fitness: " << fitness << endl;
