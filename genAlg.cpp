@@ -1,7 +1,7 @@
 // 
 //
 
-#include "stdafx.h"
+//#include "stdafx.h" Commented out unless using Visual Studio
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -149,7 +149,7 @@ double decode(chromo c) {
 				decoded[counter] = '/';
 				counter++;
 			}
-			else {
+			else { //This is serving as our null character in the string if the data is unintelligble.
 				decoded[counter] = 'a';
 				counter++;
 			}
@@ -317,12 +317,14 @@ int main()
 	//cout << test << endl;
 	int maxFitness = 0;
 	int fit = 0;
+	int fitnum=0;
 	chromo *fittest;
 	for (int i = 0; i < genSize; i++) {
-		fit = decode(*generation[i]);
+		fit = decode(*generation[i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
 		if (maxFitness < fit) {
 			maxFitness = fit;
 			fittest = generation[i];
+			fitnum = i;
 
 		}
 	//	if (fit == 1) {
@@ -330,7 +332,12 @@ int main()
 		//}
 		//cout << "pass" << endl;
 	}
-	cout << "Max fitness: " << fitness << endl;
+	if (maxFitness > 100){
+	cout << "Solution found";
+	cout << " on try #"<<fitnum;}
+	cout << "Max fitness: " << maxFitness << endl; //changed fitness to maxFitness, allowing for tracking the fittest score
+	
+
 	//int l = 0 % 4;
 	//cout << l << endl;
 	//cout << "pass" << endl;
