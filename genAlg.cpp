@@ -41,6 +41,7 @@ int num3;
 double fitness;
 int genNum=0;
 int totalGens=10;
+float mutationChance = .05;
 chromo*** genArr = new chromo**[totalGens];
 
 void generate() {
@@ -57,33 +58,44 @@ void generate() {
 			if (a == 1) {
 				input.set(x, 1);
 			}
-			else {
+			
 				input.set(x, 0);
 			}
-		}
+		
 		//cout << input << endl;
 		genArr[genNum][i] = new chromo(input);
 		//cout << generation[i]->data << endl;
 		;
 	}
- }
+}
  else {
+ 	bool mutate = false;
+ 	float mute = 0;
 	for(int i =0; i < genSize; i++){
 		for(int x =0; x<36; x++){
+			mute = 1 / rand();
+			if (mute < mutationChance){mutate = true;}
 			if (genArr[genNum-1][i]->data[x] == 1){
 				input.set(x,1);
+			}
+			if (mutate){
+				a = rand() % 2;
+				if (a == 1){input.set(x,1);}
+				else {input.set(x,0);}
 			}
 			else{
 				input.set(x,0);
 			}
 
 			genArr[genNum][i] = new chromo(input);
+			mutate = false;
 		}
 	}
- } 
+ }
 	
 	genNum++;
 }
+
 
 
 double getNum(char n) {
