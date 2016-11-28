@@ -43,12 +43,13 @@ int genNum=0;
 int totalGens=10;
 chromo*** genArr = new chromo**[totalGens];
 
-void start() {
+void generate() {
 	genArr[genNum] = new chromo*[genSize];
 	int a;
 	//char *input;
 	bitset<36> input;
 	//input = new char[39];
+ if (genNum<1){
 	for (int i = 0; i < genSize; i++) {
 
 		for (int x = 0; x < 36; x++) {
@@ -65,6 +66,21 @@ void start() {
 		//cout << generation[i]->data << endl;
 		;
 	}
+ }
+ else {
+	for(int i =0; i < genSize; i++){
+		for(int x =0; x<36; x++){
+			if (genArr[genNum-1][i]->data[x] == 1){
+				input.set(x,1);
+			}
+			else{
+				input.set(x,0);
+			}
+
+			genArr[genNum][i] = new chromo(input);
+		}
+	}
+ } 
 	
 	genNum++;
 }
@@ -307,14 +323,31 @@ double decode(chromo c) {
 	return fitness;
 }
 
+void decrypt(int currentGen){
+	int maxFitness = 0;
+	int fit = 0;
+	int fitnum=0;
+	chromo *fittest;
+	for (int i = 0; i < genSize; i++) {
+		fit = decode(*genArr[currentGen][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
+		if (maxFitness < fit) {
+			maxFitness = fit;
+			fittest = genArr[currentGen][i];
+			fitnum = i;
 
+		}
+	}
+
+}
 
 
 
 int main()
 {
-	start();
+	generate();
 	cout << "Generation complete. Decoding..." << endl;
+
+	decrypt(0);
 	//bitset<4> test;
 	//test.set(1, 1);
 	//bitset<4> t2(string("0010"));
@@ -323,19 +356,7 @@ int main()
 	//	cout << "Success" << endl;
 	//}
 	//cout << test << endl;
-	int maxFitness = 0;
-	int fit = 0;
-	int fitnum=0;
-	chromo *fittest;
-	for (int i = 0; i < genSize; i++) {
-		fit = decode(*genArr[0][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
-		if (maxFitness < fit) {
-			maxFitness = fit;
-			fittest = genArr[0][i];
-			fitnum = i;
-
-		}
-	}
+	
 	//	if (fit == 1) {
 	//		break;
 		//}
@@ -354,18 +375,10 @@ int main()
 	int end;
 	cin >> end;// This serves as a check to see if the second generation iteration works. If so, it can continue until all memorty is allocated.
 
-	start(); //2nd Gen should start here
-
+	generate(); //2nd Gen should start here
+	decrypt(1);
 	
-	for (int i = 0; i < genSize; i++) {
-		fit = decode(*genArr[1][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
-		if (maxFitness < fit) {
-			maxFitness = fit;
-			fittest = genArr[1][i];
-			fitnum = i;
 
-		}
-	}
 
 
 	int end2;
