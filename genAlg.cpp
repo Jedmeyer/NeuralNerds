@@ -1,7 +1,7 @@
 // 
 //
 
-//#include "stdafx.h" //Uncomment this include if you are using Visual Studio
+//#include "stdafx.h" Commented out unless using Visual Studio
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -12,7 +12,7 @@ using namespace std;
 
 class chromo {
 public:
-	bitset<36> data;
+	bitset<36> data; // We will be switching to strings.  They will take up more memory, but will simplify the design of the genetic algorithms.
 	int fitness;
 	chromo(bitset<36> in) {
 		data = in;
@@ -20,8 +20,7 @@ public:
 
 };
 
-chromo** generation;
-
+//Global variables declared here
 char* decoded;
 bitset<4> gene;
 int counter;
@@ -29,7 +28,7 @@ double target = 5;
 double num;
 double val;
 double num2;
-int genSize = 1000;
+int genSize = 10;
 bool op = true;
 bool number = false;
 bool first = true;
@@ -40,9 +39,12 @@ char* function;
 char type;
 int num3;
 double fitness;
+int genNum=0;
+int totalGens=10;
+chromo*** genArr = new chromo**[totalGens];
 
 void start() {
-	generation = new chromo*[genSize];
+	genArr[genNum] = new chromo*[genSize];
 	int a;
 	//char *input;
 	bitset<36> input;
@@ -59,10 +61,15 @@ void start() {
 			}
 		}
 		//cout << input << endl;
-		generation[i] = new chromo(input);
+		genArr[genNum][i] = new chromo(input);
 		//cout << generation[i]->data << endl;
+		;
 	}
+	
+	genNum++;
 }
+
+
 double getNum(char n) {
 	switch (n) {
 	case'0': num3 = 0; break;
@@ -149,7 +156,7 @@ double decode(chromo c) {
 				decoded[counter] = '/';
 				counter++;
 			}
-			else {
+			else { //This is serving as our null character in the string if the data is unintelligble.
 				decoded[counter] = 'a';
 				counter++;
 			}
@@ -307,6 +314,7 @@ double decode(chromo c) {
 int main()
 {
 	start();
+	cout << "Generation complete. Decoding..." << endl;
 	//bitset<4> test;
 	//test.set(1, 1);
 	//bitset<4> t2(string("0010"));
@@ -317,25 +325,51 @@ int main()
 	//cout << test << endl;
 	int maxFitness = 0;
 	int fit = 0;
+	int fitnum=0;
 	chromo *fittest;
 	for (int i = 0; i < genSize; i++) {
-		fit = decode(*generation[i]);
+		fit = decode(*genArr[0][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
 		if (maxFitness < fit) {
 			maxFitness = fit;
-			fittest = generation[i];
+			fittest = genArr[0][i];
+			fitnum = i;
 
 		}
+	}
 	//	if (fit == 1) {
 	//		break;
 		//}
 		//cout << "pass" << endl;
-	}
-	cout << "Max fitness: " << fitness << endl;
+	
+	/*  We need a way to check for finding a solution, I don't have perfect understanding of the code yet. */
+
+	// cout << "Solution found";
+	// cout << " on try #"<<fitnum;}
+	// cout << "Max fitness: " << maxFitness << endl; //changed fitness to maxFitness, allowing for tracking the fittest score
+	
+
 	//int l = 0 % 4;
 	//cout << l << endl;
 	//cout << "pass" << endl;
 	int end;
-	cin >> end;
+	cin >> end;// This serves as a check to see if the second generation iteration works. If so, it can continue until all memorty is allocated.
+
+	start(); //2nd Gen should start here
+
+	
+	for (int i = 0; i < genSize; i++) {
+		fit = decode(*genArr[1][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
+		if (maxFitness < fit) {
+			maxFitness = fit;
+			fittest = genArr[1][i];
+			fitnum = i;
+
+		}
+	}
+
+
+	int end2;
+	cin >> end2;
 	return 0;
 }
 
