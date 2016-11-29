@@ -98,7 +98,6 @@ double selection(double tf, double fts[]){
 void nextGen(){
 	genArr[genNum] = new chromo*[genSize];
  	bool mutate = false;
- 	float mute = 0;
  	double fits[genSize];
  	double totalfit=0;
  	double odds[genSize];
@@ -389,7 +388,7 @@ double decode(chromo c, bool console) {
 void decrypt(int currentGen){
 	int maxFitness = 0;
 	int fit = 0;
-	int fitnum=0;
+	int fitnum;
 	chromo *fittest;
 	for (int i = 0; i < genSize; i++) {
 		fit = decode(*genArr[currentGen][i],true); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
