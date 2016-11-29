@@ -92,25 +92,22 @@ double selection(double tf, double fts[]){
 	for (selection = 0; r > 0; selection++){
 		r = r - ft[selection];
 	}
-	cout << ft[10];
 	return selection;
 }
 
 void nextGen(){
 	genArr[genNum] = new chromo*[genSize];
  	bool mutate = false;
- 	float mute = 0;
  	double fits[genSize];
  	double totalfit=0;
  	double odds[genSize];
+ 	int a;
  	bitset<36> input;
  	for (int i = 0; i<genSize; i++){
  		fits[i] = decode(*genArr[genNum-1][i],false);
  		totalfit += fits[i];
 
 	}
-	
-	
 	if (totalfit ==0)totalfit=1;
 	for (int i =0; i<genSize; i++){
 		odds[i] = fits[i]/totalfit; //This results in a weighted mutation probability for each chromosome relative to its fitness value.
@@ -120,8 +117,19 @@ void nextGen(){
 		index = selection(totalfit, fits);
 		cout << "Chosen chromosome #: "<< index <<endl;;
 		for(int x =0; x<36; x++){
+			mutate = (rand () % 100) < 5;
 			if (genArr[genNum-1][index-1]->data[x] == 1){
 				input.set(x,1);
+			}
+			else if(mutate){
+				a = rand() % 2;
+				cout << "MUTATION!\n";
+				if (a == 1) {
+					input.set(x, 1);
+				}
+				else{
+					input.set(x, 0);
+				}
 			}
 			else{
 				input.set(x,0);
@@ -380,7 +388,7 @@ double decode(chromo c, bool console) {
 void decrypt(int currentGen){
 	int maxFitness = 0;
 	int fit = 0;
-	int fitnum=0;
+	int fitnum;
 	chromo *fittest;
 	for (int i = 0; i < genSize; i++) {
 		fit = decode(*genArr[currentGen][i],true); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
