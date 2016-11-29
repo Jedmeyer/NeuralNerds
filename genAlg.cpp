@@ -8,6 +8,7 @@
 #include <random>
 #include <stdexcept>
 #include <bitset>
+#include <math.h>
 using namespace std;
 
 class chromo {
@@ -20,11 +21,12 @@ public:
 
 };
 
+double decode(chromo c, bool console);
 //Global variables declared here
 char* decoded;
 bitset<4> gene;
 int counter;
-double target = 5;
+double target = 25;
 double num;
 double val;
 double num2;
@@ -58,8 +60,9 @@ void generate() {
 			if (a == 1) {
 				input.set(x, 1);
 			}
-			
+			else{
 				input.set(x, 0);
+			}
 			}
 		
 		//cout << input << endl;
@@ -68,33 +71,67 @@ void generate() {
 		;
 	}
 }
- else {
+ 
+
+	
+	genNum++;
+}
+
+double selection(double tf, double fts[]){
+	if (tf == 0){cout << "Warning: TotalFitness = 0";}
+	tf = tf*10000;
+	int tff = (int)tf;
+	int len;
+	for (len=0; fts[len] != '\0'; len++);
+	double ft[len];
+	for (int i = 0; i<len; i++){
+		ft[i] = 10000*fts[i];
+	}
+	double r = (rand() % tff); // This line is causing a floating point exception core dump
+	int selection;
+	for (selection = 0; r > 0; selection++){
+		r = r - ft[selection];
+	}
+	cout << ft[10];
+	return selection;
+}
+
+void nextGen(){
+	genArr[genNum] = new chromo*[genSize];
  	bool mutate = false;
  	float mute = 0;
+ 	double fits[genSize];
+ 	double totalfit=0;
+ 	double odds[genSize];
+ 	bitset<36> input;
+ 	for (int i = 0; i<genSize; i++){
+ 		fits[i] = decode(*genArr[genNum-1][i],false);
+ 		totalfit += fits[i];
+
+	}
+	
+	
+	if (totalfit ==0)totalfit=1;
+	for (int i =0; i<genSize; i++){
+		odds[i] = fits[i]/totalfit; //This results in a weighted mutation probability for each chromosome relative to its fitness value.
+	}
+	int index  = '\0';
 	for(int i =0; i < genSize; i++){
+		index = selection(totalfit, fits);
+		cout << "Chosen chromosome #: "<< index <<endl;;
 		for(int x =0; x<36; x++){
-			mute = 1 / rand();
-			if (mute < mutationChance){mutate = true;}
-			if (genArr[genNum-1][i]->data[x] == 1){
+			if (genArr[genNum-1][index-1]->data[x] == 1){
 				input.set(x,1);
-			}
-			if (mutate){
-				a = rand() % 2;
-				if (a == 1){input.set(x,1);}
-				else {input.set(x,0);}
 			}
 			else{
 				input.set(x,0);
 			}
-
-			genArr[genNum][i] = new chromo(input);
-			mutate = false;
 		}
-	}
- }
-	
+		genArr[genNum][i] = new chromo(input);
+	}		
 	genNum++;
 }
+
 
 
 
@@ -117,7 +154,7 @@ double getNum(char n) {
 }
 
 //DECODE(chromo)  This function will take a chromo argument and return the fitness value for that chromo
-double decode(chromo c) {
+double decode(chromo c, bool console) {
 
 	decoded = new char[10];
 	counter = 0;
@@ -299,8 +336,14 @@ double decode(chromo c) {
 
 
 
-	
+	if (target == val){
+		fitness = 1;
+	}
+	else {
+		fitness = (1 / (target - val));
+	}
 
+	if (console){
 	cout << endl;
 	cout << "---------------------------------------------------------" << endl;
 	//if (val == target) {
@@ -312,14 +355,13 @@ double decode(chromo c) {
 		
 		
 //	}
-	fitness = (1 / (target - val));
 	cout << "Chromosome data: " << c.data << endl;
 	cout << "characters: " << decoded << endl;
 	cout << "function: "<< function << endl;
 	cout << "solution: " << val << endl;
 	cout << "Fitness: " << fitness << endl;
 	cout << "---------------------------------------------------------" << endl;
-
+}
 
 
 	
@@ -341,7 +383,7 @@ void decrypt(int currentGen){
 	int fitnum=0;
 	chromo *fittest;
 	for (int i = 0; i < genSize; i++) {
-		fit = decode(*genArr[currentGen][i]); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
+		fit = decode(*genArr[currentGen][i],true); 		//Note deserved here. Because Decode prints the data, we're getting a ton of values, Want to make this more efficient.
 		if (maxFitness < fit) {
 			maxFitness = fit;
 			fittest = genArr[currentGen][i];
@@ -386,8 +428,10 @@ int main()
 	//cout << "pass" << endl;
 	int end;
 	cin >> end;// This serves as a check to see if the second generation iteration works. If so, it can continue until all memorty is allocated.
-
-	generate(); //2nd Gen should start here
+	cout << endl<<endl;
+	cout << "generation #: "<<genNum;
+	cout << endl;
+	nextGen();//2nd Gen should start here
 	decrypt(1);
 	
 
