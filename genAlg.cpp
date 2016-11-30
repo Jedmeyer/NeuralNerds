@@ -43,7 +43,7 @@ int num3;
 double fitness;
 int genNum=0;
 int totalGens=10;
-float mutationChance = .05;
+float mutationChance = 5;
 chromo*** genArr = new chromo**[totalGens];
 
 void generate() {
@@ -117,7 +117,7 @@ void nextGen(){
 		index = selection(totalfit, fits);
 		cout << "Chosen chromosome #: "<< index <<endl;;
 		for(int x =0; x<36; x++){
-			mutate = (rand () % 100) < 5;
+			mutate = (rand () % 100) < mutationChance;
 			if (genArr[genNum-1][index-1]->data[x] == 1){
 				input.set(x,1);
 			}
