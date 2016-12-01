@@ -1,6 +1,6 @@
 
 driver: driver.o GenAlg.o NeuralNet.o
-	g++ -g -Wall -std=c++11 -o driver GenAlg.o NeuralNet.o
+	g++ -g -Wall -std=c++11 -o driver driver.o GenAlg.o NeuralNet.o
 
 driver.o: driver.cpp NeuralNet.h GenAlg.h
 	g++ -g -Wall -std=c++11 -c driver.cpp
