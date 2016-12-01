@@ -5,8 +5,8 @@ using namespace std;
 
 struct Neuron{
 
-}
+};
 
 struct NeuronLayer{
 	
-}
+};
