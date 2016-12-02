@@ -584,29 +584,14 @@ int main()
 	cout << endl;
 	nextGen();//2nd Gen should start here
 	decrypt(1);
-	cout << "Gen Complete\n";
-	int end3;
-	cin >> end3;
-	cout << endl;
-	nextGen();
-	decrypt(2);
-	cout << endl;
-	cout << "Gen Complete\n";
-	int end4;
-	cin >> end4;
-	cout << endl;
-	nextGen();
-	decrypt(3);
-	cout << endl;
-	cout << "Gen Complete\n";
-	int end5;
-	cin >> end5;
-	cout << endl;
+	while (w<totalGens-1){
+		cout << "generation #: " << genNum << endl;
+		nextGen();
+		decrypt(w);
+		w++;
+	}
+	cout << endl  << w;
 
-
-
-	int end2;
-	cin >> end2;
 	return 0;
 }
 
