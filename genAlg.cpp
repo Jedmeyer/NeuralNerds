@@ -584,6 +584,7 @@ int main()
 	cout << endl;
 	nextGen();//2nd Gen should start here
 	decrypt(1);
+	int w;
 	while (w<totalGens-1){
 		cout << "generation #: " << genNum << endl;
 		nextGen();
