@@ -9,7 +9,44 @@
 #include <stdexcept>
 #include <bitset>
 #include <math.h>
+#ifdef WinOS
+#include "glut.h"
+#else
+#include "glut.h"
+
+#endif
+#include<string>
 using namespace std;
+
+//Global variables
+int Button_save_x[2];
+int Button_save_y[2];
+char Button_save_label[] = {'S','a','v','e','\0'};
+char Button_load_label[] = {'L','o','a','d','\0'};
+char generation_label[] = {'G','e','n','e','r','a','t','i','o','n',' ','#',':',' ','\0'};
+char chromosome_label[] = {'C','h','r','o','m','o','s','o','m','e',' ','#',':',' ','\0'};
+char * genome_label;
+int Button_load_x[2] = {0,10};
+int Button_load_y[2] = {0,10};
+int Button_play[2];
+bool mouseIsDragging = false;
+
+void draw(int x[], int y[], const char* label){
+	glColor3f(255,255,255); // should be white
+	glBegin(GL_POLYGON);
+		glVertex2d(x[0],y[0]);
+		glVertex2d(x[1],y[0]);
+		glVertex2d(x[1],y[1]);
+		glVertex2d(x[0],y[1]);
+	glEnd();
+	glRasterPos2f((x[0]+x[1])/2, y[0]+2);
+	for (int i = 0; label[i] != '\0'; i++){
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, ((int)label[i]));
+	}
+};
+
+
+	 
 
 class chromo {
 public:
@@ -20,6 +57,111 @@ public:
 	}
 
 };
+
+
+
+int WIDTH = 240;  // width of the user window (640 + 80)
+int HEIGHT = 600;  // height of the user window (480 + 60)
+char programName[] = "NeuralNet Reporter";
+
+void drawWindow()
+{
+  // clear the buffer
+  glClear(GL_COLOR_BUFFER_BIT);
+  draw(Button_load_x,Button_load_y,Button_load_label);
+  // draw stuff
+
+  // tell the graphics card that we're done-- go ahead and draw!
+  //   (technically, we are switching between two color buffers...)
+  glutSwapBuffers();
+}
+
+void keyboard( unsigned char c, int x, int y )
+{
+  int win = glutGetWindow();
+  switch(c) {
+    case 'q':
+    case 'Q':
+    case 27:
+      // get rid of the window (as part of shutting down)
+      glutDestroyWindow(win);
+      exit(0);
+      break;
+    default:
+      break;
+  }
+  glutPostRedisplay();
+};
+
+void mouse_motion(int x,int y)
+{
+  // the mouse button is pressed, and the mouse is moving....
+  
+  glutPostRedisplay();
+  
+  
+}
+
+
+void mouse(int button, int state, int x, int y)
+{
+  if ( GLUT_LEFT_BUTTON == button ) {
+    if ( GLUT_DOWN == state ) {
+      mouseIsDragging = true;
+      // the user just pressed down on the mouse-- do something
+    } else {
+      // the user just let go the mouse-- do something
+      mouseIsDragging = false;
+    }
+  } else if ( GLUT_RIGHT_BUTTON == button ) {
+  }
+  glutPostRedisplay();
+}
+
+void reshape(int w, int h)
+{
+   glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+   WIDTH = w;  HEIGHT = h;
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
+}
+
+void init(void)
+{
+  // clear the window to white
+  glClearColor(1,1,1,1);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  // set up the coordinate system:  number of pixels along x and y
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
+
+  // welcome message
+}
+
+void init_gl_window()
+{
+  char *argv[] = {programName};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  glutInit(&argc, argv);
+  glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
+  glutInitWindowSize(WIDTH,HEIGHT);
+  glutInitWindowPosition(100,100);
+  glutCreateWindow(programName);
+  init();
+
+  glutDisplayFunc(drawWindow);
+  glutReshapeFunc(reshape);
+  glutKeyboardFunc(keyboard);
+  glutMouseFunc(mouse);
+  glutMotionFunc(mouse_motion);
+  glutMainLoop();
+}
+
+
+
 
 double decode(chromo c, bool console);
 //Global variables declared here
@@ -43,7 +185,7 @@ int num3;
 double fitness;
 int genNum=0;
 int totalGens=10;
-float mutationChance = .05;
+float mutationChance = 5;
 chromo*** genArr = new chromo**[totalGens];
 
 void generate() {
@@ -117,7 +259,7 @@ void nextGen(){
 		index = selection(totalfit, fits);
 		cout << "Chosen chromosome #: "<< index <<endl;;
 		for(int x =0; x<36; x++){
-			mutate = (rand () % 100) < 5;
+			mutate = (rand () % 100) < mutationChance;
 			if (genArr[genNum-1][index-1]->data[x] == 1){
 				input.set(x,1);
 			}
@@ -406,6 +548,7 @@ void decrypt(int currentGen){
 
 int main()
 {
+	init_gl_window();
 	generate();
 	cout << "Generation complete. Decoding..." << endl;
 
@@ -441,7 +584,24 @@ int main()
 	cout << endl;
 	nextGen();//2nd Gen should start here
 	decrypt(1);
-	
+	cout << "Gen Complete\n";
+	int end3;
+	cin >> end3;
+	cout << endl;
+	nextGen();
+	decrypt(2);
+	cout << endl;
+	cout << "Gen Complete\n";
+	int end4;
+	cin >> end4;
+	cout << endl;
+	nextGen();
+	decrypt(3);
+	cout << endl;
+	cout << "Gen Complete\n";
+	int end5;
+	cin >> end5;
+	cout << endl;
 
 
 
