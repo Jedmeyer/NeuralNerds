@@ -1,7 +1,6 @@
 // 
 //
 
-//#include "stdafx.h" Commented out unless using Visual Studio
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -13,6 +12,9 @@
 #include "glut.h"
 #else
 #include "glut.h"
+#include<GL\GL.h>
+
+
 
 #endif
 #include<string>
@@ -46,22 +48,36 @@ void draw(int x[], int y[], const char* label){
 };
 
 
-	 
+class genome {
+public:
+	int identifier;
+	int species;
+	genome(int i, int s){
+		identifier = i;
+		species = s;
+	}
+};
 
 class chromo {
 public:
 	bitset<36> data; // We will be switching to strings.  They will take up more memory, but will simplify the design of the genetic algorithms.
 	int fitness;
+	genome *fam;
 	chromo(bitset<36> in) {
 		data = in;
 	}
+	chromo(bitset<36> in, genome *parent){
+		data = in;
+		fam = parent;
+	}
+
 
 };
 
 
 
-int WIDTH = 240;  // width of the user window (640 + 80)
-int HEIGHT = 600;  // height of the user window (480 + 60)
+int WIDTH = 320;  // width of the user window (640 + 80)
+int HEIGHT = 480;  // height of the user window (480 + 60)
 char programName[] = "NeuralNet Reporter";
 
 void drawWindow()
@@ -129,8 +145,8 @@ void reshape(int w, int h)
 
 void init(void)
 {
-  // clear the window to white
-  glClearColor(1,1,1,1);
+  // clear the window to black
+  glClearColor(0,0,0,1);
   glClear(GL_COLOR_BUFFER_BIT);
 
   // set up the coordinate system:  number of pixels along x and y
@@ -138,7 +154,6 @@ void init(void)
   glLoadIdentity();
   glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
 
-  // welcome message
 }
 
 void init_gl_window()
@@ -162,8 +177,10 @@ void init_gl_window()
 
 
 
-
+//Declare decode
 double decode(chromo c, bool console);
+
+
 //Global variables declared here
 char* decoded;
 bitset<4> gene;
@@ -172,7 +189,7 @@ double target = 25;
 double num;
 double val;
 double num2;
-int genSize = 10;
+const int genSize = 10;
 bool op = true;
 bool number = false;
 bool first = true;
@@ -184,9 +201,10 @@ char type;
 int num3;
 double fitness;
 int genNum=0;
-int totalGens=10;
+const int totalGens=10;
 float mutationChance = 5;
 chromo*** genArr = new chromo**[totalGens];
+
 
 void generate() {
 	genArr[genNum] = new chromo*[genSize];
@@ -194,10 +212,14 @@ void generate() {
 	//char *input;
 	bitset<36> input;
 	//input = new char[39];
+	int genoNum=1;
+	int specNum = 1;
  if (genNum<1){
 	for (int i = 0; i < genSize; i++) {
 
+
 		for (int x = 0; x < 36; x++) {
+
 			a = rand() % 2;
 			if (a == 1) {
 				input.set(x, 1);
@@ -209,6 +231,10 @@ void generate() {
 		
 		//cout << input << endl;
 		genArr[genNum][i] = new chromo(input);
+
+		genArr[genNum][i]->fam = new genome(genoNum,specNum);
+		genoNum++;
+		specNum++;
 		//cout << generation[i]->data << endl;
 		;
 	}
@@ -225,7 +251,8 @@ double selection(double tf, double fts[]){
 	int tff = (int)tf;
 	int len;
 	for (len=0; fts[len] != '\0'; len++);
-	double ft[len];
+	double *ft;
+	ft = new double[len];
 	for (int i = 0; i<len; i++){
 		ft[i] = 10000*fts[i];
 	}
@@ -548,7 +575,7 @@ void decrypt(int currentGen){
 
 int main()
 {
-	init_gl_window();
+	//init_gl_window();
 	generate();
 	cout << "Generation complete. Decoding..." << endl;
 
@@ -584,7 +611,7 @@ int main()
 	cout << endl;
 	nextGen();//2nd Gen should start here
 	decrypt(1);
-	int w;
+	int w=0;
 	while (w<totalGens-1){
 		cout << "generation #: " << genNum << endl;
 		nextGen();
@@ -593,6 +620,23 @@ int main()
 	}
 	cout << endl  << w;
 
+
+
+
+	//DEALLOCATION.
+	for (int i = 0; i < genNum; i++) {
+		for (int x = 0; x < genSize; x++) {
+			delete genArr[i][x];
+		}
+		delete genArr[i];
+	}
+	delete[] genArr;
+
+	
+	
+	
+	
+	
 	return 0;
 }
 
