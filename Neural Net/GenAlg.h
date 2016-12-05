@@ -29,6 +29,10 @@ public:
 }
 class generation{
 	int genSize;
+	chromo** genData;
+	void generate();
+
+	generation(int);
 }
 
 

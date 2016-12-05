@@ -3,6 +3,7 @@
 #include "GenAlg.h"
 
 
+
 void chromo::inherit(chromo *parent, bool mute){
 	gid = parent.id;
 	if (mute){
@@ -11,8 +12,10 @@ void chromo::inherit(chromo *parent, bool mute){
 	}
 }
 
-void generate(){
-	
+void generate(int gensz){
+	genData = new chromo*[gensz];
+
+
 
 }
 
@@ -25,4 +28,9 @@ chromo* chromo::cross(chromo** gen){
 	a = gen[r];
 	r = (int)(rand()%genSize);
 	b = gen[r];
+}
+generation::generation(int gensz){
+	genSize = gensz;
+	generate(genSize);
+
 }
