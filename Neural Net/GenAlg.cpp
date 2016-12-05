@@ -2,6 +2,10 @@
 
 #include "GenAlg.h"
 
+genome::genome(int gid){
+	id = gid;
+	genomeNum++;
+}
 
 
 void chromo::inherit(chromo *parent, bool mute){
@@ -12,8 +16,18 @@ void chromo::inherit(chromo *parent, bool mute){
 	}
 }
 
+
+//Generate builds the FIRST generation of the algorithm.
+//Hence, it has entirely unique genome becuase the chromosomes are independently
+//generated.
 void generate(int gensz){
 	genData = new chromo*[gensz];
+	for (int i = 0; i<genSize; i++){
+		genData[i] = new chromo
+		int gid = genomeNum;
+		fam = new genome(genomeNum);
+
+	}
 
 
 

@@ -8,6 +8,7 @@
 class genome{
 	int id;
 	int totalSpecs;
+	genome(int gid);
 }
 class chromo{
 public:
@@ -17,7 +18,7 @@ public:
 	int specid;
 	void inherit(chromo *parent, bool mute);
 	chromo* cross(chromo** gen);
-	chromo(float** in)	{
+	chromo(float** in){
 		data = in;
 	}
 	chromo(float** in, genome *parent){
@@ -38,3 +39,4 @@ class generation{
 
 void generate();
 void nextGen();
+int genomeNum;
