@@ -20,7 +20,33 @@
 #include<string>
 using namespace std;
 
-//Global variables
+//Declare decode
+double decode(chromo c, bool console);
+
+
+//Global variables declared here
+char* decoded;
+bitset<4> gene;
+int counter;
+double target = 25;
+double num;
+double val;
+double num2;
+const int genSize = 10;
+bool op = true;
+bool number = false;
+bool first = true;
+bool isType = true;
+bool yesNum = false;
+bool prevNum = false;
+char* function;
+char type;
+double fitness;
+int genNum=0;
+int genomeNum=0;
+const int totalGens=10;
+float mutationChance = 5;
+chromo*** genArr = new chromo**[totalGens];
 int Button_save_x[2];
 int Button_save_y[2];
 char Button_save_label[] = {'S','a','v','e','\0'};
@@ -50,12 +76,11 @@ void draw(int x[], int y[], const char* label){
 
 class genome {
 public:
-	int identifier;
-	int species;
-	genome(int i, int s){
-		identifier = i;
-		species = s;
-	}
+	int id;
+	int totalspec=1;
+	genome(int i){
+		id = i;
+		}
 };
 
 class chromo {
@@ -63,6 +88,8 @@ public:
 	bitset<36> data; // We will be switching to strings.  They will take up more memory, but will simplify the design of the genetic algorithms.
 	int fitness;
 	genome *fam;
+	int gid;
+	int specid;
 	chromo(bitset<36> in) {
 		data = in;
 	}
@@ -155,6 +182,29 @@ void init(void)
   glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
 
 }
+void inherit (chromo *parent,bool mute){
+	gid = parent.id;
+	if (mute){
+		specid = parent->fam.totalspec;
+		parent->fam.totalspec++;
+	}
+}
+chromo* cross(chromo** gen){
+	int r = (int)(rand()%genSize);
+	chromo* a,b;
+	a = gen[r];
+	int r = (int)(rand()%genSize);
+	b = gen[r];
+	nbit = bitset<36>;
+	r = (int)(rand ()%36);
+	/** r will be used here to to take verything in 'a' up
+	to r. The difference between chromo lengh and r will then
+	be used to get the rest of the chromosome from 'b' 
+	Next gen's content should be sufficient to craft this. */
+	return a;
+}
+
+
 
 void init_gl_window()
 {
@@ -175,68 +225,31 @@ void init_gl_window()
   glutMainLoop();
 }
 
-
-
-//Declare decode
-double decode(chromo c, bool console);
-
-
-//Global variables declared here
-char* decoded;
-bitset<4> gene;
-int counter;
-double target = 25;
-double num;
-double val;
-double num2;
-const int genSize = 10;
-bool op = true;
-bool number = false;
-bool first = true;
-bool isType = true;
-bool yesNum = false;
-bool prevNum = false;
-char* function;
-char type;
-int num3;
-double fitness;
-int genNum=0;
-const int totalGens=10;
-float mutationChance = 5;
-chromo*** genArr = new chromo**[totalGens];
-
-
 void generate() {
 	genArr[genNum] = new chromo*[genSize];
 	int a;
 	//char *input;
 	bitset<36> input;
 	//input = new char[39];
-	int genoNum=1;
-	int specNum = 1;
- if (genNum<1){
-	for (int i = 0; i < genSize; i++) {
+	if (genNum<1){
+		for (int i = 0; i < genSize; i++) {
 
 
-		for (int x = 0; x < 36; x++) {
+			for (int x = 0; x < 36; x++) {
 
 			a = rand() % 2;
-			if (a == 1) {
+				if (a == 1) {
 				input.set(x, 1);
-			}
-			else{
+				}
+				else{
 				input.set(x, 0);
-			}
+				}
 			}
 		
-		//cout << input << endl;
 		genArr[genNum][i] = new chromo(input);
-
-		genArr[genNum][i]->fam = new genome(genoNum,specNum);
-		genoNum++;
-		specNum++;
-		//cout << generation[i]->data << endl;
-		;
+		genArr[genNum][i]->fam = new genome(genomeNum);
+		genomeNum++;
+		
 	}
 }
  
@@ -270,6 +283,7 @@ void nextGen(){
  	double fits[genSize];
  	double totalfit=0;
  	double odds[genSize];
+ 	bool crossover = false;
  	int a;
  	bitset<36> input;
  	for (int i = 0; i<genSize; i++){
@@ -283,6 +297,11 @@ void nextGen(){
 	}
 	int index  = '\0';
 	for(int i =0; i < genSize; i++){
+		crossover = (rand () % 100) < crossChance;
+		//if (crossover){
+		//	cross(genArr[genNum]);
+		//}
+
 		index = selection(totalfit, fits);
 		cout << "Chosen chromosome #: "<< index <<endl;;
 		for(int x =0; x<36; x++){
