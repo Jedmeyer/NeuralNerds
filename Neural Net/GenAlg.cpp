@@ -20,22 +20,22 @@ void chromo::inherit(chromo *parent, bool mute){
 //Generate builds the FIRST generation of the algorithm.
 //Hence, it has entirely unique genome becuase the chromosomes are independently
 //generated.
-void generation::generate(int gensz, int chromolen){
-	genData = new chromo*[gensz];
-	for (int i = 0; i<genSize; i++){
+void generate(int gensz, int chromolen){
+	genArr[0] = new chromo*[gensz];
+	for (int i = 0; i<gensz; i++){
 
-		genData[i] = new chromo ();
-		genData[i]->data = new float[chromolen];
+		genArr[genNum][i] = new chromo ();
+		genArr[genNum][i]->data = new float[chromolen];
 		float r = 0;
 		for (int x=0; i<chromolen;i++){
 			r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			genData[i]->data[x] = r;
+			genArr[genNum][i]->data[x] = r;
 			// genData[i]->data[x] = r;
 			;
 		}
 
-		genData[i]->gid = genomeNum;
-		genData[i]->fam = new genome(genomeNum);
+		genArr[0][i]->gid = genomeNum;
+		genArr[0][i]->fam = new genome(genomeNum);
 
 	}
 	genNum++;
@@ -47,22 +47,22 @@ void generation::generate(int gensz, int chromolen){
 
 
 
-chromo* cross(generation a, int chromolen){
-	int r = (int)(rand()%a.genSize);
+chromo* cross(chromo **a, int chromolen){
+	int r = (int)(rand()%genSize);
 	chromo* g;
 	chromo* b;
 	g = new chromo();
 	b = new chromo();
-	g->data = a.genData[r]->data;
-	r = (int)(rand()%a.genSize);
-	b->data = a.genData[r]->data;
+	g->data = a[r]->data;
+	r = (int)(rand()%genSize);
+	b->data = a[r]->data;
 	float* arr;
 	arr = new float[chromolen];
 
 	int c = (int)(rand()%chromolen);
 	int d = chromolen - c;
 	int len;
-	for (int len=0; len<c;len++){
+	for (len=0; len<c;len++){
 		arr[len] = g->data[len];
 	}
 	for (int i=c+1; i<d; i++){
@@ -86,12 +86,8 @@ void calculate(chromo* c){
 
 
 
-generation::generation(int gensz, int chromolen){
-	genSize = gensz;
-	generate(genSize, chromolen);
 
-}
-double generation::selection(){
+double selection(){
 	double tf=0;
 	for (int i=0; i<genSize; i++){
 		calculate(genArr[genNum-1][i]);
@@ -107,11 +103,19 @@ double generation::selection(){
 	return selection;
 }
 void nextGen(int generationSize, int chromolen){
-	genArr[genNum] = new generation(generationSize,chromolen);
+	genArr[genNum] = new chromo*[generationSize];
 	bool mutate = false;
 	bool crossover = false;
-	int index = selection();
-
+	int index=0;
+	for (int i=0; i<generationSize; i++){
+		index = selection();
+		float *a = new float[chromolen];
+		for (int x=0; x<chromolen; x++){
+			a[x] = genArr[genNum-1][index]->data[x];
+		}
+		genArr[genNum][i] = new chromo(a,genArr[genNum-1][index]->fam);
+	}
+	genNum++;
 
 
 

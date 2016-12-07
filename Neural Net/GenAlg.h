@@ -4,6 +4,7 @@
 #include <ctime>
 #include <random>
 #include <math.h>
+#include <iostream>
 
 class genome{
 public:
@@ -32,20 +33,14 @@ public:
 
 	}
 };
-class generation{
-public:
-	int genSize;
-	chromo** genData;
-	void generate(int gensz, int chromolen);
-	double selection();
 
-	generation(int gensz, int chromolen);
-};
-
-chromo* cross(generation, int);
+int genSize;
+void generate(int gensz, int chromolen);
+double selection();
+chromo* cross(chromo**, int);
 void nextGen(int generationSize, int chromolen);
 void calculate(chromo* c);
 
 int genomeNum;
-chromo ***genArr;
+chromo*** genArr;
 int genNum;
