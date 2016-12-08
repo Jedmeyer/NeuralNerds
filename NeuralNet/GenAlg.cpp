@@ -146,8 +146,14 @@ int main(){
 	cout << "Compilation complete.\n";
 	generate(10,2,10);
 	genArr[1] = '\0';
+	cout << endl;
 	cout << genArr[1];
-	cout << endl << "First gen complete. Continuing...";
- 	nextGen(10,10);
- 
-}
+	genArr[1] = new chromo*[10];
+	// cout << endl << "First gen complete. Continuing...";
+ // 	nextGen(10,10);
+	// for (int i = 0; i<10;i++){ delete[] genArr[i];}
+
+	//Deallocating genArr;
+	delete[] genArr[1];
+	delete[] genArr;
+ }
