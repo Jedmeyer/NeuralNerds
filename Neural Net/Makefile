@@ -8,5 +8,8 @@ driver.o: driver.cpp NeuralNet.h GenAlg.h
 NeuralNet.o: NeuralNet.cpp GenAlg.h
 	g++ -g -Wall -std=c++11 -c NeuralNet.cpp
 
+genDriver: GenAlg.o GenAlgDriver.cpp
+	g++ -g -Wall -std=c++11 -o genDriver GenAlg.o GenAlgDriver.cpp
+
 GenAlg.o: GenAlg.cpp NeuralNet.h
 	g++ -g -Wall -std=c++11 -c GenAlg.cpp
