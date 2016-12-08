@@ -58,6 +58,6 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 	weight = 0;
 
-	for(int i = 0; i < vecLayers[i])
+	for(int i = 0; i < vecLayers[i].numNeurons; )
 
 }
