@@ -44,5 +44,20 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 		return outputs;
 	}
 
+	// For each layer ( are there for each loops in c++?)
+
+	for( int i = 0; i < numHiddenLayers+1; ++1){
+
+		if(i>0){
+			inputs = outputs;
+		}
+
+	}
+
+	outputs.clear();
+
+	weight = 0;
+
+	for(int i = 0; i < vecLayers[i])
 
 }
