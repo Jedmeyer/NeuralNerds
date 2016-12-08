@@ -12,16 +12,31 @@ class Params
 public:
 
 //----------- General Parameters -------------\\
-	static double pi;
-	static double halfPi;
-	static double twoPi;
+	
 
 //--------------- Neural Net -----------------\\
 
+static int numInputs;
+static int numHidden;
+static int neuronsPerHiddenLayer;
+static int numOutputs;
 
-//
+static double bias;
 
-}
+//------------Genetic Alg Params--------------\\
+
+static int numChromo;
+static int pop;
+
+	Params(){
+		if(!LoadInParams("params.ini")){
+			MessageBox(NULL, "Cannot find params.ini","Error", 0);
+		}
+	}
+
+	bool LoadInParameters(char* fileName);
+
+};
 
 
 
