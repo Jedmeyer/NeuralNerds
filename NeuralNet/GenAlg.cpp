@@ -1,6 +1,7 @@
 
 
 #include "GenAlg.h"
+using namespace std;
 
 genome::genome(int gid){
 	id = gid;
@@ -14,21 +15,26 @@ void chromo::inherit(chromo *parent, bool mute){
 		specid = parent->fam->totalSpecs;
 		parent->fam->totalSpecs++;
 	}
+
 }
 
 
 //Generate builds the FIRST generation of the algorithm.
 //Hence, it has entirely unique genome becuase the chromosomes are independently
 //generated.
-void generate(int gensz, int chromolen){
+void generate(int gensz, int chromolen, int totalGens){
+	cout << "\nTotal number of Generations\n";
+	cout << totalGens;
+	genArr = new chromo**[totalGens];
 	genArr[0] = new chromo*[gensz];
 	for (int i = 0; i<gensz; i++){
 
 		genArr[genNum][i] = new chromo ();
 		genArr[genNum][i]->data = new float[chromolen];
 		float r = 0;
-		for (int x=0; i<chromolen;i++){
+		for (int x=0; x<chromolen;x++){
 			r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			cout << endl << r;
 			genArr[genNum][i]->data[x] = r;
 			// genData[i]->data[x] = r;
 			;
@@ -39,9 +45,7 @@ void generate(int gensz, int chromolen){
 
 	}
 	genNum++;
-
-
-
+	cout << genNum;
 }
 
 
@@ -102,18 +106,33 @@ double selection(){
 	}
 	return selection;
 }
+
 void nextGen(int generationSize, int chromolen){
-	genArr[genNum] = new chromo*[generationSize];
+	cout << endl;
+	cout << genNum;
+	cout << "\nNext Generation...";
+	genArr[1] = new chromo*[generationSize];
+	cout << "\nGeneration Allocated";
 	bool mutate = false;
 	bool crossover = false;
 	int index=0;
+	float r,n,p; //Intermediates for determining odds of mutation and crossover;
 	for (int i=0; i<generationSize; i++){
-		index = selection();
-		float *a = new float[chromolen];
-		for (int x=0; x<chromolen; x++){
-			a[x] = genArr[genNum-1][index]->data[x];
+		genArr[genNum][i]= new chromo();
+		p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		if (p < crossChance){
+			genArr[genNum][i] = cross(genArr[genNum-1],chromolen);
 		}
+		else{ 
+			index = selection();
+			float *a = new float[chromolen];
+			for (int x=0; x<chromolen; x++){
+				r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				if (r < mutationChance){a[x] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); cout << "Mutation!\n";}
+				else{ a[x] = genArr[genNum-1][index]->data[x];}
+			}
 		genArr[genNum][i] = new chromo(a,genArr[genNum-1][index]->fam);
+		}
 	}
 	genNum++;
 
@@ -121,3 +140,20 @@ void nextGen(int generationSize, int chromolen){
 
 
 }
+
+int main(){
+	cout << endl;
+	cout << "Compilation complete.\n";
+	generate(10,2,10);
+	genArr[1] = '\0';
+	cout << endl;
+	cout << genArr[1];
+	genArr[1] = new chromo*[10];
+	// cout << endl << "First gen complete. Continuing...";
+ // 	nextGen(10,10);
+	// for (int i = 0; i<10;i++){ delete[] genArr[i];}
+
+	//Deallocating genArr;
+	delete[] genArr[1];
+	delete[] genArr;
+ }

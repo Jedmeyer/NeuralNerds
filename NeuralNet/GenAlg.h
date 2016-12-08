@@ -44,3 +44,5 @@ void calculate(chromo* c);
 int genomeNum;
 chromo*** genArr;
 int genNum;
+double mutationChance = 0.05;
+double crossChance = 0.01;
