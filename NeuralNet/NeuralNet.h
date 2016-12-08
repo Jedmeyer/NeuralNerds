@@ -1,3 +1,6 @@
+#ifndef NEURALNET_H
+#define NEURALNET_H
+
 struct Neuron{
 	
 	/// Number of inputs to the given Neuron 
@@ -6,7 +9,9 @@ struct Neuron{
 	///Array of weights from each input
 	vector<double> vecWeight;
 
-	///contstructor
+	/** Neuron constructor
+	@param nI Number of Inputs
+	*/
 	Neuron(int nI);
 };
 
@@ -18,7 +23,10 @@ struct NeuronLayer{
 	///layer of neurons
 	vector<Neuron> vecNeurons;
 
-	///constructor
+	/** NeuronLayer Constructor
+	@param nNurons Number of Nurons
+	@param numinputsPerNeuron
+	*/
 	NeuronLayer(int nNurons, int numInputsPerNeuron);
 };
 
@@ -60,3 +68,5 @@ public:
 	inline double Sigmoid(double activation, double response);
 
 };
+
+#endif

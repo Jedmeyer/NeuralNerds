@@ -52,12 +52,34 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 			inputs = outputs;
 		}
 
+		outputs.clear();
+
+		weight = 0;
+
+		for(int j = 0; j < vecLayers[i].numNeurons; ++j)
+		{
+			double netinput = 0;
+
+			int NumInputs = vecLayers[i].vecNeurons[j].NumInputs;
+
+			for(int k = 0; k < NumInputs-1; ++k){
+
+				netinput += vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight++];
+				
+			}
+
+			// add parameter bias ->
+			netinput += vecLayers[i].vecNeurons[j].vecWeight[NumInputs-1] *  ; //add bias from params here//
+
+			outputs.push_back(Sigmoid(netinput,  )) //Add activation from params
+		}
 	}
 
-	outputs.clear();
+	
 
-	weight = 0;
+}
 
-	for(int i = 0; i < vecLayers[i].numNeurons; )
+double NeuralNet::Sigmoid(double netinput, double response){
 
+	return ( 1 / ( 1 + exp( -netinput / response)));
 }

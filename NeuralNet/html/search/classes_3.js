@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tile',['tile',['../classtile.html',1,'']]]
+  ['params',['Params',['../class_params.html',1,'']]]
 ];

@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "cdfginstv",
-  1: "cgnt",
+  0: "cdfginpstv",
+  1: "cgnpt",
   2: "gn",
   3: "dfginstv"
 };
