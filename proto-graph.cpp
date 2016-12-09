@@ -2,6 +2,9 @@
 #include<iomanip>
 #include<sstream>
 #include<cstdlib>
+#include<bitset>
+#include<ctime>
+#include<random>
 using namespace std;
 #include<vector>
 #ifdef MACOSX
