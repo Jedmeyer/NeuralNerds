@@ -12,17 +12,27 @@ using namespace std;
 #include<math.h>
 #include<string.h>
 
+int WIDTH = 650;  // width of the user window
+int HEIGHT = 400;  // height of the user window
 
-int originx = 50, originy = 50, yaxispeak = 350, xaxispeak = 450;
+int originx = 50, originy = 50, yaxispeak = HEIGHT - 50, xaxispeak = WIDTH - 200;
 int xrange = xaxispeak-originx;
 int yrange = yaxispeak-originy;
 
-// make and fill the test arrays (setValues is called immediately in main)
+int statusx1 = xaxispeak + 25;
+int statusx2 = WIDTH - 50;
+int statusy1 = yaxispeak;
+int statusy2 = yaxispeak - 140;
+
+
+// make and fill the test arrays (setValues or setValues2 is called immediately in main)
 const int NUM_VALUES = 10;
+const int POP = 5;
 string NUM_VAL = to_string(NUM_VALUES);
-int *xvalues = new int[NUM_VALUES];
-int *yvalues = new int[NUM_VALUES];
-int highesty = 0;
+double *xvalues = new double[NUM_VALUES];
+double *yvalues = new double[NUM_VALUES];
+double **yvalues2 = new double*[NUM_VALUES];
+double highesty = 0;
 void setValues()
 {
   for(int i = 0; i < NUM_VALUES; i++)
@@ -37,16 +47,32 @@ void setValues()
     }
 }
 
-int WIDTH = 500;  // width of the user window
-int HEIGHT = 400;  // height of the user window
+void setValues2()
+{
+  for(int i = 0; i < NUM_VALUES; i++)
+    xvalues[i] = i+1;
+  
+  for(int i = 0; i <  NUM_VALUES; i++)
+    {
+      yvalues2[i] = new double[POP];
+
+      for(int j = 0; j < POP; j++)
+	{
+	  yvalues2[i][j] = ((i+1) * (i+1)) + j;
+	  //yvalues2[i][j] = (sqrt(100*(i+1))) + j;
+	  if (highesty < yvalues2[i][j])
+	    highesty = yvalues2[i][j];
+	}
+    }
+}
 
 //This sets the modifiers to scale the graph
-int xmodifier = 1;
-int ymodifier = 1;
+double xmodifier = 1;
+double ymodifier = 1;
 void setModifiers()
 {
-  xmodifier = xrange / NUM_VALUES;
-  ymodifier = yrange / highesty;
+  xmodifier = (double)xrange / (double)NUM_VALUES;
+  ymodifier = (double)yrange / highesty;
 }
 
 char programName[] = "proto-graph";
@@ -78,6 +104,21 @@ void plotPoints()
     glVertex2f(originx + (xvalues[i] * xmodifier), originy + (yvalues[i] * ymodifier));
   glEnd();
 }
+
+void plotPoints2()
+{
+  glColor3f(1., 1., 1.);
+  glBegin(GL_POINTS);
+  for(int i = 0; i < NUM_VALUES; i++)
+    {
+      for(int j = 0; j < POP; j++)
+	{
+	  glVertex2f(originx + (xvalues[i] * xmodifier), originy + (yvalues2[i][j] * ymodifier));
+	}
+    }
+  glEnd();
+}
+
 // the display function actually does the work of drawing in the window.
 //   this function will be called every time the appearance of the window
 //   needs to be remade.
@@ -101,23 +142,41 @@ void display()
   // draw the limits of the graph/axis
   drawNumber(originx - 25, originy, 0);
   drawNumber(originx, originy - 25, 0);
-  drawNumber(originx - 25, yaxispeak, highesty);
+  drawNumber(originx - 35, yaxispeak, highesty);
   drawNumber(xaxispeak, originy - 25, NUM_VALUES);
 
   //plot the points
-  plotPoints();
-  
-  /*
-  // let's draw a green square
-  glColor3f(0., 1., 0.);  // make it ogre
-  glBegin(GL_POLYGON);
-    glVertex2f(shape_position_x, shape_position_y);
-    glVertex2f(shape_position_x + shape_width, shape_position_y);
-    glVertex2f(shape_position_x + shape_width, shape_position_y + shape_height);
-    glVertex2f(shape_position_x, shape_position_y + shape_height);
+  //plotPoints();
+  plotPoints2();
+
+  //draw the status box
+  glColor3f(1.,1.,1.); // white
+  glBegin(GL_LINE_STRIP);
+  glVertex2f(statusx1,statusy1);
+  glVertex2f(statusx2, statusy1);
+  glVertex2f(statusx2, statusy2);
+  glVertex2f(statusx1 , statusy2);
+  glVertex2f(statusx1, statusy1);
   glEnd();
-  */
-  
+
+  //write 'Status'
+  drawText( statusx1 + (statusx2-statusx1)/3 - 5, statusy1 - 22, "Status");
+  glColor3f(1.,1.,1.); // white
+  glBegin(GL_LINE_STRIP);
+  glVertex2f(statusx1, statusy1 - 30);
+  glVertex2f(statusx2, statusy1 - 30);
+  glEnd();
+
+  //write 'Generation' and the number
+  drawText( statusx1 + (statusx2-statusx1)/3 - 22, statusy1 - 50, "Generation");
+  int sampleGen = 10;
+  drawNumber( statusx1 + (statusx2-statusx1)/2 - 9, statusy1 - 75, sampleGen);
+    
+  //write 'Genome' and the number
+  drawText( statusx1 + (statusx2-statusx1)/3 - 12, statusy1 - 100, "Genome");
+  int sampleGenome = 5;
+  drawNumber( statusx1 + (statusx2-statusx1)/2 - 3, statusy1 - 125, sampleGenome);
+   
   // tell the graphics card that we're done-- go ahead and draw!
   glutSwapBuffers();
 }
@@ -148,10 +207,10 @@ void special_keyboard(int key,int x, int y)
 {
   switch (key) {
     case GLUT_KEY_LEFT:
-      
+
       break;
     case GLUT_KEY_RIGHT:
-      
+
       break;
     case GLUT_KEY_UP:
       
@@ -170,6 +229,18 @@ void reshape(int w, int h)
 {
    glViewport(0, 0, (GLsizei) w, (GLsizei) h);
    WIDTH = w;  HEIGHT = h;
+   
+   //dynamic size
+   yaxispeak = HEIGHT - 50;
+   xaxispeak = WIDTH - 200;
+   xrange = xaxispeak-originx;
+   yrange = yaxispeak-originy;
+   statusx1 = xaxispeak + 25;
+   statusx2 = WIDTH - 50;
+   statusy1 = yaxispeak;
+   statusy2 = yaxispeak - 140;
+   setModifiers();
+   
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho(0., WIDTH-1, 0., HEIGHT-1, -1.0, 1.0);
@@ -225,15 +296,35 @@ void init_gl_window()
   glutMainLoop();
 }
 
-int main()
+void printVals()
 {
-  setValues();
   for(int i = 0; i < NUM_VALUES; i++)
     cout << xvalues[i] << ' ';
   cout << endl;
   for(int i = 0; i <  NUM_VALUES; i++)
     cout << yvalues[i] << ' ';
-  cout << endl;
+}
+
+void printVals2()
+{
+  for(int i = 0; i < NUM_VALUES; i++)
+    {
+      cout << " x value: " << xvalues[i] << " \t y values: ";
+      for(int j = 0; j < POP; j++)
+	cout << yvalues2[i][j] << " ";
+      cout << endl;
+    }
+}
+
+int main()
+{
+  /*
+    setValues();
+    printVals();
+    cout << endl;
+  */  
+  setValues2();
+  printVals2();
   setModifiers();
   init_gl_window();
 }
