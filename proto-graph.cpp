@@ -12,16 +12,20 @@ using namespace std;
 #include<math.h>
 #include<string.h>
 
+int WIDTH = 500;  // width of the user window
+int HEIGHT = 400;  // height of the user window
 
-int originx = 50, originy = 50, yaxispeak = 350, xaxispeak = 450;
+int originx = 50, originy = 50, yaxispeak = HEIGHT - 50, xaxispeak = WIDTH - 50;
 int xrange = xaxispeak-originx;
 int yrange = yaxispeak-originy;
 
-// make and fill the test arrays (setValues is called immediately in main)
+// make and fill the test arrays (setValues or setValues2 is called immediately in main)
 const int NUM_VALUES = 10;
+const int POP = 5;
 string NUM_VAL = to_string(NUM_VALUES);
 int *xvalues = new int[NUM_VALUES];
 int *yvalues = new int[NUM_VALUES];
+int **yvalues2 = new int*[NUM_VALUES];
 int highesty = 0;
 void setValues()
 {
@@ -37,16 +41,32 @@ void setValues()
     }
 }
 
-int WIDTH = 500;  // width of the user window
-int HEIGHT = 400;  // height of the user window
+void setValues2()
+{
+  for(int i = 0; i < NUM_VALUES; i++)
+    xvalues[i] = i+1;
+  
+  for(int i = 0; i <  NUM_VALUES; i++)
+    {
+      yvalues2[i] = new int[POP];
+
+      for(int j = 0; j < POP; j++)
+	{
+	  yvalues2[i][j] = ((i+1) * (i+1)) + j;
+	  //yvalues2[i][j] = (sqrt(100*(i+1))) + j;
+	  if (highesty < yvalues2[i][j])
+	    highesty = yvalues2[i][j];
+	}
+    }
+}
 
 //This sets the modifiers to scale the graph
-int xmodifier = 1;
-int ymodifier = 1;
+double xmodifier = 1;
+double ymodifier = 1;
 void setModifiers()
 {
-  xmodifier = xrange / NUM_VALUES;
-  ymodifier = yrange / highesty;
+  xmodifier = (double)xrange / (double)NUM_VALUES;
+  ymodifier = (double)yrange / (double)highesty;
 }
 
 char programName[] = "proto-graph";
@@ -78,6 +98,21 @@ void plotPoints()
     glVertex2f(originx + (xvalues[i] * xmodifier), originy + (yvalues[i] * ymodifier));
   glEnd();
 }
+
+void plotPoints2()
+{
+  glColor3f(1., 1., 1.);
+  glBegin(GL_POINTS);
+  for(int i = 0; i < NUM_VALUES; i++)
+    {
+      for(int j = 0; j < POP; j++)
+	{
+	  glVertex2f(originx + (xvalues[i] * xmodifier), originy + (yvalues2[i][j] * ymodifier));
+	}
+    }
+  glEnd();
+}
+
 // the display function actually does the work of drawing in the window.
 //   this function will be called every time the appearance of the window
 //   needs to be remade.
@@ -105,7 +140,8 @@ void display()
   drawNumber(xaxispeak, originy - 25, NUM_VALUES);
 
   //plot the points
-  plotPoints();
+  //plotPoints();
+  plotPoints2();
   
   /*
   // let's draw a green square
@@ -170,6 +206,14 @@ void reshape(int w, int h)
 {
    glViewport(0, 0, (GLsizei) w, (GLsizei) h);
    WIDTH = w;  HEIGHT = h;
+   
+   //dynamic size
+   yaxispeak = HEIGHT - 50;
+   xaxispeak = WIDTH - 50;
+   xrange = xaxispeak-originx;
+   yrange = yaxispeak-originy;
+   setModifiers();
+   
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho(0., WIDTH-1, 0., HEIGHT-1, -1.0, 1.0);
@@ -225,15 +269,35 @@ void init_gl_window()
   glutMainLoop();
 }
 
-int main()
+void printVals()
 {
-  setValues();
   for(int i = 0; i < NUM_VALUES; i++)
     cout << xvalues[i] << ' ';
   cout << endl;
   for(int i = 0; i <  NUM_VALUES; i++)
     cout << yvalues[i] << ' ';
-  cout << endl;
+}
+
+void printVals2()
+{
+  for(int i = 0; i < NUM_VALUES; i++)
+    {
+      cout << " x value: " << xvalues[i] << " \t y values: ";
+      for(int j = 0; j < POP; j++)
+	cout << yvalues2[i][j] << " ";
+      cout << endl;
+    }
+}
+
+int main()
+{
+  /*
+    setValues();
+    printVals();
+    cout << endl;
+  */  
+  setValues2();
+  printVals2();
   setModifiers();
   init_gl_window();
 }
