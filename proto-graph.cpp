@@ -240,6 +240,7 @@ void nextGen(){
 
 
 double getNum(char n) {
+  int num3;
   switch (n) {
   case'0': num3 = 0; break;
   case'1': num3 = 1; break;
