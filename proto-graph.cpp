@@ -5,6 +5,7 @@
 #include<bitset>
 #include<ctime>
 #include<random>
+#include<stdexcept>
 using namespace std;
 #include<vector>
 #ifdef MACOSX
@@ -35,6 +36,7 @@ public:
   genome *fam;
   int gid;
   int specid;
+
   chromo(bitset<36> in) {
     data = in;
   }
@@ -109,27 +111,28 @@ double *yvalues = new double[NUM_VALUES];
 double **yvalues2 = new double*[NUM_VALUES];
 double highesty = 0;
 
-void inherit (chromo *parent,bool mute){
-  gid = parent.id;
-  if (mute){
-    specid = parent->fam.totalspec;
-    parent->fam.totalspec++;
-  }
-}
-chromo* cross(chromo** gen){
-  int r = (int)(rand()%genSize);
-  chromo* a,b;
-  a = gen[r];
-  int r = (int)(rand()%genSize);
-  b = gen[r];
-  nbit = bitset<36>;
-  r = (int)(rand ()%36);
-  /** r will be used here to to take verything in 'a' up
-  to r. The difference between chromo lengh and r will then
-  be used to get the rest of the chromosome from 'b' 
-  Next gen's content should be sufficient to craft this. */
-  return a;
-}
+// void inherit (chromo *parent,bool mute){
+//   gid = parent.id;
+//   if (mute){
+//     specid = parent->fam.totalspec;
+//     parent->fam.totalspec++;
+//   }
+// }
+// chromo* cross(chromo** gen){
+//   int r = (int)(rand()%genSize);
+//   chromo* a;
+//   chromo* b;
+//   a = gen[r];
+//   r = (int)(rand()%genSize);
+//   b = gen[r];
+//   nbit = bitset<36>;
+//   r = (int)(rand ()%36);
+//   * r will be used here to to take verything in 'a' up
+//   to r. The difference between chromo lengh and r will then
+//   be used to get the rest of the chromosome from 'b' 
+//   Next gen's content should be sufficient to craft this. 
+//   return a;
+// }
 
 void generate() {
   genArr[genNum] = new chromo*[genSize];
@@ -202,7 +205,7 @@ void nextGen(){
   }
   int index  = '\0';
   for(int i =0; i < genSize; i++){
-    crossover = (rand () % 100) < crossChance;
+    // crossover = (rand () % 100) < crossChance;
     //if (crossover){
     //  cross(genArr[genNum]);
     //}
