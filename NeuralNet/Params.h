@@ -14,6 +14,7 @@ public:
 //----------- General Parameters -------------\\
 	
 
+
 //--------------- Neural Net -----------------\\
 
 static int numInputs;
