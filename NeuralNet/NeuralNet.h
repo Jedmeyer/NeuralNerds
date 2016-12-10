@@ -65,7 +65,7 @@ public:
 	vector<double> Update(vector<double> &inputs);
 
 	// sigmoid response curve
-	inline double Sigmoid(double activation, double response);
+	//inline double Sigmoid(double activation, double response);
 
 };
 

@@ -23,6 +23,7 @@ static int neuronsPerHiddenLayer;
 static int numOutputs;
 
 static double bias;
+static double activation;
 
 //------------Genetic Alg Params--------------\\
 

@@ -26,13 +26,28 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 	for(int i = 0; i < nNurons; ++i){
 
 		//Call Constructor for each Neuron
-		
+
 		vecNeurons.push_back(Neuron(numInputsPerNeuron));
+
 	}
+
 }
+
 
 vector<double> NeuralNet::Update(vector<double> &inputs){
 
+	vector<double> outputs;
+
+	int weight = 0;
+
+	if(inputs.size() != NumInputs){
+		//Return empty vector if incorrect
+		return outputs;
+	}
+
+
+
+/*
 	// stores result outputs from each layer
 	vector<double> outputs;
 
@@ -65,21 +80,16 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 			for(int k = 0; k < NumInputs-1; ++k){
 
 				netinput += vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight++];
-				
+
 			}
 
-			// add parameter bias ->
-			netinput += vecLayers[i].vecNeurons[j].vecWeight[NumInputs-1] *  ; //add bias from params here//
 
-			outputs.push_back(Sigmoid(netinput,  )) //Add activation from params
-		}
+			netinput += vecLayers[i].vecNeurons[j].vecWeight[NumInputs-1] * Params::bias;
+
+			outputs.push_back(Sigmoid(netinput,  Params::activation))
 	}
 
-	
+	*/
 
-}
 
-double NeuralNet::Sigmoid(double netinput, double response){
-
-	return ( 1 / ( 1 + exp( -netinput / response)));
 }

@@ -11,9 +11,10 @@ double Params::numInputs   = 0;
 double Params::numHidden   = 0; 
 double Params::neuronsPerHiddenLayer = 0; 
 double Params::numOutputs = 0; 
-double bias = 0;
-double numChromo = 0;
-double pop = 0;
+double Params::bias = 0;
+double Params::activation = 0;
+double Params::numChromo = 0;
+double Params::pop = 0;
 
 
 bool Params::LoadInParameters(char* fileName){
@@ -35,9 +36,13 @@ bool Params::LoadInParameters(char* fileName){
 	grab >> paramDescription;
 	grab >> bias;
 	grab >> paramDescription;
+	grab >> activation;
+	grab >> paramDescription;
 	grab >> numChromo;
 	grab >> paramDescription;
 	grab >> pop;
+	grab >> paramDescription;
+	grab >> activation;
 }
 
 /*
