@@ -14,6 +14,7 @@
 #GenAlg.o: GenAlg.cpp NeuralNet.h
 #	g++ -g -Wall -std=c++11 -c GenAlg.cpp
 
+
 C2048: C2048.o Driver.o
 	g++ -g -Wall -std=c++11 -o 2048Driver Driver.o
 
