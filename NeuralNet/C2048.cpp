@@ -8,7 +8,14 @@
 
 typedef unsigned int uint;
 using namespace std;
-enum movDir { UP, DOWN, LEFT, RIGHT };
+//enum movDir { UP, DOWN, LEFT, RIGHT };
+
+g2048::g2048(){
+  done = false;
+  win = false;
+  moved = false;
+  score = 0;
+}
 
 void g2048::loop(){
   addTile();

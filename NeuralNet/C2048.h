@@ -22,9 +22,8 @@ public:
 class g2048{
 
 public:
-  g2048() : done( false ), win( false ), moved( true ), score( 0 ) {}
+  g2048();
   void loop();
-private:
   void drawBoard();
   void waitKey();
   void addTile();
