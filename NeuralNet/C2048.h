@@ -9,6 +9,7 @@
 
 typedef unsigned int uint;
 using namespace std;
+
 enum movDir { UP, DOWN, LEFT, RIGHT };
 class tile
 {
@@ -19,6 +20,7 @@ public:
 };
 
 class g2048{
+
 public:
   g2048() : done( false ), win( false ), moved( true ), score( 0 ) {}
   void loop();
@@ -34,10 +36,6 @@ private:
   tile board[4][4];
   bool win, done, moved;
   uint score;
-}
+};
 
 #endif
-
-
-
-}
