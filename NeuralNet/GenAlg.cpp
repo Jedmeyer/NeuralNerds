@@ -123,7 +123,7 @@ void nextGen(int generationSize, int chromolen){
 		if (p < crossChance){
 			genArr[genNum][i] = cross(genArr[genNum-1],chromolen);
 		}
-		else{ 
+		else{
 			index = selection();
 			float *a = new float[chromolen];
 			for (int x=0; x<chromolen; x++){

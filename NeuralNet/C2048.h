@@ -31,6 +31,9 @@ private:
   void moveVert(int,int,int);
   void moveHori(int,int,int);
   void move(movDir);
+  tile board[4][4];
+  bool win, done, moved;
+  uint score;
 }
 
 #endif
