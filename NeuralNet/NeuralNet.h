@@ -2,8 +2,8 @@
 #define NEURALNET_H
 
 struct Neuron{
-	
-	/// Number of inputs to the given Neuron 
+
+	/// Number of inputs to the given Neuron
 	int numInputs;
 
 	///Array of weights from each input
@@ -59,7 +59,7 @@ public:
 	int GetNumberOfWeights()const;
 
 	// replaces weights w/ new ones;
-	int PutWeights(vector<double> &weights);
+	void PutWeights(vector<double> &weights);
 
 	// calc outputs from set of inputs;
 	vector<double> Update(vector<double> &inputs);
