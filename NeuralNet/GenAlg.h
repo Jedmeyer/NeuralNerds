@@ -4,38 +4,34 @@
 #include <ctime>
 #include <random>
 #include <math.h>
-#include <iostream>
 
-class genome{ /**< Class genome tracks the inheritance of the chromosomes for each generation */
+
+struct genome{
 public:
-	int id; /**< A number defining the genomic ID*/
-	int totalSpecs;/**< Total number of species in the genome. Increases with each mutation. */
-	genome(int gid); /**< Creates a genome with the specific genomic ID */
-};
-class chromo{
-public:
-	float* data; /**< Pointer to the chromosmal Data*/
-	genome* fam;/**<Pointer to the genome the chromosome is a part of*/
-	int gid;/**< Family's genomic ID*/
-	int specid; /**< Chromosome's species ID*/
-	double fitness;/**< Chromosome's fitness score */
-	void inherit(chromo *parent, bool mute);
-	//Used for initial generate function to make the first set of chromosomes.
-	chromo(){;}
-	chromo(float* in){
-		data = in;
-	}
-	//Used for mutations to define a new species of chromosome
-	chromo(float* in, genome *parent){
-		data = in;
-		fam = parent;
-
-
-	}
+	vector<double> chromoWeights; /**< Array of weights for the entire neural net, serves as ONE member of a generation */
+	double fitness;
+	genome();
+	genome(double f1){fitness = f1;}
+	genome(vector <double> w1, double f1);
+	bool operator <(const genome &g1, const genome &g2)
 };
 
-void generate(int gensz, int chromolen);
-double selection();
-chromo* cross(chromo**, int);
-void nextGen(int generationSize, int chromolen);
-void calculate(chromo* c);
+class GenAlg{
+	vector <genome> population;
+	double popfitness; /**< Sum of all fitness values in the population */ 
+	double topfit; /**< The top fitness in the population of the generation */
+	int gnumNeurons =  params::numChromo;
+	const int populationSize = params::pop;
+	
+	/**
+	@param pop Population of the generation, Vector of genomes
+	@param popfitness Total fitness of the population
+	*/
+
+	void cross(vector <genome> pop, double totfitness);
+	void mutate(genome g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
+	void generate(); /** Starter for the random generation of the population*/
+
+
+};
+
