@@ -33,6 +33,45 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 
 }
 
+////////////////////////////--Defualt Constructor--////////////////////////////
+// Grabs Params.ini variables
+///////////////////////////////////////////////////////////////////////////////
+NeuralNet::NerualNet(){
+	numInputs           =  Params::numInputs;
+	numoutputs	        =  Params::numOutputs;
+	numHiddenLayers     =  Params::numHiddenLayers;
+	neuronsPerHiddenLyr =  Params::numHiddenLayers;
+}
+
+////////////////////////////--Creating the Net--////////////////////////////
+// Sets up Net with random Weights -1 -> 1
+////////////////////////////////////////////////////////////////////////////
+void NeuralNet::CreateNet()
+{
+	//create the layers of the network
+	if (numHiddenLayers > 0)
+	{
+		//create first hidden layer
+	  vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr, numInputs));
+
+    for (int i=0; i<umHiddenLayers-1; ++i)
+    {
+
+			vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr,
+                                         neuronsPerHiddenLyr));
+    }
+
+    //create output layer
+	  vecLayers.push_back(NeuronLayer(numOutputs, neuronsPerHiddenLyr));
+	}
+
+  else
+  {
+	  //create output layer
+	  vecLayers.push_back(SNeuronLayer(numOutputs, numInputs));
+  }
+}
+
 
 vector<double> NeuralNet::Update(vector<double> &inputs){
 
@@ -91,5 +130,13 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 	*/
 
+
+}
+
+vector<double> NeuralNet::GetWeights(){
+}
+
+
+int NeuralNet::GetNumberOfWeights(){
 
 }
