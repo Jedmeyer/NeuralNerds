@@ -25,6 +25,23 @@ void genome::setfitness(double ft){
 }
 
 
+void genome::mutate(genome &g1){
+	int p = g1.chromoWeights.size();
+	int r;
+	double muteVal;
+	double willmute;
+	for (int i=0; i < p; i++){
+		willmute = fRand(0,1);
+		if (willmute < mutationChance){
+			muteVal = fRand(-1,1);	
+			g1[i] = muteVal;
+			cout << "\nDebug: Mutation Occurred\n"
+		}
+
+	}
+}
+
+
 GenAlg::GenAlg(NeuralNet &nn){
 	genome.reserve(populationSize);
 
@@ -41,23 +58,22 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		srand(time());
 		int r,p;
 		r = rand()%g1.size();
-		p = g2.size() - r;
+		p = g2.size();
 		int i;
 		for ( i = 0; i < r; i++){
 			g3.chromoWeights[i] = g1.chromoWeights[i];
 			g4.chromoWeights[i] = g2.chromoWeights[i];
 		}
-		for (i = 0 ; i < p; i++){
-			g3.chromoWeights[i+r] = g2.chromoWeights[i+r];
-			g4.chromoWeights[i+r] = g1.chromoWeights[i+r];
+		for (i = r ; i < p; i++){
+			g3.chromoWeights[i] = g2.chromoWeights[i];
+			g4.chromoWeights[i] = g1.chromoWeights[i];
 		}
 		vector<genome> kross;
 		kross[0] = g3;
 		kross[1] = g4;
 		return kross;
-
-
 }
+
 
 vector<genome> GenAlg::selection(){
 	vector<genome> pop2;
@@ -73,7 +89,6 @@ vector<genome> GenAlg::selection(){
 	for (int i=0; i<populationSize; i++){
 		int selection;
 		r = 0;
-		srand(time());
 		r = rand() % popfitness;
 		for (selection=0; r>0; selection++){
 			r = r - population[selection].fitness;
@@ -82,6 +97,31 @@ vector<genome> GenAlg::selection(){
 		pop2[i] = population[selection];
 	}
 	return pop2;
+}
+
+vector<genome> GenAlg::nextGen(){
+	vector<genome> pop3;
+	pop3.reserve(populationSize);
+	pop3 = selection();
+	vector<genome> intermed;
+	double q2;
+	for (int i = 0; i< populationSize; i++){
+		pop3[i].mutate();
+		q2 = fRand(0,1);
+
+		if (q2 < crossChance && i>0){
+			intermed = cross(pop3[i],pop3[i-1]);
+			pop3[i] = intermed[1];
+			pop3[i-1] = intermed[0];
+		}
+	}
+
+
+
+
+
+
+
 }
 
 
@@ -94,31 +134,4 @@ vector<genome> GenAlg::selection(){
 
 
 
-void nextGen(int generationSize, int chromolen){
-	cout << endl;
-	cout << genNum;
-	cout << "\nNext Generation...";
-	genArr[1] = new chromo*[generationSize];
-	cout << "\nGeneration Allocated";
-	bool mutate = false;
-	bool crossover = false;
-	int index=0;
-	float r,n,p; //Intermediates for determining odds of mutation and crossover;
-	for (int i=0; i<generationSize; i++){
-		genArr[genNum][i]= new chromo();
-		p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		if (p < crossChance){
-			genArr[genNum][i] = cross(genArr[genNum-1],chromolen);
-		}
-		else{
-			index = selection();
-			float *a = new float[chromolen];
-			for (int x=0; x<chromolen; x++){
-				r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				if (r < mutationChance){a[x] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); cout << "Mutation!\n";}
-				else{ a[x] = genArr[genNum-1][index]->data[x];}
-			}
-		genArr[genNum][i] = new chromo(a,genArr[genNum-1][index]->fam);
-		}
-	}
-	genNum++;
+
