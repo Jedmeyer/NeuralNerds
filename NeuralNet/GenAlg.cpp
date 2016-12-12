@@ -1,159 +1,100 @@
-
-
 #include "GenAlg.h"
+
+
+
 using namespace std;
 
-genome::genome(int gid){
-	id = gid;
-	genomeNum++;
+genome::genome(){fitness = 0;}
+
+genome::genome(double f1){
+	fitness = f1;};
+
+genome::genome(vector<double> w1, double f1){
+	chromoWeights = w1;
+	fitness = f1;
+};
+void genome::setfitness(double ft){
+	fitness = ft;
+};
+
+bool genome::operator <(const genome &g1, const genome &g2){
+	return g1.fitness < g2.fitness;
+};
+void genome::setfitness(double ft){
+	fitness = ft;
 }
 
 
-void chromo::inherit(chromo *parent, bool mute){
-	gid = parent->fam->id;
-	if (mute){
-		specid = parent->fam->totalSpecs;
-		parent->fam->totalSpecs++;
+GenAlg::GenAlg(NeuralNet &nn){
+	genome.reserve(populationSize);
+	
+	for (int i=0; i<populationSize; i++){
+		nn.CreateNet();
+		population[i].chromoWeights = nn.GetWeights();
 	}
-
 }
-
-
-//Generate builds the FIRST generation of the algorithm.
-//Hence, it has entirely unique genome becuase the chromosomes are independently
-//generated.
-void generate(int gensz, int chromolen, int totalGens){
-	cout << "\nTotal number of Generations\n";
-	cout << totalGens;
-	genArr = new chromo**[totalGens];
-	genArr[0] = new chromo*[gensz];
-	for (int i = 0; i<gensz; i++){
-
-		genArr[genNum][i] = new chromo ();
-		genArr[genNum][i]->data = new float[chromolen];
-		float r = 0;
-		for (int x=0; x<chromolen;x++){
-			r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			cout << endl << r;
-			genArr[genNum][i]->data[x] = r;
-			// genData[i]->data[x] = r;
-			;
+vector<genome> GenAlg::cross(genome &g1, genome &g2){
+		genome g3;
+		genome g4;
+		g3.chromoWeights.reserve(g1.size());
+		g4.chromoWeights.reserve(g1.size());
+		srand(time());
+		int r,p;
+		r = rand()%g1.size();
+		p = g2.size() - r;
+		int i;
+		for ( i = 0; i < r; i++){
+			g3.chromoWeights[i] = g1.chromoWeights[i];
+			g4.chromoWeights[i] = g2.chromoWeights[i];
 		}
-
-		genArr[0][i]->gid = genomeNum;
-		genArr[0][i]->fam = new genome(genomeNum);
-
-	}
-	genNum++;
-	cout << genNum;
-}
-
-
-
-
-chromo* cross(chromo **a, int chromolen){
-	int r = (int)(rand()%genSize);
-	chromo* g;
-	chromo* b;
-	g = new chromo();
-	b = new chromo();
-	g->data = a[r]->data;
-	r = (int)(rand()%genSize);
-	b->data = a[r]->data;
-	float* arr;
-	arr = new float[chromolen];
-
-	int c = (int)(rand()%chromolen);
-	int d = chromolen - c;
-	int len;
-	for (len=0; len<c;len++){
-		arr[len] = g->data[len];
-	}
-	for (int i=c+1; i<d; i++){
-		arr[len+i] = b->data[i];
-	}
-	float *rv = arr;
-	chromo* crossed = new chromo(rv);
-	return crossed;
-}
-
-void calculate(chromo* c){
-	int len;
-	for (len = 0; c->data != '\0'; len++);
-	int sum=0;
-	for (int i=0; i<len; i++){
-		sum += c->data[i];
-	}
-	c->fitness = sum;
-}
-
-
-
-
-
-double selection(){
-	double tf=0;
-	for (int i=0; i<genSize; i++){
-		calculate(genArr[genNum-1][i]);
-		tf += genArr[genNum-1][i]->fitness;
-	}
-	int selection;
-
-	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-
-	for (selection =0; r>0; selection++){
-		r = r - genArr[genNum-1][selection]->fitness;
-	}
-	return selection;
-}
-
-void nextGen(int generationSize, int chromolen){
-	cout << endl;
-	cout << genNum;
-	cout << "\nNext Generation...";
-	genArr[1] = new chromo*[generationSize];
-	cout << "\nGeneration Allocated";
-	bool mutate = false;
-	bool crossover = false;
-	int index=0;
-	float r,n,p; //Intermediates for determining odds of mutation and crossover;
-	for (int i=0; i<generationSize; i++){
-		genArr[genNum][i]= new chromo();
-		p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		if (p < crossChance){
-			genArr[genNum][i] = cross(genArr[genNum-1],chromolen);
+		for (i = 0 ; i < p; i++){
+			g3.chromoWeights[i+r] = g2.chromoWeights[i+r];
+			g4.chromoWeights[i+r] = g1.chromoWeights[i+r];
 		}
-		else{ 
-			index = selection();
-			float *a = new float[chromolen];
-			for (int x=0; x<chromolen; x++){
-				r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				if (r < mutationChance){a[x] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); cout << "Mutation!\n";}
-				else{ a[x] = genArr[genNum-1][index]->data[x];}
-			}
-		genArr[genNum][i] = new chromo(a,genArr[genNum-1][index]->fam);
-		}
-	}
-	genNum++;
-
-
+		vector<genome> kross;
+		kross[0] = g3;
+		kross[1] = g4;
+		return kross;
 
 
 }
 
-int main(){
-	cout << endl;
-	cout << "Compilation complete.\n";
-	generate(10,2,10);
-	genArr[1] = '\0';
-	cout << endl;
-	cout << genArr[1];
-	genArr[1] = new chromo*[10];
-	// cout << endl << "First gen complete. Continuing...";
- // 	nextGen(10,10);
-	// for (int i = 0; i<10;i++){ delete[] genArr[i];}
+vector<genome> GenAlg::selection(){
+	vector<genome> pop2;
+	pop2.reserve(populationSize);
+	popfitness = 0;
+	topfit =0;
+	double r;
+	// Loop calculates all important fitness related things...
+	for (int i =0; i<populationSize; i++){
+		popfitness += population[i].fitness;
+		if (population[i].fitness > topfit){topfit=population[i].fitness;}
+	}
+	for (int i=0; i<populationSize; i++){
+		int selection;
+		r = 0;
+		srand(time());
+		r = rand() % popfitness;
+		for (selection=0; r>0; selection++){
+			r = r - population[selection].fitness;
+			if (selection>populationSize){cout << "\nSelection Error!";break;}
+		}
+		pop2[i] = population[selection];
+	}
+	return pop2;
+}
 
-	//Deallocating genArr;
-	delete[] genArr[1];
-	delete[] genArr;
- }
+
+
+
+	
+
+
+
+
+
+
+
+
+
+

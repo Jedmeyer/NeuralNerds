@@ -13,24 +13,32 @@ public:
 	genome();
 	genome(double f1){fitness = f1;}
 	genome(vector <double> w1, double f1);
-	bool operator <(const genome &g1, const genome &g2)
+	bool operator <(const genome &g1, const genome &g2);
+	void setfitness(double ft);
 };
 
 class GenAlg{
-	vector <genome> population;
+	vector<genome> population;
 	double popfitness; /**< Sum of all fitness values in the population */ 
 	double topfit; /**< The top fitness in the population of the generation */
-	int gnumNeurons =  params::numChromo;
-	const int populationSize = params::pop;
+	int gnumNeurons =  Params::numChromo;
+	const int populationSize = Params::pop;
 	
 	/**
 	@param pop Population of the generation, Vector of genomes
 	@param popfitness Total fitness of the population
 	*/
 
-	void cross(vector <genome> pop, double totfitness);
+	/**
+	BEFORE SELECTION CAN BE CALLED, A FITNESS
+	MUST BE ASSIGNED TO EACH MEMBER OF THE POPULATION
+	**/
+
+
+	vector<genome> cross(genome &g1, genome &g2); //Should return cross of two genome split somewhere down the doubles array
 	void mutate(genome g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
-	void generate(); /** Starter for the random generation of the population*/
+	GenAlg(NeuralNet &nn); /**< Constructor, also starter for the random generation of the population*/
+	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
 
 
 };
