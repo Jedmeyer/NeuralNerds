@@ -14,6 +14,11 @@
 #GenAlg.o: GenAlg.cpp NeuralNet.h
 #	g++ -g -Wall -std=c++11 -c GenAlg.cpp
 
+Control2048:	C2048.o Controller.o
+	g++ -g -Wall -std=c++11 -o Control2048 Controller.o C2048.o
+
+Controller.o:	Controller.cpp C2048.h
+	g++ -g -Wall -std=c++11 -c Controller.cpp
 
 C2048: C2048.o Driver.o
 	g++ -g -Wall -std=c++11 -o C2048 Driver.o C2048.o
