@@ -4,6 +4,9 @@
 #include <ctime>
 #include <random>
 #include <math.h>
+#include "NeuralNet.h"
+#include "Params.h"
+
 
 
 struct genome{
@@ -13,8 +16,10 @@ public:
 	genome();
 	genome(double f1){fitness = f1;}
 	genome(vector <double> w1, double f1);
-	bool operator <(const genome &g1, const genome &g2);
-	void setfitness(double ft);
+	bool operator <(const genome &g2);
+	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
+	void mutate(genome &g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
+
 };
 
 class GenAlg{
@@ -37,9 +42,18 @@ public:
 
 
 	vector<genome> cross(genome &g1, genome &g2); //Should return cross of two genome split somewhere down the doubles array
-	void mutate(genome g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
 	GenAlg(NeuralNet &nn); /**< Constructor, also starter for the random generation of the population*/
 	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
+	vector<genome> nextGen();
 
 
 };
+
+double fRand(double fMin, double fMax)
+{
+    double f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}
+
+double mutatationChance = 0.05;
+double crossChance = 0.01;
