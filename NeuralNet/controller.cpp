@@ -12,8 +12,12 @@ int main(){
 	cout<<"HELP ME"<<endl;
 
 	srand( static_cast<uint>( time( NULL ) ) );
-	g2048 g;
 
+	NeuralNet net();
+	GenAlg gen(&net);
+	while(true){//This will be the start of the main loop for the genalg.
+
+		g2048 g;
 		g.addTile();
 	  while( true )
 	  {
@@ -25,7 +29,8 @@ int main(){
 	  string s = "Game Over!";
 	  if( g.win ) s = "You've made it!";
 	  cout << s << endl << endl;
+		gen.pop = gen.selection()
 
-
+}
 	return 0;
 }

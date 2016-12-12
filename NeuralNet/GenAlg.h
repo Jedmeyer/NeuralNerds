@@ -18,12 +18,13 @@ public:
 };
 
 class GenAlg{
+public:
 	vector<genome> population;
-	double popfitness; /**< Sum of all fitness values in the population */ 
+	double popfitness; /**< Sum of all fitness values in the population */
 	double topfit; /**< The top fitness in the population of the generation */
 	int gnumNeurons =  Params::numChromo;
 	const int populationSize = Params::pop;
-	
+
 	/**
 	@param pop Population of the generation, Vector of genomes
 	@param popfitness Total fitness of the population
@@ -42,4 +43,3 @@ class GenAlg{
 
 
 };
-
