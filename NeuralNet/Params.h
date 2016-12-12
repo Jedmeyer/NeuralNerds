@@ -2,6 +2,7 @@
 #define PARAMS_H
 
 #include <fstream>
+#include <iostream>
 #include <windows.h>
 
 using namespace std;

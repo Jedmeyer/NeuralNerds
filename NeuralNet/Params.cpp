@@ -44,6 +44,8 @@ bool Params::LoadInParameters(char* fileName){
 	fin >> pop;
 	fin >> paramDescription;
 	fin >> activation;
+
+	return true;
 }
 
 /*
