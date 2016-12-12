@@ -103,9 +103,7 @@ vector<genome> GenAlg::nextGen(){
 		pop3[i].mutate();
 		q2 = fRand(0,1);
 		if (q2 < crossChance && i>0){
-			intermed = cross(pop3[i],pop3[i-1]);
-			pop3[i] = intermed[1];
-			pop3[i-1] = intermed[0];
+			cross(pop3[i],pop3[i-1]);
 		}
 	}
 	return pop3;
