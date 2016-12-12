@@ -23,7 +23,7 @@ class g2048{
 
 public:
   g2048();
-  void loop();
+  //void loop();
   //Was private past this point
   void drawBoard();
   void waitKey();
