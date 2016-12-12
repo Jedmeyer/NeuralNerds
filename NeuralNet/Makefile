@@ -16,7 +16,7 @@
 
 
 C2048: C2048.o Driver.o
-	g++ -g -Wall -std=c++11 -o 2048Driver Driver.o
+	g++ -g -Wall -std=c++11 -o C2048 Driver.o C2048.o
 
 Driver.o: Driver.cpp C2048.h
 	g++ -g -Wall -std=c++11 -c Driver.cpp

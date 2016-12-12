@@ -19,7 +19,6 @@ Neuron::Neuron(int nI) : numInputs(nI+1){
 	}
 }
 
-
 NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNeurons){
 
 
