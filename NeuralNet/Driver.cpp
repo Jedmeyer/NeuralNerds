@@ -20,6 +20,25 @@ int main(){
 	cout<<"Param Test Hidden: "<<Params::numHidden<<endl;
 	cout<<"Param Test Activation: "<<Params::activation<<endl;
 
+	/*
+	//g.loop();
+	while(true){
+		g.addTile();
+	  while( true )
+	  {
+	    if( g.moved ) g.addTile();
+	    g.drawBoard();
+	    if( g.done ) break;
+	    g.waitKey();
+	  }
+	  string s = "Game Over!";
+	  if( g.win ) s = "You've made it!";
+	  cout << s << endl << endl;
+	  }
+	}
+	*/
+
+
 
 	return 0;
 }
