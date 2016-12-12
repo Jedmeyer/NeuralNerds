@@ -27,6 +27,7 @@ public:
   void loop();
   //Was private past this point
   vector<double> toVector();
+  vector<double> toInput();
   void drawBoard();
   void waitKey();
   void addTile();

@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <vector>
+#include <cmath>
 #include "C2048.h"
 
 typedef unsigned int uint;
@@ -48,6 +49,42 @@ vector<double> g2048::toVector(){
   return vecBoard;
 }
 
+vector<double> g2048::toInput(){
+
+  //Return Weights of board
+  vector<double> weights;
+
+  //Storage for the current board
+  vector<double> curBoard = toVector();
+
+  int largestTile = 0;
+
+  //Find largest value
+  for(int i = 0; i < curBoard.size(); ++i){
+    if(curBoard[i]>largestTile){
+      largestTile=curBoard[i];
+
+    }
+  }
+
+  //Log base 2 all
+  for(int i = 0; i < curBoard.size(); ++i){
+    if(curBoard[i]==0){
+      weights.push_back(0);
+    }
+    else{
+      weights.push_back(log2(curBoard[i]));
+    }
+  }
+  //Save Logbase 2 of largest
+  double topLog = log2(largestTile);
+  // divide by log base 2 of largest
+  for(int i = 0; i < curBoard.size(); ++i){
+    weights[i] = weights[i] / topLog;
+  }
+
+}
+
 void g2048::drawBoard(){
   system( "cls" );
   cout << "SCORE: " << score << endl << endl;
@@ -67,9 +104,10 @@ void g2048::drawBoard(){
 
 void g2048::waitKey(){
   moved = false; char c;
-  cout << "(W)Up (S)Down (A)Left (D)Right "; //cin >> c; c &= 0x5F;
+  cout << "(W)Up (S)Down (A)Left (D)Right "; cin >> c; c &= 0x5F;
 
   ////////////
+  /*
   int r = rand()%4;
 
   switch(r)
@@ -79,10 +117,11 @@ void g2048::waitKey(){
     case 2:move( DOWN  );break;
     case 3:move( RIGHT );
   }
+  */
   ////////////
 
 
-  /*
+
   switch( c )
   {
     case 'W': move( UP );break;
@@ -90,7 +129,7 @@ void g2048::waitKey(){
     case 'S': move( DOWN ); break;
     case 'D': move( RIGHT );
   }
-  */
+
   for( int y = 0; y < 4; y++ )
     for( int x = 0; x < 4; x++ )
   board[x][y].blocked = false;
