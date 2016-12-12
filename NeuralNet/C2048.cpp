@@ -34,18 +34,18 @@ void g2048::loop(){
 
 vector<double> g2048::toVector(){
 
-  vector<double> weights;
-  
+  vector<double> vecBoard;
+
   for(int i = 0; i < 4; ++i){
 
     for(int j = 0; j < 4; ++j){
 
-      weights.push_back(board[i][j]);
+      vecBoard.push_back(board[i][j].val);
 
     }
   }
 
-  return weights;
+  return vecBoard;
 }
 
 void g2048::drawBoard(){

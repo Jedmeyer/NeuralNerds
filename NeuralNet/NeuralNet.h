@@ -1,6 +1,9 @@
 #ifndef NEURALNET_H
 #define NEURALNET_H
 
+#include <iostream>
+#include <vector>
+
 struct Neuron{
 
 	/// Number of inputs to the given Neuron

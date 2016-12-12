@@ -65,7 +65,7 @@ void NeuralNet::CreateNet(){
 
   else{
 	  //create output layer
-	  vecLayers.push_back(SNeuronLayer(numOutputs, numInputs));
+	  vecLayers.push_back(neuronLayer(numOutputs, numInputs));
   }
 }
 
@@ -161,6 +161,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 	if(inputs.size() != NumInputs){
 		//Return empty vector if incorrect
+		cout<<"Incorrect Size"<<endl;
 		return outputs;
 	}
 
@@ -173,6 +174,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 		outputs.clear();
 
+		//Counts for iterations
 		weight = 0;
 
 		//each neuron
@@ -189,7 +191,8 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 			for(int k = 0; k < numInputs - 1; ++k){
 
 				// Weights * inputs
-				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight++];
+				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight];
+				weight++;
 			}
 
 			//add bias
