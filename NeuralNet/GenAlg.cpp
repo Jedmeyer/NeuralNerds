@@ -17,8 +17,8 @@ void genome::setfitness(double ft){
 	fitness = ft;
 };
 
-bool genome::operator <(const genome &g1, const genome &g2){
-	return g1.fitness < g2.fitness;
+bool genome::operator <(cconst genome &g2){
+	return this.fitness < g2.fitness;
 };
 void genome::setfitness(double ft){
 	fitness = ft;
