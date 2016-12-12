@@ -8,12 +8,13 @@ double Params::Pi		=3.1415926535;
 
 */
 double Params::numInputs   = 0;
-double Params::numHidden   = 0; 
-double Params::neuronsPerHiddenLayer = 0; 
-double Params::numOutputs = 0; 
-double bias = 0;
-double numChromo = 0;
-double pop = 0;
+double Params::numHidden   = 0;
+double Params::neuronsPerHiddenLayer = 0;
+double Params::numOutputs = 0;
+double Params::bias = 0;
+double Params::activation = 0;
+double Params::numChromo = 0;
+double Params::pop = 0;
 
 
 bool Params::LoadInParameters(char* fileName){
@@ -25,19 +26,26 @@ bool Params::LoadInParameters(char* fileName){
 
 	char paramDescription[30];
 
-	grab >> numInputs;
-	grab >> paramDescription;
-	grab >> numHidden;
-	grab >> paramDescription;
-	grab >> neuronsPerHiddenLayer;
-	grab >> paramDescription;
-	grab >> numOutputs;
-	grab >> paramDescription;
-	grab >> bias;
-	grab >> paramDescription;
-	grab >> numChromo;
-	grab >> paramDescription;
-	grab >> pop;
+	fin >> paramDescription;
+	fin >> numInputs;
+	fin >> paramDescription;
+	fin >> numHidden;
+	fin >> paramDescription;
+	fin >> neuronsPerHiddenLayer;
+	fin >> paramDescription;
+	fin >> numOutputs;
+	fin >> paramDescription;
+	fin >> bias;
+	fin >> paramDescription;
+	fin >> activation;
+	fin >> paramDescription;
+	fin >> numChromo;
+	fin >> paramDescription;
+	fin >> pop;
+	fin >> paramDescription;
+	fin >> activation;
+
+	return true;
 }
 
 /*

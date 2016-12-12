@@ -19,34 +19,154 @@ Neuron::Neuron(int nI) : numInputs(nI+1){
 	}
 }
 
-
 NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNeurons){
 
 
 	for(int i = 0; i < nNurons; ++i){
 
 		//Call Constructor for each Neuron
-		
+
 		vecNeurons.push_back(Neuron(numInputsPerNeuron));
+
 	}
+
 }
+
+////////////////////////////--Defualt Constructor--////////////////////////////
+// Grabs Params.ini variables
+///////////////////////////////////////////////////////////////////////////////
+
+NeuralNet::NerualNet(){
+	numInputs           =  Params::numInputs;
+	numoutputs	        =  Params::numOutputs;
+	numHiddenLayers     =  Params::numHiddenLayers;
+	neuronsPerHiddenLyr =  Params::numHiddenLayers;
+}
+
+////////////////////////////--Creating the Net--////////////////////////////
+// Sets up Net with random Weights -1 -> 1
+////////////////////////////////////////////////////////////////////////////
+
+void NeuralNet::CreateNet(){
+	//create the layers of the network
+	if (numHiddenLayers > 0){
+		//create first hidden layer
+	  vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr, numInputs));
+
+    for (int i=0; i<numHiddenLayers-1; ++i){
+
+			vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr,
+                                         neuronsPerHiddenLyr));
+    }
+
+    //create output layer
+	  vecLayers.push_back(NeuronLayer(numOutputs, neuronsPerHiddenLyr));
+	}
+
+  else{
+	  //create output layer
+	  vecLayers.push_back(neuronLayer(numOutputs, numInputs));
+  }
+}
+
+////////////////////////////--Get Weights --////////////////////////////
+// Returns a vector containing the weights
+////////////////////////////////////////////////////////////////////////
+
+vector<double> NeuralNet::GetWeights(){
+
+	//return vector
+	vector<double> weights;
+
+	//each layer
+	for(int i = 0; i < numHiddenLayers + 1; ++i){
+
+		//each neuron
+		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
+
+			//each weight
+			for(int k = 0; k < vecLayers[i].vecNeurons[j].numInputs; ++k){
+
+				//add Weight to vec of weights
+				weights.push_back(vecLayers[i].vecNeurons[j].vecWeight[k]);
+			}
+		}
+	}
+	return weights;
+}
+
+////////////////////////////--Put Weights --////////////////////////////
+// Returns a vector containing the weights
+////////////////////////////////////////////////////////////////////////
+
+void NeuralNet::PutWeights(vector<double> &weights){
+
+	// weight position
+	int weight = 0;
+
+	//each layer
+	for(int i = 0; i < numHiddenLayers +1; ++i){
+
+		//each neuron
+		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
+
+			//each weights
+			for(int k = 0; k < vecLayers[i].vecNeurons[j].numInputs; ++k){
+
+				//set weights
+				vecLayers[i].vecNeurons[j].vecWeight[k] = weights[weight++];
+
+			}
+		}
+	}
+	return;
+}
+
+///////////////////////--Get Number Of Weights --///////////////////////
+// Returns an int of # of weights total
+////////////////////////////////////////////////////////////////////////
+
+int NeuralNet::GetNumberOfWeights(){
+
+	// # weights
+	int weights = 0;
+
+	for(int i = 0; i < numHiddenLayers +1; ++i){
+
+		//each neuron
+		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
+
+			//each weights
+			for(int k = 0; k < vecLayers[i].vecNeurons[j].numInputs; ++k){
+
+				//add to weights
+				weights++;
+
+			}
+		}
+	}
+	return weights;
+}
+
+////////////////////////////-- Update --////////////////////////////
+// Send it inputs, returns outputs
+// Main function of the neural net
+////////////////////////////////////////////////////////////////////
 
 vector<double> NeuralNet::Update(vector<double> &inputs){
 
-	// stores result outputs from each layer
 	vector<double> outputs;
 
 	int weight = 0;
 
-	// safety check: make sure we have the correct # of inputs
 	if(inputs.size() != NumInputs){
-		// return empty vector if incorrect
+		//Return empty vector if incorrect
+		cout<<"Incorrect Size"<<endl;
 		return outputs;
 	}
 
-	// For each layer ( are there for each loops in c++?)
-
-	for( int i = 0; i < numHiddenLayers+1; ++1){
+	//each layer
+	for(int i = 0; i < numHiddenLayers +1; ++i){
 
 		if(i>0){
 			inputs = outputs;
@@ -54,32 +174,35 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 		outputs.clear();
 
+		//Counts for iterations
 		weight = 0;
 
-		for(int j = 0; j < vecLayers[i].numNeurons; ++j)
-		{
-			double netinput = 0;
+		//each neuron
+		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
 
-			int NumInputs = vecLayers[i].vecNeurons[j].NumInputs;
+			//stores the total Input later
+			double totInput = 0;
 
-			for(int k = 0; k < NumInputs-1; ++k){
+			//Simplify later lines
+			int numInputs = vecLayers[i].vecNeurons[j].numInputs;
 
-				netinput += vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight++];
-				
+
+			//each weights
+			for(int k = 0; k < numInputs - 1; ++k){
+
+				// Weights * inputs
+				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight];
+				weight++;
 			}
 
-			// add parameter bias ->
-			netinput += vecLayers[i].vecNeurons[j].vecWeight[NumInputs-1] *  ; //add bias from params here//
+			//add bias
+			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
 
-			outputs.push_back(Sigmoid(netinput,  )) //Add activation from params
+			//Store the output as generated
+			outputs.push_back(totInput);
+
+			weight = 0;
 		}
 	}
-
-	
-
-}
-
-double NeuralNet::Sigmoid(double netinput, double response){
-
-	return ( 1 / ( 1 + exp( -netinput / response)));
+	return outputs;
 }

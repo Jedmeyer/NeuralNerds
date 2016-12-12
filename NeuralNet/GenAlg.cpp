@@ -93,6 +93,37 @@ vector<genome> GenAlg::selection(){
 
 
 
+<<<<<<< HEAD
+=======
+void nextGen(int generationSize, int chromolen){
+	cout << endl;
+	cout << genNum;
+	cout << "\nNext Generation...";
+	genArr[1] = new chromo*[generationSize];
+	cout << "\nGeneration Allocated";
+	bool mutate = false;
+	bool crossover = false;
+	int index=0;
+	float r,n,p; //Intermediates for determining odds of mutation and crossover;
+	for (int i=0; i<generationSize; i++){
+		genArr[genNum][i]= new chromo();
+		p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		if (p < crossChance){
+			genArr[genNum][i] = cross(genArr[genNum-1],chromolen);
+		}
+		else{
+			index = selection();
+			float *a = new float[chromolen];
+			for (int x=0; x<chromolen; x++){
+				r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				if (r < mutationChance){a[x] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); cout << "Mutation!\n";}
+				else{ a[x] = genArr[genNum-1][index]->data[x];}
+			}
+		genArr[genNum][i] = new chromo(a,genArr[genNum-1][index]->fam);
+		}
+	}
+	genNum++;
+>>>>>>> 7d30cdfac4ad3a31f4eb36ce6a4b7ca0ba026965
 
 
 
