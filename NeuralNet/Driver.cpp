@@ -14,7 +14,6 @@ int main(){
 	srand( static_cast<uint>( time( NULL ) ) );
 	g2048 g;
 	g.loop();
-<<<<<<< HEAD
 	*/
 	cout<<"Param Test Bias: "<<Params::bias<<endl;
 	cout<<"Param Test Inputs: "<<Params::numInputs<<endl;
@@ -41,8 +40,6 @@ int main(){
 
 
 
-=======
-	
->>>>>>> 0366f14c578a3c9c02c69248ff609aee60ca1c28
+
 	return 0;
 }
