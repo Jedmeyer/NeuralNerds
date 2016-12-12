@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <vector>
 #include "C2048.h"
+#include "NeuralNet.h"
+#include "GenAlg.h"
 
 using namespace std;
 
