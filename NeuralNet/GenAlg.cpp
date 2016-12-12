@@ -27,7 +27,7 @@ void genome::setfitness(double ft){
 
 GenAlg::GenAlg(NeuralNet &nn){
 	genome.reserve(populationSize);
-	
+
 	for (int i=0; i<populationSize; i++){
 		nn.CreateNet();
 		population[i].chromoWeights = nn.GetWeights();
@@ -87,14 +87,13 @@ vector<genome> GenAlg::selection(){
 
 
 
-	
 
 
 
 
 
-<<<<<<< HEAD
-=======
+
+
 void nextGen(int generationSize, int chromolen){
 	cout << endl;
 	cout << genNum;
@@ -123,9 +122,3 @@ void nextGen(int generationSize, int chromolen){
 		}
 	}
 	genNum++;
->>>>>>> 7d30cdfac4ad3a31f4eb36ce6a4b7ca0ba026965
-
-
-
-
-

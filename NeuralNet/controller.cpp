@@ -29,7 +29,7 @@ int main(){
 	  string s = "Game Over!";
 	  if( g.win ) s = "You've made it!";
 	  cout << s << endl << endl;
-		gen.pop = gen.selection()
+		gen.population = gen.selection(gen.population);
 
 }
 	return 0;
