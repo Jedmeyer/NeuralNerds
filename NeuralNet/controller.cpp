@@ -7,6 +7,7 @@
 #include "C2048.h"
 #include "NeuralNet.h"
 #include "GenAlg.h"
+#include "Params.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ int main(){
 	srand( static_cast<uint>( time( NULL ) ) );
 
 	NeuralNet net();//declares the neural network object
-	GenAlg gen(&net);//Declares the GenAlg object and fills the population
+	GenAlg gen(net);//Declares the GenAlg object and fills the population
 	vector<double> GWeights;
 	while(true){//This will be the start of the main loop for the genalg.
 		for(int i = 0; i< popSize; i++){//This is the loop for each genome in the generation
@@ -35,7 +36,8 @@ int main(){
 		  if( g.win ) s = "You've made it!";
 		  cout << s << endl << endl;
 		}
-		gen.population = gen.selection();//This sets up the next generation
+		gen.nextGen();
+		//gen.population = gen.selection();//This sets up the next generation
 
 }
 	return 0;

@@ -1,5 +1,13 @@
 #include "GenAlg.h"
-
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
+#include <random>
+#include <math.h>
+#include <vector>
+#include "NeuralNet.h"
+#include "Params.h"
+using namespace std;
 
 
 using namespace std;
@@ -33,7 +41,7 @@ void genome::mutate(genome &g1){
 	for (int i=0; i < p; i++){
 		willmute = fRand(0,1);
 		if (willmute < mutationChance){
-			muteVal = fRand(-1,1);	
+			muteVal = fRand(-1,1);
 			g1[i] = muteVal;
 			cout << "\nDebug: Mutation Occurred";
 		}
@@ -108,15 +116,3 @@ vector<genome> GenAlg::nextGen(){
 	}
 	return pop3;
 }
-
-
-
-
-
-
-
-
-
-
-
-

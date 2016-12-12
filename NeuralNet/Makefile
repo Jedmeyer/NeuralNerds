@@ -14,11 +14,17 @@
 #GenAlg.o: GenAlg.cpp NeuralNet.h
 #	g++ -g -Wall -std=c++11 -c GenAlg.cpp
 
-Control2048:	C2048.o Controller.o
-	g++ -g -Wall -std=c++11 -o Control2048 Controller.o C2048.o
+Control2048:	C2048.o Controller.o GenAlg.o NeuralNet.o
+	g++ -g -Wall -std=c++11 -o Control2048 Controller.o C2048.o GenAlg.o NeuralNet.o
 
-Controller.o:	Controller.cpp C2048.h
+Controller.o:	Controller.cpp C2048.h GenAlg.h NeuralNet.h
 	g++ -g -Wall -std=c++11 -c Controller.cpp
+
+GenAlg.o:	GenAlg.cpp NeuralNet.h
+	g++ -g -Wall -std=c++11 -c GenAlg.cpp
+
+NeuralNet.o:	NeuralNet.cpp
+	g++ -g -Wall -std=c++11 -c NeuralNet.cpp
 
 C2048: C2048.o Driver.o
 	g++ -g -Wall -std=c++11 -o C2048 Driver.o C2048.o
@@ -28,7 +34,6 @@ Driver.o: Driver.cpp C2048.h
 
 C2048.o: C2048.cpp
 	g++ -g -Wall -std=c++11 -c C2048.cpp
-
 
 Params: Params.o Driver.o
 	g++ -g -Wall -std=c++11 -o ParamTest Driver.o Params.o

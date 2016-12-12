@@ -2,9 +2,13 @@
 #include "NeuralNet.h"
 #include <vector>
 #include <random>
+#include <time.h>
+#include <cstdlib>
 
 using namespace std;
 
+std::default_random_engine generator;
+std::uniform_real_distribution<double> distribution(-1,1); //doubles from -1 to 1
 
 
 Neuron::Neuron(int nI) : numInputs(nI+1){
@@ -14,7 +18,8 @@ Neuron::Neuron(int nI) : numInputs(nI+1){
 
 		//Set up with random Weight values
 
-		vecWeight.push_back(RandomClamped());
+
+		vecWeight.push_back(distribution(generator));
 
 	}
 }

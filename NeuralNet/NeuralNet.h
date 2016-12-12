@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-
+using namespace std;
 struct Neuron{
 
 	/// Number of inputs to the given Neuron

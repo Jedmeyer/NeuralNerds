@@ -1,12 +1,15 @@
+#ifndef GENALG_H
+#define GENALG_H
 
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
 #include <random>
 #include <math.h>
+#include <vector>
 #include "NeuralNet.h"
 #include "Params.h"
-
+using namespace std;
 
 
 struct genome{
@@ -15,8 +18,8 @@ public:
 	double fitness;
 	genome();
 	genome(double f1){fitness = f1;}
-	genome(vector <double> w1, double f1);
-	bool operator <(const genome &g2);
+	genome(vector <double>, double);
+	bool operator <(const genome&);
 	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
 	void mutate(genome &g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
 
@@ -41,8 +44,8 @@ public:
 	**/
 
 
-	vector<genome> cross(genome &g1, genome &g2); //Should return cross of two genome split somewhere down the doubles array
-	GenAlg(NeuralNet &nn); /**< Constructor, also starter for the random generation of the population*/
+	vector<genome> cross(genome&, genome&); //Should return cross of two genome split somewhere down the doubles array
+	GenAlg(NeuralNet&); /**< Constructor, also starter for the random generation of the population*/
 	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
 	vector<genome> nextGen();
 
@@ -57,3 +60,5 @@ double fRand(double fMin, double fMax)
 
 double mutatationChance = 0.05;
 double crossChance = 0.01;
+
+#endif
