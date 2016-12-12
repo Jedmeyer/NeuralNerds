@@ -16,7 +16,7 @@ public:
 	genome();
 	genome(double f1){fitness = f1;}
 	genome(vector <double> w1, double f1);
-	bool operator <(const genome &g1, const genome &g2);
+	bool operator <(const genome &g2);
 	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
 	void mutate(genome &g1); /**< Alters the genome of a member of a population to be inherited in the next generation */
 
