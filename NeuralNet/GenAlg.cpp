@@ -35,7 +35,7 @@ void genome::mutate(genome &g1){
 		if (willmute < mutationChance){
 			muteVal = fRand(-1,1);	
 			g1[i] = muteVal;
-			cout << "\nDebug: Mutation Occurred\n"
+			cout << "\nDebug: Mutation Occurred";
 		}
 
 	}
@@ -53,8 +53,6 @@ GenAlg::GenAlg(NeuralNet &nn){
 vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		genome g3;
 		genome g4;
-		g3.chromoWeights.reserve(g1.size());
-		g4.chromoWeights.reserve(g1.size());
 		srand(time());
 		int r,p;
 		r = rand()%g1.size();
@@ -68,16 +66,13 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 			g3.chromoWeights[i] = g2.chromoWeights[i];
 			g4.chromoWeights[i] = g1.chromoWeights[i];
 		}
-		vector<genome> kross;
-		kross[0] = g3;
-		kross[1] = g4;
-		return kross;
+		g1.chromoWeights = g3.chromoWeights;
+		g2.chromoWeights = g4.chromoWeights;
 }
 
 
 vector<genome> GenAlg::selection(){
 	vector<genome> pop2;
-	pop2.reserve(populationSize);
 	popfitness = 0;
 	topfit =0;
 	double r;
@@ -101,27 +96,19 @@ vector<genome> GenAlg::selection(){
 
 vector<genome> GenAlg::nextGen(){
 	vector<genome> pop3;
-	pop3.reserve(populationSize);
 	pop3 = selection();
 	vector<genome> intermed;
 	double q2;
 	for (int i = 0; i< populationSize; i++){
 		pop3[i].mutate();
 		q2 = fRand(0,1);
-
 		if (q2 < crossChance && i>0){
 			intermed = cross(pop3[i],pop3[i-1]);
 			pop3[i] = intermed[1];
 			pop3[i-1] = intermed[0];
 		}
 	}
-
-
-
-
-
-
-
+	return pop3;
 }
 
 

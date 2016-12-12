@@ -4,6 +4,9 @@
 #include <ctime>
 #include <random>
 #include <math.h>
+#include "NeuralNet.h"
+#include "Params.h"
+
 
 
 struct genome{
