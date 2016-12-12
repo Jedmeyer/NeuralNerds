@@ -49,7 +49,7 @@ vector<double> g2048::toVector(){
   return vecBoard;
 }
 
-vector<double> g2048::toInput(){s
+vector<double> g2048::toInput(){
 
   //Return Weights of board
   vector<double> weights;
