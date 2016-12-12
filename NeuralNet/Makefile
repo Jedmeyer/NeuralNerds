@@ -23,3 +23,13 @@ Driver.o: Driver.cpp C2048.h
 
 C2048.o: C2048.h
 	g++ -g -Wall -std=c++11 -c C2048.cpp
+
+
+Params: Params.o Driver.o
+	g++ -g -Wall -std=c++11 -o ParamTest Driver.o Params.o
+
+Driver.o: Driver.cpp Params.h
+	g++ -g -Wall -std=c++11 -c Driver.cpp
+
+Params.o: Params.cpp
+	g++ -g -Wall -std=c++11 -c Params.cpp
