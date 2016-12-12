@@ -58,29 +58,6 @@ double *yvalues = new double[NUM_VALUES];
 double **yvalues2 = new double*[NUM_VALUES];
 double highesty = 0;
 
-// void inherit (chromo *parent,bool mute){
-//   gid = parent.id;
-//   if (mute){
-//     specid = parent->fam.totalspec;
-//     parent->fam.totalspec++;
-//   }
-// }
-// chromo* cross(chromo** gen){
-//   int r = (int)(rand()%genSize);
-//   chromo* a;
-//   chromo* b;
-//   a = gen[r];
-//   r = (int)(rand()%genSize);
-//   b = gen[r];
-//   nbit = bitset<36>;
-//   r = (int)(rand ()%36);
-//   * r will be used here to to take verything in 'a' up
-//   to r. The difference between chromo lengh and r will then
-//   be used to get the rest of the chromosome from 'b' 
-//   Next gen's content should be sufficient to craft this. 
-//   return a;
-// }
-
 
 
 
@@ -108,8 +85,7 @@ void setValues2()
     {
       yvalues2[i] = new double[POP];
       for(int j = 0; j < POP; j++){
-	       yvalues2[i][j] = decode(*genArr[i][j],false);
-	       //yvalues2[i][j] = (sqrt(100*(i+1))) + j;
+	       yvalues2[i][j] = (sqrt(100*(i+1))) + j;
 	       if (highesty < yvalues2[i][j])
 	         highesty = yvalues2[i][j];
 	       }
