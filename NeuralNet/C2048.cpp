@@ -57,7 +57,7 @@ vector<double> g2048::toInput(){
   //Storage for the current board
   vector<double> curBoard = toVector();
 
-  int largestTile = 0;
+  double largestTile = 0;
 
   //Find largest value
   for(int i = 0; i < curBoard.size(); ++i){
@@ -82,7 +82,7 @@ vector<double> g2048::toInput(){
   for(int i = 0; i < curBoard.size(); ++i){
     weights[i] = weights[i] / topLog;
   }
-
+  return weights;
 }
 
 void g2048::drawBoard(){

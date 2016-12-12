@@ -35,22 +35,6 @@ int main(){
 	    if( g.moved ) g.addTile();
 	    g.drawBoard();
 	    if( g.done ) break;
-
-			/// INPUT FUNCTION TESTING ///
-
-			cout<<"log2(0): "<<log2(0)<<endl;
-
-			boardInputTest = g.toInput();
-
-			cout<<"BoardInputTest Size: "<<boardInputTest.size()<<endl;
-			for(int i = 0; i < boardInputTest.size(); ++i){
-				cout<<boardInputTest[i]<<" "<<endl;
-			}
-			cout<<endl;
-
-
-			/////////////////////////////
-
 	    g.waitKey();
 	  }
 	  string s = "Game Over!";
