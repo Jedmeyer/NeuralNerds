@@ -16,7 +16,7 @@ g2048::g2048(){
   moved = false;
   score = 0;
 }
-/*
+
 void g2048::loop(){
   addTile();
   while( true )
@@ -29,8 +29,8 @@ void g2048::loop(){
   string s = "Game Over!";
   if( win ) s = "You've made it!";
   cout << s << endl << endl;
-  }
-*/
+}
+
 void g2048::drawBoard(){
   system( "cls" );
   cout << "SCORE: " << score << endl << endl;
