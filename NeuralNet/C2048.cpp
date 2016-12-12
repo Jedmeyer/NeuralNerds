@@ -67,7 +67,22 @@ void g2048::drawBoard(){
 
 void g2048::waitKey(){
   moved = false; char c;
-  cout << "(W)Up (S)Down (A)Left (D)Right "; cin >> c; c &= 0x5F;
+  cout << "(W)Up (S)Down (A)Left (D)Right "; //cin >> c; c &= 0x5F;
+
+  ////////////
+  int r = rand()%4;
+
+  switch(r)
+  {
+    case 0:move( UP    );break;
+    case 1:move( LEFT  );break;
+    case 2:move( DOWN  );break;
+    case 3:move( RIGHT );
+  }
+  ////////////
+
+
+  /*
   switch( c )
   {
     case 'W': move( UP );break;
@@ -75,6 +90,7 @@ void g2048::waitKey(){
     case 'S': move( DOWN ); break;
     case 'D': move( RIGHT );
   }
+  */
   for( int y = 0; y < 4; y++ )
     for( int x = 0; x < 4; x++ )
   board[x][y].blocked = false;

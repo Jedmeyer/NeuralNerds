@@ -28,7 +28,7 @@ public:
   //Was private past this point
   vector<double> toVector();
   void drawBoard();
-  void waitKey();``
+  void waitKey();
   void addTile();
   bool canMove();
   bool testAdd(int,int,uint);
