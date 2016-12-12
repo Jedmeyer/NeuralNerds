@@ -25,7 +25,7 @@ int main(){
 	  string s = "Game Over!";
 	  if( g.win ) s = "You've made it!";
 	  cout << s << endl << endl;
-	  
+
 
 	return 0;
 }
