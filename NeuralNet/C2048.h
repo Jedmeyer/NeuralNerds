@@ -6,6 +6,7 @@
 #include <string>
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
 
 typedef unsigned int uint;
 using namespace std;
@@ -25,8 +26,9 @@ public:
   g2048();
   void loop();
   //Was private past this point
+  vector<double> toVector();
   void drawBoard();
-  void waitKey();
+  void waitKey();``
   void addTile();
   bool canMove();
   bool testAdd(int,int,uint);

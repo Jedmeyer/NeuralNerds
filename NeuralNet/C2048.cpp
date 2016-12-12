@@ -4,6 +4,7 @@
 #include <string>
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
 #include "C2048.h"
 
 typedef unsigned int uint;
@@ -29,6 +30,22 @@ void g2048::loop(){
   string s = "Game Over!";
   if( win ) s = "You've made it!";
   cout << s << endl << endl;
+}
+
+vector<double> g2048::toVector(){
+
+  vector<double> weights;
+  
+  for(int i = 0; i < 4; ++i){
+
+    for(int j = 0; j < 4; ++j){
+
+      weights.push_back(board[i][j]);
+
+    }
+  }
+
+  return weights;
 }
 
 void g2048::drawBoard(){
