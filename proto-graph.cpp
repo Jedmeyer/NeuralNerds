@@ -1,11 +1,6 @@
 #include<iostream>
 #include<iomanip>
 #include<sstream>
-#include<cstdlib>
-#include<bitset>
-#include<ctime>
-#include<random>
-#include<stdexcept>
 using namespace std;
 #include<vector>
 #ifdef MACOSX
@@ -16,25 +11,6 @@ using namespace std;
 #include<stdlib.h>
 #include<math.h>
 #include<string.h>
-
-
-
-
-
-int Button_save_x[2];
-int Button_save_y[2];
-char Button_save_label[] = {'S','a','v','e','\0'};
-char Button_load_label[] = {'L','o','a','d','\0'};
-char generation_label[] = {'G','e','n','e','r','a','t','i','o','n',' ','#',':',' ','\0'};
-char chromosome_label[] = {'C','h','r','o','m','o','s','o','m','e',' ','#',':',' ','\0'};
-char * genome_label;
-int Button_load_x[2] = {0,10};
-int Button_load_y[2] = {0,10};
-int Button_play[2];
-bool mouseIsDragging = false;
-
-
-
 
 int WIDTH = 650;  // width of the user window
 int HEIGHT = 400;  // height of the user window
@@ -51,17 +27,12 @@ int statusy2 = yaxispeak - 140;
 
 // make and fill the test arrays (setValues or setValues2 is called immediately in main)
 const int NUM_VALUES = 10;
-const int POP = 10;
+const int POP = 5;
 string NUM_VAL = to_string(NUM_VALUES);
 double *xvalues = new double[NUM_VALUES];
 double *yvalues = new double[NUM_VALUES];
 double **yvalues2 = new double*[NUM_VALUES];
 double highesty = 0;
-
-
-
-
-
 void setValues()
 {
   for(int i = 0; i < NUM_VALUES; i++)
@@ -84,11 +55,14 @@ void setValues2()
   for(int i = 0; i <  NUM_VALUES; i++)
     {
       yvalues2[i] = new double[POP];
-      for(int j = 0; j < POP; j++){
-	       yvalues2[i][j] = (sqrt(100*(i+1))) + j;
-	       if (highesty < yvalues2[i][j])
-	         highesty = yvalues2[i][j];
-	       }
+
+      for(int j = 0; j < POP; j++)
+	{
+	  yvalues2[i][j] = ((i+1) * (i+1)) + j;
+	  //yvalues2[i][j] = (sqrt(100*(i+1))) + j;
+	  if (highesty < yvalues2[i][j])
+	    highesty = yvalues2[i][j];
+	}
     }
 }
 
@@ -173,7 +147,7 @@ void display()
 
   //plot the points
   //plotPoints();
-  plotPoints();
+  plotPoints2();
 
   //draw the status box
   glColor3f(1.,1.,1.); // white
@@ -344,12 +318,14 @@ void printVals2()
 
 int main()
 {
-  setValues();
-  printVals();
+  /*
+    setValues();
+    printVals();
+    cout << endl;
+  */  
+  setValues2();
+  printVals2();
   setModifiers();
   init_gl_window();
-  
-
-
-
 }
+

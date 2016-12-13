@@ -63,8 +63,8 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		genome g4;
 		srand(time());
 		int r,p;
-		r = rand()%g1.size();
-		p = g2.size();
+		r = rand()%g1.chromoWeights.size();
+		p = g2.chromoWeights.size();
 		int i;
 		for ( i = 0; i < r; i++){
 			g3.chromoWeights[i] = g1.chromoWeights[i];
