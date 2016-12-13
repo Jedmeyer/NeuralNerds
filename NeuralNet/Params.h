@@ -30,6 +30,8 @@ static double activation;
 
 static double numChromo;
 static double pop;
+static double mute;
+static double cross;
 
 	Params(){
 		if(!LoadInParameters("params.ini")){

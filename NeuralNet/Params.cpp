@@ -15,6 +15,8 @@ double Params::bias = 0;
 double Params::activation = 0;
 double Params::numChromo = 0;
 double Params::pop = 0;
+double Params::mute = 0;
+double Params::cross = 0;
 
 
 bool Params::LoadInParameters(char* fileName){
@@ -43,7 +45,9 @@ bool Params::LoadInParameters(char* fileName){
 	fin >> paramDescription;
 	fin >> pop;
 	fin >> paramDescription;
-	fin >> activation;
+	fin >> mute;
+	fin >> paramDescription;
+	fin >> cross;
 
 	return true;
 }
