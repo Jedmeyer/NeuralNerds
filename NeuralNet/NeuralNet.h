@@ -51,6 +51,9 @@ private:
 
 public:
 
+	std::default_random_engine generator;
+	std::uniform_real_distribution<double> distribution(-1,1); //doubles from -1 to 1
+
 	NeuralNet();
 
 	void CreateNet();

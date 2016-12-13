@@ -4,6 +4,7 @@
 #include <string>
 #include <iomanip>
 #include <cstdlib>
+#include <stdlib.h>
 #include <vector>
 #include <cmath>
 #include "C2048.h"
@@ -13,6 +14,7 @@ using namespace std;
 //enum movDir { UP, DOWN, LEFT, RIGHT };
 
 g2048::g2048(){
+  srand(time(NULL));
   done = false;
   win = false;
   moved = false;
@@ -102,12 +104,48 @@ void g2048::drawBoard(){
   cout << "+------+------+------+------+" << endl << endl;
 }
 
-void g2048::waitKey(){
-  moved = false; char c;
-  cout << "(W)Up (S)Down (A)Left (D)Right "; cin >> c; c &= 0x5F;
+void g2048::netMove(vector<double> output){
+  ///////////// Set up With only 2 Output Neurons ///////////////
+  //     11 = UP // 00 = DOWN // 10 = LEFT // 01 = RIGHT       //
+  ///////////////////////////////////////////////////////////////
+  moved = false;
 
-  ////////////
+  if(output[0] == 1){
+    if(output[1] == 1) move( UP );
+    else move( LEFT );
+  }
+  else{
+    if(output[1] == 1) move( RIGHT );
+    else move( DOWN );
+  }
+
+  for( int y = 0; y < 4; y++ )
+    for( int x = 0; x < 4; x++ )
+      board[x][y].blocked = false;
+
+  ///////////// Set up With 4 Output Neurons ///////////////
+  //  UP, DOWN, LEFT, RIGHT
+  //////////////////////////////////////////////////////////
   /*
+  moved = false;
+
+  if(output[0] == 1) move( UP );
+  else if(output[1] == 1) move( DOWN );
+  else if(output[2] == 1) move( LEFT );
+  else if(output[3] == 1) move( RIGHT);
+  else cout<<"ERROR READING MOVE"<<endl;
+
+  for( int y = 0; y < 4; y++ )
+    for( int x = 0; x < 4; x++ )
+      board[x][y].blocked = false;
+
+  */
+
+}
+
+void g2048::randMove(){
+  moved = false;
+
   int r = rand()%4;
 
   switch(r)
@@ -117,10 +155,18 @@ void g2048::waitKey(){
     case 2:move( DOWN  );break;
     case 3:move( RIGHT );
   }
-  */
-  ////////////
 
+  for( int y = 0; y < 4; y++ )
+    for( int x = 0; x < 4; x++ )
+      board[x][y].blocked = false;
 
+  for(int i = 0; i < 50000000; ++i);
+
+}
+
+void g2048::waitKey(){
+  moved = false; char c;
+  cout << "(W)Up (S)Down (A)Left (D)Right "; cin >> c; c &= 0x5F;
 
   switch( c )
   {

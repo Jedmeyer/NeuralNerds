@@ -9,8 +9,7 @@ test the 2048 code
 	%make C2048
 
 test random function for 2048
-	%make Control2048	
+	%make Control2048
 
-testing parameters 
+testing parameters
 	%make Params
-

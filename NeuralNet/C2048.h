@@ -29,6 +29,8 @@ public:
   vector<double> toVector();
   vector<double> toInput();
   void drawBoard();
+  void randMove();
+  void netMove(vector<double> output);
   void waitKey();
   void addTile();
   bool canMove();

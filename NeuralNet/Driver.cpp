@@ -7,11 +7,22 @@
 #include "Params.h"
 #include <vector>
 #include <cmath>
+#include <random>
 
 using namespace std;
 
 int main(){
 	cout<<"HELP ME"<<endl;
+
+	/*
+	std::default_random_engine generator;
+	std::uniform_real_distribution<double> distribution(-1,1); //doubles from -1 to 1
+
+	for(int i = 0; i < 100; ++i){
+		cout<<distribution(generator)<<endl;
+	}
+	*/
+
 	/*
 	srand( static_cast<uint>( time( NULL ) ) );
 	g2048 g;
@@ -25,6 +36,7 @@ int main(){
 	cout<<"Param Test Hidden: "<<Params::numHidden<<endl;
 	cout<<"Param Test Activation: "<<Params::activation<<endl;
 	*/
+
 	g2048 g;
 	vector<double> boardInputTest;
 	//g.loop();
@@ -35,7 +47,17 @@ int main(){
 	    if( g.moved ) g.addTile();
 	    g.drawBoard();
 	    if( g.done ) break;
-	    g.waitKey();
+
+			boardInputTest = g.toInput();
+			for(int i = 0; i < boardInputTest.size(); ++i){
+				if(i%4 == 0){
+					cout<<"---"<<endl;
+				}
+				cout << boardInputTest[i] << endl;
+			}
+
+	    //g.waitKey();
+			g.randMove();
 	  }
 	  string s = "Game Over!";
 	  if( g.win ) s = "You've made it!";
