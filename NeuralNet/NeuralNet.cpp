@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Params.h"
 #include "NeuralNet.h"
 #include <vector>
 #include <random>
@@ -41,9 +42,9 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 // Grabs Params.ini variables
 ///////////////////////////////////////////////////////////////////////////////
 
-NeuralNet::NerualNet(){
+NeuralNet::NeuralNet(){
 	numInputs           =  Params::numInputs;
-	numoutputs	        =  Params::numOutputs;
+	numOutputs	        =  Params::numOutputs;
 	numHiddenLayers     =  Params::numHiddenLayers;
 	neuronsPerHiddenLyr =  Params::numHiddenLayers;
 }
