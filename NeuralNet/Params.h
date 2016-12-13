@@ -3,7 +3,7 @@
 
 #include <fstream>
 #include <iostream>
-#include <windows.h>
+// #include <windows.h>
 
 using namespace std;
 
@@ -33,7 +33,7 @@ static double pop;
 
 	Params(){
 		if(!LoadInParameters("params.ini")){
-			MessageBox(NULL, "Cannot find params.ini","Error", 0);
+		cout << "\nCannot find params.ini\n";
 		}
 	}
 
