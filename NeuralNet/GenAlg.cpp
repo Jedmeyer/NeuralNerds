@@ -9,24 +9,18 @@
 #include "Params.h"
 using namespace std;
 
-
-using namespace std;
-
 genome::genome(){fitness = 0;}
 
 genome::genome(double f1){
-	fitness = f1;};
+	fitness = f1;
+};
 
 genome::genome(vector<double> w1, double f1){
 	chromoWeights = w1;
 	fitness = f1;
 };
-void genome::setfitness(double ft){
-	fitness = ft;
-};
-
 bool genome::operator <(const genome &g2){
-	return this.fitness < g2.fitness;
+	return this->fitness < g2.fitness;
 };
 void genome::setfitness(double ft){
 	fitness = ft;
@@ -42,7 +36,7 @@ void genome::mutate(genome &g1){
 		willmute = fRand(0,1);
 		if (willmute < mutationChance){
 			muteVal = fRand(-1,1);
-			g1[i] = muteVal;
+			g1.chromoWeights[i] = muteVal;
 			cout << "\nDebug: Mutation Occurred";
 		}
 
@@ -51,7 +45,7 @@ void genome::mutate(genome &g1){
 
 
 GenAlg::GenAlg(NeuralNet &nn){
-	genome.reserve(populationSize);
+	population.reserve(populationSize);
 
 	for (int i=0; i<populationSize; i++){
 		nn.CreateNet();
@@ -61,7 +55,7 @@ GenAlg::GenAlg(NeuralNet &nn){
 vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		genome g3;
 		genome g4;
-		srand(time());
+		//srand(time(NULL));
 		int r,p;
 		r = rand()%g1.chromoWeights.size();
 		p = g2.chromoWeights.size();
@@ -92,7 +86,7 @@ vector<genome> GenAlg::selection(){
 	for (int i=0; i<populationSize; i++){
 		int selection;
 		r = 0;
-		r = rand() % popfitness;
+		r = rand() % (int)popfitness;
 		for (selection=0; r>0; selection++){
 			r = r - population[selection].fitness;
 			if (selection>populationSize){cout << "\nSelection Error!";break;}
@@ -108,7 +102,7 @@ vector<genome> GenAlg::nextGen(){
 	vector<genome> intermed;
 	double q2;
 	for (int i = 0; i< populationSize; i++){
-		pop3[i].mutate();
+		pop3[i].mutate(pop3[i]);
 		q2 = fRand(0,1);
 		if (q2 < crossChance && i>0){
 			cross(pop3[i],pop3[i-1]);
