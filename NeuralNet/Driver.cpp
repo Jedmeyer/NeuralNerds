@@ -90,7 +90,6 @@ int main(){
 		inputs.push_back(0);
 		//////////////////////////
 		Params p;
-		cout<<Params::numHidden<<endl;
 
 		cout<<"INPUTS CREATED"<<endl<<endl;
 		NeuralNet nn;

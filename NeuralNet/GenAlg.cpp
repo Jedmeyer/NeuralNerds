@@ -19,13 +19,14 @@ genome::genome(vector<double> w1, double f1){
 	chromoWeights = w1;
 	fitness = f1;
 };
+
 bool genome::operator <(const genome &g2){
 	return this->fitness < g2.fitness;
 };
+
 void genome::setfitness(double ft){
 	fitness = ft;
 }
-
 
 void genome::mutate(){
 	int p = this->chromoWeights.size();
@@ -43,7 +44,6 @@ void genome::mutate(){
 	}
 }
 
-
 GenAlg::GenAlg(NeuralNet &nn){
 	population.reserve(populationSize);
 
@@ -52,6 +52,7 @@ GenAlg::GenAlg(NeuralNet &nn){
 		population[i].chromoWeights = nn.GetWeights();
 	}
 }
+
 vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		genome g3;
 		genome g4;
@@ -71,7 +72,6 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		g1.chromoWeights = g3.chromoWeights;
 		g2.chromoWeights = g4.chromoWeights;
 }
-
 
 vector<genome> GenAlg::selection(){
 	vector<genome> pop2;
