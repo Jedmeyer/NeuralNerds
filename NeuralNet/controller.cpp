@@ -31,7 +31,7 @@ int main(){
 		    g.drawBoard();
 		    if( g.done ) break;
 		    //g.waitKey();
-				g.netMove(net.update(g.toInput()));
+				g.netMove(net.Update(g.toInput()));
 		  }
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";
