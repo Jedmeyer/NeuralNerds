@@ -65,6 +65,7 @@ GenAlg::GenAlg(NeuralNet &nn){
 	population.reserve(populationSize);
 
 	for (int i=0; i<populationSize; i++){
+		population.push_back(genome());
 		nn.CreateNet();
 		population[i].chromoWeights = nn.GetWeights();
 	}
