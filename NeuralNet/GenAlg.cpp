@@ -27,8 +27,8 @@ void genome::setfitness(double ft){
 }
 
 
-void genome::mutate(genome &g1){
-	int p = g1.chromoWeights.size();
+void genome::mutate(){
+	int p = this->chromoWeights.size();
 	int r;
 	double muteVal;
 	double willmute;
@@ -36,7 +36,7 @@ void genome::mutate(genome &g1){
 		willmute = fRand(0,1);
 		if (willmute < mutationChance){
 			muteVal = fRand(-1,1);
-			g1.chromoWeights[i] = muteVal;
+			this->chromoWeights[i] = muteVal;
 			cout << "\nDebug: Mutation Occurred";
 		}
 
@@ -102,7 +102,7 @@ vector<genome> GenAlg::nextGen(){
 	vector<genome> intermed;
 	double q2;
 	for (int i = 0; i< populationSize; i++){
-		pop3[i].mutate(pop3[i]);
+		pop3[i].mutate();
 		q2 = fRand(0,1);
 		if (q2 < crossChance && i>0){
 			cross(pop3[i],pop3[i-1]);
