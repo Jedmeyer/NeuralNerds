@@ -17,7 +17,7 @@ public:
 	vector<double> chromoWeights; /**< Array of weights for the entire neural net, serves as ONE member of a generation */
 	double fitness;
 	genome();
-	genome(double f1){fitness = f1;}
+	genome(double f1);
 	genome(vector <double>, double);
 	bool operator <(const genome&);
 	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
@@ -58,7 +58,7 @@ double fRand(double fMin, double fMax)
     return fMin + f * (fMax - fMin);
 }
 
-double mutatationChance = 0.05;
-double crossChance = 0.01;
+double mutationChance = Params::mute;
+double crossChance = Params::cross;
 
 #endif

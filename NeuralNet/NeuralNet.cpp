@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Params.h"
 #include "NeuralNet.h"
 #include <vector>
 #include <random>
@@ -41,11 +42,11 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 // Grabs Params.ini variables
 ///////////////////////////////////////////////////////////////////////////////
 
-NeuralNet::NerualNet(){
+NeuralNet::NeuralNet(){
 	numInputs           =  Params::numInputs;
-	numoutputs	        =  Params::numOutputs;
-	numHiddenLayers     =  Params::numHiddenLayers;
-	neuronsPerHiddenLyr =  Params::numHiddenLayers;
+	numOutputs	        =  Params::numOutputs;
+	numHiddenLayers     =  Params::numHidden;
+	neuronsPerHiddenLyr =  Params::neuronsPerHiddenLayer;
 }
 
 ////////////////////////////--Creating the Net--////////////////////////////
@@ -70,7 +71,7 @@ void NeuralNet::CreateNet(){
 
   else{
 	  //create output layer
-	  vecLayers.push_back(neuronLayer(numOutputs, numInputs));
+	  vecLayers.push_back(NeuronLayer(numOutputs, numInputs));
   }
 }
 
@@ -78,7 +79,7 @@ void NeuralNet::CreateNet(){
 // Returns a vector containing the weights
 ////////////////////////////////////////////////////////////////////////
 
-vector<double> NeuralNet::GetWeights(){
+vector<double> NeuralNet::GetWeights() const{
 
 	//return vector
 	vector<double> weights;
@@ -131,7 +132,7 @@ void NeuralNet::PutWeights(vector<double> &weights){
 // Returns an int of # of weights total
 ////////////////////////////////////////////////////////////////////////
 
-int NeuralNet::GetNumberOfWeights(){
+int NeuralNet::GetNumberOfWeights() const{
 
 	// # weights
 	int weights = 0;
@@ -164,7 +165,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 	int weight = 0;
 
-	if(inputs.size() != NumInputs){
+	if(inputs.size() != this->numInputs){
 		//Return empty vector if incorrect
 		cout<<"Incorrect Size"<<endl;
 		return outputs;

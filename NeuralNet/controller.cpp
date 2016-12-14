@@ -38,7 +38,7 @@ int main(){
 		}
 		gen.nextGen();
 		//gen.population = gen.selection();//This sets up the next generation
-
+ 
 }
 	return 0;
 }
