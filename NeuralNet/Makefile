@@ -15,7 +15,7 @@
 #	g++ -g -Wall -std=c++11 -c GenAlg.cpp
 
 Controller:	GenAlg.o Controller.o NeuralNet.o C2048.o Params.o
-	g++ -g -Wall -std=c++11 -o NeuralNetFinal GenAlg.o Controller.o NeuralNet.o C2048.o Params.o
+	g++ -g -Wall -std=c++11 -o NeuralNetFinal GenAlg.o Controller.o NeuralNet.o C2048.o Params.o proto-graph.o
 
 Control2048:	C2048.o Controller.o GenAlg.o NeuralNet.o
 	g++ -g -Wall -std=c++11 -o Control2048 Controller.o C2048.o GenAlg.o NeuralNet.o
