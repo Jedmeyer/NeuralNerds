@@ -88,7 +88,7 @@ vector<double> g2048::toInput(){
 }
 
 void g2048::drawBoard(){
-  system( "cls" );
+  //system( "cls" );
   cout << "SCORE: " << score << endl << endl;
   for( int y = 0; y < 4; y++ )
   {
