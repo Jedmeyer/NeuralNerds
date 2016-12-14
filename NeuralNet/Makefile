@@ -15,10 +15,16 @@
 #	g++ -g -Wall -std=c++11 -c GenAlg.cpp
 
 Controller:	GenAlg.o Controller.o NeuralNet.o C2048.o Params.o
-	g++ -g -Wall -std=c++11 -o NeuralNetFinal GenAlg.o Controller.o NeuralNet.o C2048.o Params.o
+	g++ -g -Wall -std=c++11 -o NeuralNetFinal GenAlg.o Controller.o NeuralNet.o C2048.o Params.o proto-graph.o
 
 Control2048:	C2048.o Controller.o GenAlg.o NeuralNet.o
 	g++ -g -Wall -std=c++11 -o Control2048 Controller.o C2048.o GenAlg.o NeuralNet.o
+
+proto-graph: proto-graph.o
+	g++ $(OPTS) -o proto-graph proto-graph.o $(LIBS)
+
+proto-graph.o: proto-graph.cpp
+	g++ $(OPTS) $(MACOSX_DEFINE) -c proto-graph.cpp
 
 Controller.o:	controller.cpp C2048.h GenAlg.h NeuralNet.h
 	g++ -g -Wall -std=c++11 -c controller.cpp
