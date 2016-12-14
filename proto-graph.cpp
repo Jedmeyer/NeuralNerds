@@ -14,7 +14,6 @@ using namespace std;
 #include<string.h>
 
 /* To do list in 2k16 lul
-   Connect the dots :D
    Pause button :I
  */
 
@@ -122,6 +121,22 @@ void plotPoints()
   glEnd();
 }
 
+//Connects the values
+void connectTheDots()
+{
+  glBegin(GL_LINE_STRIP);
+  glColor3f(1., 1., 0); // Gold (Highest) first
+  for(unsigned int i = 0; i < gens.size(); i++)
+    glVertex2f(originx + ((1+i) * xmodifier), originy + (gens[i].high  * ymodifier));
+  glEnd();
+  
+  glBegin(GL_LINE_STRIP);
+  glColor3f(1., 0, 0); // Red (Average) next
+  for(unsigned int i = 0; i < gens.size(); i++)
+    glVertex2f(originx + ((1+i) * xmodifier), originy + (gens[i].ave  * ymodifier));
+  glEnd();
+}
+
 
 
 // the display function actually does the work of drawing in the window.
@@ -154,6 +169,9 @@ void display()
   
   //plot the points
   plotPoints();
+
+  //Connect the dots
+  connectTheDots();
 
   //draw the status box
   glColor3f(1.,1.,1.); // white
@@ -252,7 +270,7 @@ void init(void)
 
   // set up how points and lines will be drawn.  The following
   //  commands make points and lines look nice and smooth.
-  glPointSize(3);
+  glPointSize(5);
   glLineWidth(1.5);
   glEnable(GL_POINT_SMOOTH);
   glEnable(GL_LINE_SMOOTH);
