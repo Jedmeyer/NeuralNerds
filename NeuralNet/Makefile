@@ -47,10 +47,10 @@ Driver.o: Driver.cpp Params.h
 Params.o: Params.cpp
 	g++ -g -Wall -std=c++11 -c Params.cpp
 
-NetTest: NeuralNet.o Driver.o Params.o
-	g++ -g -Wall -std=c++11 -o NetTest Driver.o NeuralNet.o
+NetTest: Params.o NeuralNet.o Driver.o
+	g++ -g -Wall -std=c++11 -o NetTest Driver.o NeuralNet.o Params.o
 
-Driver.o: Driver.cpp NeuralNet.h
+Driver.o: Driver.cpp NeuralNet.h Params.h
 	g++ -g -Wall -std=c++11 -c Driver.cpp
 
 NeuralNet.o:	NeuralNet.cpp Params.h

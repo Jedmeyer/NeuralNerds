@@ -38,17 +38,11 @@ NeuronLayer::NeuronLayer(int nNurons,
 ///////////////////////////////////////////////////////////////////////////////
 
 NeuralNet::NeuralNet(){
-	/////////////////////// REPLACE later ///////////////////////
-	/*
+
 	numInputs           =  Params::numInputs;
 	numOutputs	        =  Params::numOutputs;
 	numHiddenLayers     =  Params::numHidden;
 	neuronsPerHiddenLyr =  Params::neuronsPerHiddenLayer;
-	*/
-	numInputs           =  16;
-	numOutputs	        =  2;
-	numHiddenLayers     =  1;
-	neuronsPerHiddenLyr =  16;
 
 	CreateNet();
 }
@@ -207,9 +201,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 
 			}
 
-			//add bias /////////////// REPLACE LATER ////////////////////////////
-			//totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
-			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * -1;
+			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
 
 			//Store the output as generated
 			outputs.push_back(totInput);
