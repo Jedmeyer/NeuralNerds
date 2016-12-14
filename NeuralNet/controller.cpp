@@ -13,6 +13,7 @@ using namespace std;
 
 int main(){
 	vector<double> inputs;
+	vector<double> outputs;
 	int popSize = Params::pop;
 	cout<<"HELP ME"<<endl;
 
@@ -33,7 +34,13 @@ int main(){
 		    if( g.done ) break;
 		    //g.waitKey();
 				inputs = g.toInput();
-				g.netMove(net.Update(inputs));
+				outputs = net.Update(inputs);
+				
+				if(totInput > 0){totInput = 1;}
+				else if(totInput < -1){totInput = 0;}
+				else{cout<<"Those Number are UNREAL Man"<<endl;}
+
+				g.netMove(outputs);
 		  }
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";

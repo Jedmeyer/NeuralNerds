@@ -70,23 +70,23 @@ int main(){
 		vector<double> inputs;
 		///////////////////////
 		inputs.push_back(0);
-		inputs.push_back(0.3333);
-		inputs.push_back(0.3333);
-		inputs.push_back(0.6666);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
 		///////////////////////////
 		inputs.push_back(0);
 		inputs.push_back(0);
 		inputs.push_back(0);
-		inputs.push_back(0.6666);
-		///////////////////////////
-		inputs.push_back(0);
-		inputs.push_back(1);
-		inputs.push_back(0);
 		inputs.push_back(0);
 		///////////////////////////
-		inputs.push_back(1);
 		inputs.push_back(0);
-		inputs.push_back(0.3333);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		///////////////////////////
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
 		inputs.push_back(0);
 		//////////////////////////
 		Params p;
