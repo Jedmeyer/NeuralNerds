@@ -140,16 +140,15 @@ int NeuralNet::GetNumberOfWeights() const{
 
 	// # weights
 	int weights = 0;
-	cout<<"Num Hidden Layers: "<<numHiddenLayers<<endl;
+
 	for(int i = 0; i < numHiddenLayers +1; ++i){
-		cout<<"							i: "<<i<<endl;
+
 		//each neuron
 		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
-			cout<<"				j: "<<j<<endl;
+
 			//each weights
 			for(int k = 0; k < vecLayers[i].vecNeurons[j].numInputs; ++k){
-				cout<<"k: "<<k<<endl;
-				cout<<vecLayers[i].vecNeurons[j].numInputs<<endl;
+
 				//add to weights
 				weights++;
 				//cout<<"Here: "<<weights<<endl;
@@ -165,9 +164,7 @@ int NeuralNet::GetNumberOfWeights() const{
 ////////////////////////////////////////////////////////////////////
 
 vector<double> NeuralNet::Update(vector<double> &inputs){
-	///////debug////////
-	int count=0;
-	////////////////////
+
 	vector<double> outputs;
 
 	int weight = 0;
@@ -207,10 +204,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight];
 				weight++;
 
-				///////debug////////
-				count++;
-				cout<<"Here: #"<<count<<endl;
-				////////////////////
+
 			}
 
 			//add bias /////////////// REPLACE LATER ////////////////////////////

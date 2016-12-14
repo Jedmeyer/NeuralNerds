@@ -90,16 +90,15 @@ int main(){
 		inputs.push_back(0);
 		//////////////////////////
 
-		cout<<"INPUTS CREATED"<<endl;
+		cout<<"INPUTS CREATED"<<endl<<endl;
 		NeuralNet nn;
-		cout<<"NEURAL NET INITIALIZED"<<endl;
+		cout<<"NEURAL NET INITIALIZED"<<endl<<endl;
 		nn.CreateNet();
-		cout<<"NEURAL NET CREATED"<<endl;
+		cout<<"NEURAL NET CREATED"<<endl<<endl;
 
-		cout<<nn.GetNumberOfWeights()<<endl;
 
 		vector<double> output = nn.Update(inputs);
-		cout<<"NEUAL NET UPDATED"<<endl;
+		cout<<"NEUAL NET UPDATED"<<endl<<endl;
 		for(int i = 0; i < output.size(); ++i){
 			cout<<"Output #"<<i<<" "<<output[i]<<endl;
 		}
