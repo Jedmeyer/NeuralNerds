@@ -115,7 +115,14 @@ vector<genome> GenAlg::selection(){
 			r = r - population[selection].fitness;
 			if (selection>populationSize){cout << "\nSelection Error!";break;}
 		}
-		pop2[i] = population[selection];
+		cout<<"HERE"<<endl;
+		cout<<pop2.size()<<endl;
+		cout<<i<<endl;
+		cout<<population.size()<<endl;
+		cout<<selection<<endl;
+		cout<<populationSize<<endl;
+		pop2.push_back(population[selection]);
+		cout<<"HERE2"<<endl;
 	}
 	return pop2;
 }
