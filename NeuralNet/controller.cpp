@@ -48,7 +48,7 @@ int main(){
 				}
 
 
-		    g.drawBoard();
+		    //g.drawBoard();
 				cout<<"Genome Number: "<<i+1<<endl;
 
 		    if( g.done ) break;
