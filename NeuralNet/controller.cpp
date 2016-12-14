@@ -12,6 +12,7 @@
 using namespace std;
 
 int main(){
+	vector<double> inputs;
 	int popSize = Params::pop;
 	cout<<"HELP ME"<<endl;
 
@@ -31,7 +32,8 @@ int main(){
 		    g.drawBoard();
 		    if( g.done ) break;
 		    //g.waitKey();
-				g.netMove(net.Update(g.toInput()));
+				inputs = g.toInput();
+				g.netMove(net.Update(inputs));
 		  }
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";
