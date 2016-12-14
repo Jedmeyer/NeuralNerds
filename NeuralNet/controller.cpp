@@ -44,11 +44,12 @@ int main(){
 				else{
 					illegalMoves++;
 					cout<<illegalMoves<<endl;
-					if(illegalMoves >= maxIllegalMoves) break;
+					if(illegalMoves >= maxIllegalMoves){illegalMoves = 0; break;}
 				}
 
 
 		    g.drawBoard();
+				cout<<"Genome Number: "<<i+1<<endl;
 
 		    if( g.done ) break;
 		    //g.waitKey();
@@ -62,12 +63,12 @@ int main(){
 					if(outputs[i] > 0){outputs[i] = 1;}
 					else if(outputs[i] <= 0){outputs[i] = 0;}
 					else{
-
 						cout<<"Those Number are UNREAL Man"<<endl;
 						for(int k = 0; k < outputs.size(); ++k){cout<<outputs[i];}
 						break;
 					}
 				}
+				for(int i = 0; i < 100000000; ++i);
 				g.netMove(outputs);
 		  }
 		  string s = "Game Over!";
