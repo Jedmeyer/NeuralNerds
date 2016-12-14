@@ -59,16 +59,13 @@ int main(){
 
 				/// Changes outputs into two bit binary format
 				for(int i = 0; i < outputs.size(); ++i){
-
 					if(outputs[i] > 0){outputs[i] = 1;}
 					else if(outputs[i] <= 0){outputs[i] = 0;}
-					else{
-						cout<<"Those Number are UNREAL Man"<<endl;
-						for(int k = 0; k < outputs.size(); ++k){cout<<outputs[i];}
-						break;
-					}
+					else{cout<<"Those Number are UNREAL Man"<<endl; break;}
 				}
-				for(int i = 0; i < 100000000; ++i);
+
+				for(int j = 0; j < outputs.size(); ++j) cout<<outputs[j]<<endl;
+				//for(int i = 0; i < 100000000; ++i);
 				g.netMove(outputs);
 		  }
 		  string s = "Game Over!";
