@@ -14,6 +14,8 @@ using namespace std;
 
 struct genome{
 public:
+	double mutationChance;
+	double crossChance;
 	vector<double> chromoWeights; /**< Array of weights for the entire neural net, serves as ONE member of a generation */
 	double fitness;
 	genome();
@@ -28,6 +30,8 @@ public:
 
 class GenAlg{
 public:
+	double mutationChance;
+	double crossChance;
 	vector<genome> population;
 	double popfitness; /**< Sum of all fitness values in the population */
 	double topfit; /**< The top fitness in the population of the generation */
@@ -63,7 +67,5 @@ double fRand(double fMin, double fMax)
 }
 */
 
-double mutationChance = Params::mute;
-double crossChance = Params::cross;
 
 #endif

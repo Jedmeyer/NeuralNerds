@@ -9,15 +9,23 @@
 #include "Params.h"
 using namespace std;
 
-genome::genome(){fitness = 0;}
+genome::genome(){
+	fitness = 0;
+	mutationChance = Params::mute;
+	crossChance = Params::cross;
+}
 
 genome::genome(double f1){
 	fitness = f1;
+	mutationChance = Params::mute;
+	crossChance = Params::cross;
 };
 
 genome::genome(vector<double> w1, double f1){
 	chromoWeights = w1;
 	fitness = f1;
+	mutationChance = Params::mute;
+	crossChance = Params::cross;
 };
 
 bool genome::operator <(const genome &g2){
@@ -50,6 +58,10 @@ void genome::mutate(){
 }
 
 GenAlg::GenAlg(NeuralNet &nn){
+
+	mutationChance = Params::mute;
+	crossChance = Params::cross;
+
 	population.reserve(populationSize);
 
 	for (int i=0; i<populationSize; i++){
