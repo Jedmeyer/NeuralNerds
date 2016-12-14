@@ -12,7 +12,6 @@
 using namespace std;
 
 int main(){
-	Params p;
 	int popSize = Params::pop;
 	cout<<"HELP ME"<<endl;
 
@@ -31,7 +30,8 @@ int main(){
 		    if( g.moved ) g.addTile();
 		    g.drawBoard();
 		    if( g.done ) break;
-		    g.waitKey();
+		    //g.waitKey();
+				g.netMove(net.update(g.toInput()));
 		  }
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";
