@@ -58,7 +58,7 @@ double fRand(double fMin, double fMax)
     return fMin + f * (fMax - fMin);
 }
 
-double mutationChance = 0.05;
-double crossChance = 0.01;
+double mutationChance = Params::mute;
+double crossChance = Params::cross;
 
 #endif
