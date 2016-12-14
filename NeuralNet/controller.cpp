@@ -12,12 +12,13 @@
 using namespace std;
 
 int main(){
+	Params p;
 	int popSize = Params::pop;
 	cout<<"HELP ME"<<endl;
 
 	srand( static_cast<uint>( time( NULL ) ) );
 
-	NeuralNet net();//declares the neural network object
+	NeuralNet net;//declares the neural network object
 	GenAlg gen(net);//Declares the GenAlg object and fills the population
 	vector<double> GWeights;
 	while(true){//This will be the start of the main loop for the genalg.
