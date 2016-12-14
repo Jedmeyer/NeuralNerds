@@ -2,8 +2,14 @@
 #define NEURALNET_H
 
 #include <iostream>
+#include "Params.h"
 #include <vector>
+#include <random>
+#include <time.h>
+#include <cstdlib>
+
 using namespace std;
+
 struct Neuron{
 
 	/// Number of inputs to the given Neuron

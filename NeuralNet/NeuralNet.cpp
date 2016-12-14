@@ -1,10 +1,4 @@
-#include <iostream>
-#include "Params.h"
 #include "NeuralNet.h"
-#include <vector>
-#include <random>
-#include <time.h>
-#include <cstdlib>
 
 using namespace std;
 
@@ -25,7 +19,8 @@ Neuron::Neuron(int nI) : numInputs(nI+1){
 	}
 }
 
-NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNeurons){
+NeuronLayer::NeuronLayer(int nNurons,
+												 int numInputsPerNeuron) : numNeurons(nNurons){
 
 
 	for(int i = 0; i < nNurons; ++i){
@@ -43,10 +38,19 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 ///////////////////////////////////////////////////////////////////////////////
 
 NeuralNet::NeuralNet(){
+	/////////////////////// REPLACE later ///////////////////////
+	/*
 	numInputs           =  Params::numInputs;
 	numOutputs	        =  Params::numOutputs;
 	numHiddenLayers     =  Params::numHidden;
 	neuronsPerHiddenLyr =  Params::neuronsPerHiddenLayer;
+	*/
+	numInputs           =  16;
+	numOutputs	        =  2;
+	numHiddenLayers     =  1;
+	neuronsPerHiddenLyr =  16;
+
+	CreateNet();
 }
 
 ////////////////////////////--Creating the Net--////////////////////////////
@@ -62,7 +66,7 @@ void NeuralNet::CreateNet(){
     for (int i=0; i<numHiddenLayers-1; ++i){
 
 			vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr,
-                                         neuronsPerHiddenLyr));
+                                      neuronsPerHiddenLyr));
     }
 
     //create output layer
@@ -136,18 +140,19 @@ int NeuralNet::GetNumberOfWeights() const{
 
 	// # weights
 	int weights = 0;
-
+	cout<<"Num Hidden Layers: "<<numHiddenLayers<<endl;
 	for(int i = 0; i < numHiddenLayers +1; ++i){
-
+		cout<<"							i: "<<i<<endl;
 		//each neuron
 		for(int j = 0; j < vecLayers[i].numNeurons; ++j){
-
+			cout<<"				j: "<<j<<endl;
 			//each weights
 			for(int k = 0; k < vecLayers[i].vecNeurons[j].numInputs; ++k){
-
+				cout<<"k: "<<k<<endl;
+				cout<<vecLayers[i].vecNeurons[j].numInputs<<endl;
 				//add to weights
 				weights++;
-
+				//cout<<"Here: "<<weights<<endl;
 			}
 		}
 	}
@@ -160,7 +165,9 @@ int NeuralNet::GetNumberOfWeights() const{
 ////////////////////////////////////////////////////////////////////
 
 vector<double> NeuralNet::Update(vector<double> &inputs){
-
+	///////debug////////
+	int count=0;
+	////////////////////
 	vector<double> outputs;
 
 	int weight = 0;
@@ -199,16 +206,25 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 				// Weights * inputs
 				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight];
 				weight++;
+
+				///////debug////////
+				count++;
+				cout<<"Here: #"<<count<<endl;
+				////////////////////
 			}
 
-			//add bias
-			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
+			//add bias /////////////// REPLACE LATER ////////////////////////////
+			//totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
+			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * -1;
 
 			//Store the output as generated
 			outputs.push_back(totInput);
 
 			weight = 0;
+
+
 		}
 	}
+
 	return outputs;
 }
