@@ -22,6 +22,7 @@ public:
 	bool operator <(const genome&);
 	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
 	void mutate(); /**< Alters the genome of a member of a population to be inherited in the next generation */
+	double fRand(double, double);
 
 };
 
@@ -33,6 +34,8 @@ public:
 	int gnumNeurons =  Params::numChromo;
 	const int populationSize = Params::pop;
 
+
+
 	/**
 	@param pop Population of the generation, Vector of genomes
 	@param popfitness Total fitness of the population
@@ -43,6 +46,7 @@ public:
 	MUST BE ASSIGNED TO EACH MEMBER OF THE POPULATION
 	**/
 
+	double fRand(double, double);
 
 	vector<genome> cross(genome&, genome&); //Should return cross of two genome split somewhere down the doubles array
 	GenAlg(NeuralNet&); /**< Constructor, also starter for the random generation of the population*/
@@ -51,12 +55,13 @@ public:
 
 
 };
-
+/*
 double fRand(double fMin, double fMax)
 {
     double f = (double)rand() / RAND_MAX;
     return fMin + f * (fMax - fMin);
 }
+*/
 
 double mutationChance = Params::mute;
 double crossChance = Params::cross;

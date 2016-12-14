@@ -24,6 +24,11 @@ bool genome::operator <(const genome &g2){
 	return this->fitness < g2.fitness;
 };
 
+double genome::fRand(double fMin, double fMax){
+	double f = (double)rand() / RAND_MAX;
+	return fMin + f * (fMax - fMin);
+}
+
 void genome::setfitness(double ft){
 	fitness = ft;
 }
@@ -51,6 +56,11 @@ GenAlg::GenAlg(NeuralNet &nn){
 		nn.CreateNet();
 		population[i].chromoWeights = nn.GetWeights();
 	}
+}
+
+double GenAlg::fRand(double fMin, double fMax){
+	double f = (double)rand() / RAND_MAX;
+	return fMin + f * (fMax - fMin);
 }
 
 vector<genome> GenAlg::cross(genome &g1, genome &g2){
