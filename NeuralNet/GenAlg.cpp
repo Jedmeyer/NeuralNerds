@@ -110,7 +110,7 @@ vector<genome> GenAlg::selection(){
 		int selection;
 		r = 0;
 		cout<<"Pop Fit: "<<popfitness<<endl;
-		r = rand() % (int)popfitness;
+		r = fRand(0,popfitness);
 		for (selection=0; r>0; selection++){
 			r = r - population[selection].fitness;
 			if (selection>populationSize){cout << "\nSelection Error!";break;}
