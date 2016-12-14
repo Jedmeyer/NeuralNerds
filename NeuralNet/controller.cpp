@@ -48,7 +48,7 @@ int main(){
 				}
 
 
-		    //g.drawBoard();
+		  //  g.drawBoard();
 				cout<<"Genome Number: "<<i+1<<endl;
 
 		    if( g.done ) break;
@@ -68,6 +68,7 @@ int main(){
 				//for(int i = 0; i < 100000000; ++i);
 				g.netMove(outputs);
 		  }
+			gen.population[i].setfitness(g.score);
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";
 		  cout << s << endl << endl;
