@@ -164,6 +164,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 	int weight = 0;
 
 	if(inputs.size() != this->numInputs){
+		cout<<numInputs<<endl;
 		//Return empty vector if incorrect
 		cout<<"Incorrect Size"<<endl;
 		return outputs;

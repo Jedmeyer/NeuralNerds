@@ -7,16 +7,18 @@ Example:
 double Params::Pi		=3.1415926535;
 
 */
-double Params::numInputs   = 0;
-double Params::numHidden   = 0;
+
+int    Params::illegalMoves          = 0;
+double Params::numInputs  				   = 0;
+double Params::numHidden  			 	 	 = 0;
 double Params::neuronsPerHiddenLayer = 0;
-double Params::numOutputs = 0;
-double Params::bias = 0;
-double Params::activation = 0;
-double Params::numChromo = 0;
-double Params::pop = 0;
-double Params::mute = 0;
-double Params::cross = 0;
+double Params::numOutputs 	 	 	 	   = 0;
+double Params::bias									 = 0;
+double Params::activation  	 	 	 	   = 0;
+double Params::numChromo   	 	 	 	   = 0;
+double Params::pop    	 	 	 	 	 	 	 = 0;
+double Params::mute  	 	 	 	 	 	  	 = 0;
+double Params::cross  	 	 	 	 	 	 	 = 0;
 
 
 bool Params::LoadInParameters(char* fileName){
@@ -27,7 +29,8 @@ bool Params::LoadInParameters(char* fileName){
 	}
 
 	char paramDescription[30];
-
+	fin >> paramDescription;
+	fin >> illegalMoves;
 	fin >> paramDescription;
 	fin >> numInputs;
 	fin >> paramDescription;

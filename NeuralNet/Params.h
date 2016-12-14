@@ -14,6 +14,7 @@ public:
 
 //----------- General Parameters -------------\\
 
+static int illegalMoves;
 
 
 //--------------- Neural Net -----------------\\

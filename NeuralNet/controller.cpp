@@ -13,9 +13,11 @@ using namespace std;
 
 int main(){
 	Params p;
+	int illegalMoves = 0;
 	vector<double> inputs;
 	vector<double> outputs;
 	int popSize = Params::pop;
+	int maxIllegalMoves = Params::illegalMoves;
 	cout<<"HELP ME"<<endl;
 	cout<<popSize<<endl;
 	srand( static_cast<uint>( time( NULL ) ) );
@@ -26,7 +28,7 @@ int main(){
 	vector<double> GWeights;
 
 	while(true){//This will be the start of the main loop for the genalg.
-		
+
 		for(int i = 0; i< popSize; i++){//This is the loop for each genome in the generation
 
 			GWeights = gen.population[i].chromoWeights;//Gets the Weigths for this genome
@@ -35,8 +37,19 @@ int main(){
 
 		  while( true )//This is the 2048 game loop
 		  {
-		    if( g.moved ) g.addTile();
+		    if( g.moved ){
+					g.addTile();
+					illegalMoves=0;
+				}
+				else{
+					illegalMoves++;
+					cout<<illegalMoves<<endl;
+					if(illegalMoves >= maxIllegalMoves) break;
+				}
+
+
 		    g.drawBoard();
+
 		    if( g.done ) break;
 		    //g.waitKey();
 
@@ -47,8 +60,13 @@ int main(){
 				for(int i = 0; i < outputs.size(); ++i){
 
 					if(outputs[i] > 0){outputs[i] = 1;}
-					else if(outputs[i] < -1){outputs[i] = 0;}
-					else{cout<<"Those Number are UNREAL Man"<<endl;}
+					else if(outputs[i] <= 0){outputs[i] = 0;}
+					else{
+
+						cout<<"Those Number are UNREAL Man"<<endl;
+						for(int k = 0; k < outputs.size(); ++k){cout<<outputs[i];}
+						break;
+					}
 				}
 				g.netMove(outputs);
 		  }
