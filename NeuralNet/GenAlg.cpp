@@ -77,13 +77,21 @@ double GenAlg::fRand(double fMin, double fMax){
 }
 
 void GenAlg::cross(genome &g1, genome &g2){
+		cout << "\n Running Cross...";
 		genome g3;
 		genome g4;
-		//srand(time(NULL));
+
+		vector <double> chromesome1;
+		vector <double> chromesome2;
+		chromesome1 = g1.chromoWeights;
+		chromesome2 = g2.chromoWeights;
 		int r,p;
-		r = rand()%g1.chromoWeights.size();
+		cout <<"\nIts ME THE SIZE METHOD!!";
+		cout <<"\nChromoWeights Size: "<< chromesome1.size();
+		cout<<"Passed"<<endl;
+		r = rand()%chromesome2.size();
+
 		p = g2.chromoWeights.size();
-		p = p-1;
 		int i;
 		for ( i = 0; i < r; i++){
 			g3.chromoWeights.push_back(g1.chromoWeights[i]);
@@ -100,10 +108,25 @@ void GenAlg::cross(genome &g1, genome &g2){
 genome GenAlg::Choosen(){
 	double h = fRand(0,1)*popfitness;
 	double cumulativeFit=0;
-	for(int index = 0; index<populationSize; index++){
-		cumulativeFit += population[index].fitness;
+	if ( popfitness != 0){
+		for(int index = 0; index<populationSize; index++){
+			cumulativeFit += population[index].fitness;
 
-		if(cumulativeFit >= h){return population[index];}
+			if(cumulativeFit >= h){return population[index];}
+
+		}
+	}
+	else {
+		int ft=0;
+		ft = rand()%populationSize;
+		for (int index = 0; index < populationSize; index++){
+			ft = ft - 1;
+			if (ft <= 0){
+				return index;
+			}
+
+		}
+
 
 	}
 
