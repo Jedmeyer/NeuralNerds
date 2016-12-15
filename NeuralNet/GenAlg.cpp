@@ -83,6 +83,7 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		int r,p;
 		r = rand()%g1.chromoWeights.size();
 		p = g2.chromoWeights.size();
+		p = p-1;
 		int i;
 		for ( i = 0; i < r; i++){
 			g3.chromoWeights.push_back(g1.chromoWeights[i]);
@@ -152,7 +153,7 @@ vector<genome> GenAlg::nextGen(){
 		q2 = fRand(0,1);
 
 		if (q2 < crossChance && i>0){
-			cout<<"HERE"<<endl;
+			cout<<"HERE--------------------------------------------------------------"<<endl;
 			cross(pop3[i],pop3[i-1]);
 		}
 

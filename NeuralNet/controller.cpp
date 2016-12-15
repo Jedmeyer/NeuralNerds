@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <time.h>
 #include <string>
 #include <iomanip>
@@ -12,6 +13,9 @@
 using namespace std;
 
 int main(){
+	ofstream fout;
+	fout.open("data.txt");
+
 	Params p;
 	int illegalMoves = 0;
 	vector<double> inputs;
@@ -81,10 +85,14 @@ int main(){
 		  cout << s << endl << endl;
 		}
 		aveFit = totalFit/popSize;
+
+		fout<<endl<<endl<<endl<<genNum<<endl<<maxFit<<endl<<aveFit<<endl;
+		aveFit = 0;
 		totalFit = 0;
 		gen.nextGen();
 		//gen.population = gen.selection();//This sets up the next generation
 
-}
+	}
+	fout.close();
 	return 0;
 }
