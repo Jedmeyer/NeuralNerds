@@ -1,10 +1,4 @@
-#include <iostream>
-#include "Params.h"
 #include "NeuralNet.h"
-#include <vector>
-#include <random>
-#include <time.h>
-#include <cstdlib>
 
 using namespace std;
 
@@ -25,7 +19,8 @@ Neuron::Neuron(int nI) : numInputs(nI+1){
 	}
 }
 
-NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNeurons){
+NeuronLayer::NeuronLayer(int nNurons,
+												 int numInputsPerNeuron) : numNeurons(nNurons){
 
 
 	for(int i = 0; i < nNurons; ++i){
@@ -43,10 +38,13 @@ NeuronLayer::NeuronLayer(int nNurons, int numInputsPerNeuron) : numNeurons(numNe
 ///////////////////////////////////////////////////////////////////////////////
 
 NeuralNet::NeuralNet(){
+
 	numInputs           =  Params::numInputs;
 	numOutputs	        =  Params::numOutputs;
 	numHiddenLayers     =  Params::numHidden;
 	neuronsPerHiddenLyr =  Params::neuronsPerHiddenLayer;
+
+	CreateNet();
 }
 
 ////////////////////////////--Creating the Net--////////////////////////////
@@ -62,7 +60,7 @@ void NeuralNet::CreateNet(){
     for (int i=0; i<numHiddenLayers-1; ++i){
 
 			vecLayers.push_back(NeuronLayer(neuronsPerHiddenLyr,
-                                         neuronsPerHiddenLyr));
+                                      neuronsPerHiddenLyr));
     }
 
     //create output layer
@@ -147,7 +145,7 @@ int NeuralNet::GetNumberOfWeights() const{
 
 				//add to weights
 				weights++;
-
+				//cout<<"Here: "<<weights<<endl;
 			}
 		}
 	}
@@ -166,6 +164,7 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 	int weight = 0;
 
 	if(inputs.size() != this->numInputs){
+		cout<<numInputs<<endl;
 		//Return empty vector if incorrect
 		cout<<"Incorrect Size"<<endl;
 		return outputs;
@@ -199,16 +198,20 @@ vector<double> NeuralNet::Update(vector<double> &inputs){
 				// Weights * inputs
 				totInput +=vecLayers[i].vecNeurons[j].vecWeight[k] * inputs[weight];
 				weight++;
+
+
 			}
 
-			//add bias
 			totInput += vecLayers[i].vecNeurons[j].vecWeight[numInputs-1] * Params::bias;
 
 			//Store the output as generated
 			outputs.push_back(totInput);
 
 			weight = 0;
+
+
 		}
 	}
+
 	return outputs;
 }

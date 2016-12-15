@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include "C2048.h"
 #include "Params.h"
+#include "NeuralNet.h"
 #include <vector>
 #include <cmath>
 #include <random>
@@ -37,6 +38,7 @@ int main(){
 	cout<<"Param Test Activation: "<<Params::activation<<endl;
 	*/
 
+	/*
 	g2048 g;
 	vector<double> boardInputTest;
 	//g.loop();
@@ -63,8 +65,46 @@ int main(){
 	  if( g.win ) s = "You've made it!";
 	  cout << s << endl << endl;
 	  }
+		*/
+
+		vector<double> inputs;
+		///////////////////////
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		///////////////////////////
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		///////////////////////////
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		///////////////////////////
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		inputs.push_back(0);
+		//////////////////////////
+		Params p;
+
+		cout<<"INPUTS CREATED"<<endl<<endl;
+		NeuralNet nn;
+		cout<<"NEURAL NET INITIALIZED"<<endl<<endl;
+		nn.CreateNet();
+		cout<<"NEURAL NET CREATED"<<endl<<endl;
+
+
+		vector<double> output = nn.Update(inputs);
+		cout<<"NEUAL NET UPDATED"<<endl<<endl;
+		for(int i = 0; i < output.size(); ++i){
+			cout<<"Output #"<<i<<" "<<output[i]<<endl;
+		}
 
 
 
-	return 0;
+		return 0;
 }
