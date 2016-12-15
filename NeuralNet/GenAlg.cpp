@@ -131,9 +131,9 @@ vector<genome> GenAlg::selection(){
 				cout<<"ENTERED LOOP"<<endl;
 				r = r - population[selection].fitness;
 
-				if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
+			//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
 			}
-			if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
+		//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
 		}
 		/*
 		cout<<"HERE"<<endl;
@@ -143,7 +143,7 @@ vector<genome> GenAlg::selection(){
 		cout<<selection<<endl;
 		cout<<populationSize<<endl;
 		*/
-		if(selection == 10){
+		if(selection-1 == -1 || selection == 10){
 			cout<<"Selection = "<<selection<<endl;
 			int fuck;
 			cin>>fuck;
