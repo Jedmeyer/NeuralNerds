@@ -100,12 +100,12 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 }
 
 genome GenAlg::Choosen(){
-	double h = fRand(0,1);
+	double h = fRand(0,1)*popfitness;
 	double cumulativeFit=0;
-	for(int index = 0; i<populationSize; i++){
+	for(int index = 0; index<populationSize; index++){
 		cumulativeFit += population[index].fitness;
-		
-		if(cumulativeFit >= h){return population[index]}
+
+		if(cumulativeFit >= h){return population[index];}
 
 	}
 
@@ -145,9 +145,9 @@ vector<genome> GenAlg::selection(){
 	// 			r = r - population[selection].fitness;
 
 			//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
-			
+
 		//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
-		
+
 		/*
 		cout<<"HERE"<<endl;
 		cout<<pop2.size()<<endl;
@@ -161,9 +161,12 @@ vector<genome> GenAlg::selection(){
 		// 	int fuck;
 		// 	cin>>fuck;
 		// }
-		pop2.push_back(population[Choosen()]);
+		for(int x = 0; x<populationSize; x++){
+			pop2.push_back(Choosen());
+		}
+
 		//cout<<"HERE2"<<endl;
-	
+
 	return pop2;
 }
 
