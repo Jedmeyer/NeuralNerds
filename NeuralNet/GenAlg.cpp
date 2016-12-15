@@ -85,15 +85,17 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		p = g2.chromoWeights.size();
 		int i;
 		for ( i = 0; i < r; i++){
-			g3.chromoWeights[i] = g1.chromoWeights[i];
-			g4.chromoWeights[i] = g2.chromoWeights[i];
+			g3.chromoWeights.push_back(g1.chromoWeights[i]);
+			g4.chromoWeights.push_back(g2.chromoWeights[i]);
 		}
 		for (i = r ; i < p; i++){
-			g3.chromoWeights[i] = g2.chromoWeights[i];
-			g4.chromoWeights[i] = g1.chromoWeights[i];
+			g3.chromoWeights.push_back(g2.chromoWeights[i]);
+			g4.chromoWeights.push_back(g1.chromoWeights[i]);
 		}
-		g1.chromoWeights = g3.chromoWeights;
-		g2.chromoWeights = g4.chromoWeights;
+		for (int rs = 0; rs < p; rs++){
+			g1.chromoWeights[rs] = g3.chromoWeights[rs];
+			g2.chromoWeights[rs] = g4.chromoWeights[rs];
+		}
 }
 
 vector<genome> GenAlg::selection(){
@@ -147,12 +149,12 @@ vector<genome> GenAlg::nextGen(){
 	double q2;
 	for (int i = 0; i< populationSize; i++){
 		pop3[i].mutate();
-	//	q2 = fRand(0,1);
+		q2 = fRand(0,1);
 
-	//	if (q2 < crossChance && i>0){
-		//	cout<<"HERE"<<endl;
-			//cross(pop3[i],pop3[i-1]);
-	//	}
+		if (q2 < crossChance && i>0){
+			cout<<"HERE"<<endl;
+			cross(pop3[i],pop3[i-1]);
+		}
 
 	}
 
