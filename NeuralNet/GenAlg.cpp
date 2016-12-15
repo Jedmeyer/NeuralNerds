@@ -108,12 +108,23 @@ vector<genome> GenAlg::selection(){
 	}
 	for (int i=0; i<populationSize; i++){
 		int selection;
+		int backup=0;
 		r = 0;
 		cout<<"Pop Fit: "<<popfitness<<endl;
+		if (popfitness == 0){
+			for(selection = 0; r > 0; selection++){
+				backup = rand() % populationSize;
+				backup = backup - 1;
+			}
+		}
+		
+		else{
 		r = fRand(0,popfitness);
-		for (selection=0; r>0; selection++){
-			r = r - population[selection].fitness;
-			if (selection>populationSize){cout << "\nSelection Error!";break;}
+			for (selection=0; r>0; selection++){
+				r = r - population[selection].fitness;
+		
+				if (selection>populationSize-1){cout << "\nSelection Error!";break;}
+			}
 		}
 		cout<<"HERE"<<endl;
 		cout<<pop2.size()<<endl;
