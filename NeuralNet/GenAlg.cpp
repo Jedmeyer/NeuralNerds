@@ -99,42 +99,55 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 		}
 }
 
+genome GenAlg::Choosen(){
+	double h = fRand(0,1);
+	double cumulativeFit=0;
+	for(int index = 0; i<populationSize; i++){
+		cumulativeFit += population[index].fitness;
+		
+		if(cumulativeFit >= h){return population[index]}
+
+	}
+
+return NULL;
+}
+
+
 vector<genome> GenAlg::selection(){
 	vector<genome> pop2;
 	popfitness = 0;
 	topfit =0;
-	double r;
 	// Loop calculates all important fitness related things...
 	for (int i =0; i<populationSize; i++){
 		popfitness += population[i].fitness;
 		if (population[i].fitness > topfit){topfit=population[i].fitness;}
 	}
-	for (int i=0; i<populationSize; i++){
-		int selection;
-		int backup=0;
-		r = 0;
-		//cout<<"Pop Fit: "<<popfitness<<endl;
-		if (popfitness == 0){
-			cout<<"PopFitness = 0"<<endl;
-			for(selection = 0; backup > 0; selection++){
-				backup = rand() % populationSize;
-				backup = backup - 1;
-			}
-		}
+	// for (int i=0; i<populationSize; i++){
+	// 	int selection;
+	// 	int backup=0;
+	// 	r = 0;
+	// 	//cout<<"Pop Fit: "<<popfitness<<endl;
+	// 	if (popfitness == 0){
+	// 		cout<<"PopFitness = 0"<<endl;
+	// 		for(selection = 0; backup > 0; selection++){
+	// 			backup = rand() % populationSize;
+	// 			backup = backup - 1;
+	// 		}
+	// 	}
 
-		else{
-		r = fRand(0,popfitness);
-		int counter = 0;
-			for (selection=0; r>0; selection++){
-				counter++;
-				cout<<counter<<endl;
-				cout<<"ENTERED LOOP"<<endl;
-				r = r - population[selection].fitness;
+	// 	else{
+	// 	r = fRand(0,popfitness);
+	// 	int counter = 0;
+	// 		for (selection=0; r>0; selection++){
+	// 			counter++;
+	// 			cout<<counter<<endl;
+	// 			cout<<"ENTERED LOOP"<<endl;
+	// 			r = r - population[selection].fitness;
 
 			//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
-			}
+			
 		//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
-		}
+		
 		/*
 		cout<<"HERE"<<endl;
 		cout<<pop2.size()<<endl;
@@ -143,14 +156,14 @@ vector<genome> GenAlg::selection(){
 		cout<<selection<<endl;
 		cout<<populationSize<<endl;
 		*/
-		if(selection-1 == -1 || selection == 10){
-			cout<<"Selection = "<<selection<<endl;
-			int fuck;
-			cin>>fuck;
-		}
-		pop2.push_back(population[selection-1]);
+		// if(selection-1 == -1 || selection == 10){
+		// 	cout<<"Selection = "<<selection<<endl;
+		// 	int fuck;
+		// 	cin>>fuck;
+		// }
+		pop2.push_back(population[Choosen()]);
 		//cout<<"HERE2"<<endl;
-	}
+	
 	return pop2;
 }
 

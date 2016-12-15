@@ -56,7 +56,7 @@ public:
 	GenAlg(NeuralNet&); /**< Constructor, also starter for the random generation of the population*/
 	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
 	vector<genome> nextGen();
-
+	genome Choosen();
 
 };
 /*
