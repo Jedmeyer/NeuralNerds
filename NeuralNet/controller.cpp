@@ -12,10 +12,33 @@
 
 using namespace std;
 
+int count;
+
+vector<double> redirect(vector<double> output){
+	bool a = output[0];
+	bool b = output[1];
+	cout<<"A: "<<a<<endl;
+	cout<<"B: "<<b<<endl;
+	switch(count){
+		case 0: a=!a; break;
+		case 1: b=!b; break;
+		case 2: a=!a; break;
+	}
+	if(a) output[0] = 1;
+	else output[0] = 0;
+	if(b) output[1] = 1;
+	else output[1] = 0;
+
+	output[0] = a;
+	output[1] = b;
+	return output;
+}
+
+
 int main(){
 	ofstream fout;
 	fout.open("data.txt");
-
+	count = 0;
 	Params p;
 	int illegalMoves = 0;
 	vector<double> inputs;
@@ -23,6 +46,7 @@ int main(){
 	int popSize = Params::pop;
 	int maxIllegalMoves = Params::illegalMoves;
 	cout<<"HELP ME"<<endl;
+
 	cout<<popSize<<endl;
 	srand( static_cast<uint>( time( NULL ) ) );
 
@@ -35,6 +59,7 @@ int main(){
 	int totalFit = 0;
 	int aveFit = 0;
 	while(true){//This will be the start of the main loop for the genalg.
+
 		genNum++;
 		for(int i = 0; i< popSize; i++){//This is the loop for each genome in the generation
 
@@ -46,26 +71,35 @@ int main(){
 		  {
 		    if( g.moved ){
 					g.addTile();
-					illegalMoves=0;
+					//illegalMoves=0;
+					count = 0;
 				}
 				else{
-					illegalMoves++;
-					cout<<illegalMoves<<endl;
-					if(illegalMoves >= maxIllegalMoves){illegalMoves = 0; break;}
+					if(outputs.size() == 2){
+						outputs = redirect(outputs);
+						count ++;
+						cout<<"HERE"<<endl;
+					}
+
+					//illegalMoves++;
+					//cout<<illegalMoves<<endl;
+					//if(illegalMoves >= maxIllegalMoves){illegalMoves = 0; break;}
 				}
 
 
-		    //g.drawBoard();
+		    g.drawBoard();
 				cout<<"Genome Number: "<<i+1<<endl;
 
 		    if( g.done ) break;
 		    //g.waitKey();
 
-				inputs = g.toInput();
-				outputs = net.Update(inputs);
-
+				if(count <= 0){
+					inputs = g.toInput();
+					outputs = net.Update(inputs);
+				}
 				/// Changes outputs into two bit binary format
 				for(int i = 0; i < outputs.size(); ++i){
+					cout<<"Output pre Binary: "<<outputs[1]<<endl;
 					if(outputs[i] > 0){outputs[i] = 1;}
 					else if(outputs[i] <= 0){outputs[i] = 0;}
 					else{cout<<"Those Number are UNREAL Man"<<endl; break;}
@@ -87,6 +121,7 @@ int main(){
 		aveFit = totalFit/popSize;
 
 		fout<<endl<<endl<<endl<<genNum<<endl<<maxFit<<endl<<aveFit<<endl;
+		maxFit=0;
 		aveFit = 0;
 		totalFit = 0;
 		gen.nextGen();
