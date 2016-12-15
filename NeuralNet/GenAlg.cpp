@@ -113,9 +113,10 @@ vector<genome> GenAlg::selection(){
 		int selection;
 		int backup=0;
 		r = 0;
-		cout<<"Pop Fit: "<<popfitness<<endl;
+		//cout<<"Pop Fit: "<<popfitness<<endl;
 		if (popfitness == 0){
-			for(selection = 0; r > 0; selection++){
+			cout<<"PopFitness = 0"<<endl;
+			for(selection = 0; backup > 0; selection++){
 				backup = rand() % populationSize;
 				backup = backup - 1;
 			}
@@ -123,11 +124,16 @@ vector<genome> GenAlg::selection(){
 
 		else{
 		r = fRand(0,popfitness);
+		int counter = 0;
 			for (selection=0; r>0; selection++){
+				counter++;
+				cout<<counter<<endl;
+				cout<<"ENTERED LOOP"<<endl;
 				r = r - population[selection].fitness;
 
-				if (selection>populationSize-1){cout << "\nSelection Error!";break;}
+				if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
 			}
+			if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
 		}
 		/*
 		cout<<"HERE"<<endl;
@@ -137,6 +143,11 @@ vector<genome> GenAlg::selection(){
 		cout<<selection<<endl;
 		cout<<populationSize<<endl;
 		*/
+		if(selection == 10){
+			cout<<"Selection = "<<selection<<endl;
+			int fuck;
+			cin>>fuck;
+		}
 		pop2.push_back(population[selection-1]);
 		//cout<<"HERE2"<<endl;
 	}
@@ -152,10 +163,10 @@ vector<genome> GenAlg::nextGen(){
 		pop3[i].mutate();
 		q2 = fRand(0,1);
 
-		if (q2 < crossChance && i>0){
-			cout<<"HERE--------------------------------------------------------------"<<endl;
-			cross(pop3[i],pop3[i-1]);
-		}
+		//if (q2 < crossChance && i>0){
+		//	cout<<"HERE--------------------------------------------------------------"<<endl;
+			//cross(pop3[i],pop3[i-1]);
+	//	}
 
 	}
 
