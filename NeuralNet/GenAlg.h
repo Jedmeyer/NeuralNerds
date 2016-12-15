@@ -52,7 +52,7 @@ public:
 
 	double fRand(double, double);
 
-	vector<genome> cross(genome&, genome&); //Should return cross of two genome split somewhere down the doubles array
+	void cross(genome&, genome&); //Should return cross of two genome split somewhere down the doubles array
 	GenAlg(NeuralNet&); /**< Constructor, also starter for the random generation of the population*/
 	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
 	vector<genome> nextGen();

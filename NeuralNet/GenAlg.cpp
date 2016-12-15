@@ -76,7 +76,7 @@ double GenAlg::fRand(double fMin, double fMax){
 	return fMin + f * (fMax - fMin);
 }
 
-vector<genome> GenAlg::cross(genome &g1, genome &g2){
+void GenAlg::cross(genome &g1, genome &g2){
 		genome g3;
 		genome g4;
 		//srand(time(NULL));
@@ -93,10 +93,8 @@ vector<genome> GenAlg::cross(genome &g1, genome &g2){
 			g3.chromoWeights.push_back(g2.chromoWeights[i]);
 			g4.chromoWeights.push_back(g1.chromoWeights[i]);
 		}
-		for (int rs = 0; rs < p; rs++){
-			g1.chromoWeights[rs] = g3.chromoWeights[rs];
-			g2.chromoWeights[rs] = g4.chromoWeights[rs];
-		}
+		g1 = g3;
+		g2 = g4;
 }
 
 genome GenAlg::Choosen(){
@@ -179,10 +177,10 @@ vector<genome> GenAlg::nextGen(){
 		pop3[i].mutate();
 		q2 = fRand(0,1);
 
-		//if (q2 < crossChance && i>0){
-		//	cout<<"HERE--------------------------------------------------------------"<<endl;
-			//cross(pop3[i],pop3[i-1]);
-	//	}
+		if (q2 < crossChance && i>0){
+			cout<<"HERE--------------------------------------------------------------"<<endl;
+			cross(pop3[i],pop3[i-1]);
+		}
 
 	}
 
