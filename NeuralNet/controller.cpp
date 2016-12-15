@@ -26,9 +26,12 @@ int main(){
 	GenAlg gen(net);//Declares the GenAlg object and fills the population
 
 	vector<double> GWeights;
-
+	int genNum = 0;
+	int maxFit = 0;
+	int totalFit = 0;
+	int aveFit = 0;
 	while(true){//This will be the start of the main loop for the genalg.
-
+		genNum++;
 		for(int i = 0; i< popSize; i++){//This is the loop for each genome in the generation
 
 			GWeights = gen.population[i].chromoWeights;//Gets the Weigths for this genome
@@ -69,10 +72,16 @@ int main(){
 				g.netMove(outputs);
 		  }
 			gen.population[i].setfitness(g.score);
+			totalFit += g.score;
+			if(g.score>maxFit){
+				maxFit = g.score;
+			}
 		  string s = "Game Over!";
 		  if( g.win ) s = "You've made it!";
 		  cout << s << endl << endl;
 		}
+		aveFit = totalFit/popSize;
+		totalFit = 0;
 		gen.nextGen();
 		//gen.population = gen.selection();//This sets up the next generation
 

@@ -117,23 +117,25 @@ vector<genome> GenAlg::selection(){
 				backup = backup - 1;
 			}
 		}
-		
+
 		else{
 		r = fRand(0,popfitness);
 			for (selection=0; r>0; selection++){
 				r = r - population[selection].fitness;
-		
+
 				if (selection>populationSize-1){cout << "\nSelection Error!";break;}
 			}
 		}
+		/*
 		cout<<"HERE"<<endl;
 		cout<<pop2.size()<<endl;
 		cout<<i<<endl;
 		cout<<population.size()<<endl;
 		cout<<selection<<endl;
 		cout<<populationSize<<endl;
-		pop2.push_back(population[selection]);
-		cout<<"HERE2"<<endl;
+		*/
+		pop2.push_back(population[selection-1]);
+		//cout<<"HERE2"<<endl;
 	}
 	return pop2;
 }
@@ -145,10 +147,14 @@ vector<genome> GenAlg::nextGen(){
 	double q2;
 	for (int i = 0; i< populationSize; i++){
 		pop3[i].mutate();
-		q2 = fRand(0,1);
-		if (q2 < crossChance && i>0){
-			cross(pop3[i],pop3[i-1]);
-		}
+	//	q2 = fRand(0,1);
+
+	//	if (q2 < crossChance && i>0){
+		//	cout<<"HERE"<<endl;
+			//cross(pop3[i],pop3[i-1]);
+	//	}
+
 	}
+
 	return pop3;
 }
