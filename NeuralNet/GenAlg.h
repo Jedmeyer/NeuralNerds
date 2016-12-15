@@ -14,25 +14,25 @@ using namespace std;
 
 struct genome{
 public:
-	double mutationChance;
-	double crossChance;
+	double mutationChance;/** double defining the threshold at which the crossover will occur*/
+	double crossChance;/**< double defining the threshold at which the crossover will occur */
 	vector<double> chromoWeights; /**< Array of weights for the entire neural net, serves as ONE member of a generation */
-	double fitness;
-	genome();
+	double fitness;/** Fitness value of a genome*/
+	genome();/**< Default genome constructor. Majority of genomes used are through this method */
 	genome(double f1);
 	genome(vector <double>, double);
 	bool operator <(const genome&);
 	void setfitness(double ft);/** < Sets the fitness of a specific genome structure */
 	void mutate(); /**< Alters the genome of a member of a population to be inherited in the next generation */
-	double fRand(double, double);
+	double fRand(double, double);/**< Function that returns a random value between the two given values, the first being the lower */
 
 };
 
 class GenAlg{
 public:
-	double mutationChance;
-	double crossChance;
-	vector<genome> population;
+	double mutationChance;/** double defining the threshold at which the crossover will occur*/
+	double crossChance;/**< double defining the threshold at which the crossover will occur */
+	vector<genome> population;/** The Vector of genomes defining the size  */
 	double popfitness; /**< Sum of all fitness values in the population */
 	double topfit; /**< The top fitness in the population of the generation */
 	int gnumNeurons =  Params::numChromo;
@@ -55,17 +55,11 @@ public:
 	void cross(genome&, genome&); //Should return cross of two genome split somewhere down the doubles array
 	GenAlg(NeuralNet&); /**< Constructor, also starter for the random generation of the population*/
 	vector<genome> selection(); /**< Selection process should return a vector of ALL THE SELECTED genomes to be set equal to the current generation */
-	vector<genome> nextGen();
-	genome Choosen();
+	vector<genome> nextGen(); /**<  Sets up the next generation of the population. */
+	genome Choosen(); /**< Helper method for the selection function */
 
 };
-/*
-double fRand(double fMin, double fMax)
-{
-    double f = (double)rand() / RAND_MAX;
-    return fMin + f * (fMax - fMin);
-}
-*/
+
 
 
 #endif
