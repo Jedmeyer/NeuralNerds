@@ -139,45 +139,7 @@ vector<genome> GenAlg::selection(){
 		popfitness += population[i].fitness;
 		if (population[i].fitness > topfit){topfit=population[i].fitness;}
 	}
-	// for (int i=0; i<populationSize; i++){
-	// 	int selection;
-	// 	int backup=0;
-	// 	r = 0;
-	// 	//cout<<"Pop Fit: "<<popfitness<<endl;
-	// 	if (popfitness == 0){
-	// 		cout<<"PopFitness = 0"<<endl;
-	// 		for(selection = 0; backup > 0; selection++){
-	// 			backup = rand() % populationSize;
-	// 			backup = backup - 1;
-	// 		}
-	// 	}
-
-	// 	else{
-	// 	r = fRand(0,popfitness);
-	// 	int counter = 0;
-	// 		for (selection=0; r>0; selection++){
-	// 			counter++;
-	// 			cout<<counter<<endl;
-	// 			cout<<"ENTERED LOOP"<<endl;
-	// 			r = r - population[selection].fitness;
-
-			//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test; break;}
-
-		//	if (selection>populationSize-1){cout << "\nSelection Error!"; int test; cin>>test;}
-
-		/*
-		cout<<"HERE"<<endl;
-		cout<<pop2.size()<<endl;
-		cout<<i<<endl;
-		cout<<population.size()<<endl;
-		cout<<selection<<endl;
-		cout<<populationSize<<endl;
-		*/
-		// if(selection-1 == -1 || selection == 10){
-		// 	cout<<"Selection = "<<selection<<endl;
-		// 	int fuck;
-		// 	cin>>fuck;
-		// }
+	
 		for(int x = 0; x<populationSize; x++){
 			pop2.push_back(Choosen());
 		}
@@ -197,7 +159,6 @@ vector<genome> GenAlg::nextGen(){
 		q2 = fRand(0,1);
 
 		if (q2 < crossChance && i>0){
-			cout<<"HERE--------------------------------------------------------------"<<endl;
 			cross(pop3[i],pop3[i-1]);
 		}
 
