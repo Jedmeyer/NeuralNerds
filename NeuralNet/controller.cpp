@@ -87,7 +87,7 @@ int main(){
 				}
 
 
-		    g.drawBoard();
+		    //g.drawBoard();
 				cout<<"Genome Number: "<<i+1<<endl;
 
 		    if( g.done ) break;
@@ -99,7 +99,7 @@ int main(){
 				}
 				/// Changes outputs into two bit binary format
 				for(int i = 0; i < outputs.size(); ++i){
-					cout<<"Output pre Binary: "<<outputs[1]<<endl;
+					//cout<<"Output pre Binary: "<<outputs[1]<<endl;
 					if(outputs[i] > 0){outputs[i] = 1;}
 					else if(outputs[i] <= 0){outputs[i] = 0;}
 					else{cout<<"Those Number are UNREAL Man"<<endl; break;}

@@ -43,41 +43,48 @@ struct NeuronLayer{
 class NeuralNet{
 
 private:
-
+	///Number of input neurons for the net
 	int numInputs;
 
+	///Number of output neurons in the net
 	int numOutputs;
 
+	///Number of hidden layers
 	int numHiddenLayers;
 
+	/// Neurons for every hidden layer
 	int neuronsPerHiddenLyr;
 
-	//Storage for Layers of nerons, includes output
+	///Storage for Layers of nerons, includes output
 	vector<NeuronLayer> vecLayers;
 
 public:
-
-	// std::default_random_engine generator;
-	// std::uniform_real_distribution<double> distribution(-1,1); //doubles from -1 to 1
-
+	///Neural Net Construcor, Grabs from Params.ini
 	NeuralNet();
 
+	///Creates a Neural
 	void CreateNet();
 
-	// Gets the weight from neural net
+	/** Gets the weights from neural net
+	@return vector of all weights in order
+	*/
 	vector<double> GetWeights()const;
 
-	// returns total number of weights in the net
+	/** returns total number of weights in the net
+	@return number of weights in the neural net
+	*/
 	int GetNumberOfWeights()const;
 
-	// replaces weights w/ new ones;
+	/** replaces weights w/ new ones;
+	@param weights vector of weights to set the neural net to
+	*/
 	void PutWeights(vector<double> &weights);
 
-	// calc outputs from set of inputs;
+	/** calc outputs from set of inputs, main function of neural net
+	@param inputs input layer numbers
+	@return output layer calculations
+	*/
 	vector<double> Update(vector<double> &inputs);
-
-	// sigmoid response curve
-	//inline double Sigmoid(double activation, double response);
 
 };
 
