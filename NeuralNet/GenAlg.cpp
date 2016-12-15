@@ -84,8 +84,8 @@ void GenAlg::cross(genome &g1, genome &g2){
 		
 		int r,p;
 		int pause; // This pause allows for the .size() methods to not throw floating point errors.
-		cout <<"\nChromoWeights Size: "<< chromesome1.size();
-		r = rand()%chromesome2.size();
+	
+		r = rand()%g2.chromoWeights.size();
 			
 		p = g2.chromoWeights.size();
 		int i;
